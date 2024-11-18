@@ -46,7 +46,8 @@ jobs:
       # https://docs.github.com/en/rest/actions/workflows?apiVersion=2022-11-28#create-a-workflow-dispatch-event
       - name: Trigger
         run: |
-          curl --verbose --location --request POST \
+          curl --verbose --location --fail-early --fail --fail-with-body \
+          --request POST \
           -H "Accept: application/vnd.github+json" \
           -H "Authorization: token ${{secrets.PUBLISH_TOKEN}}" \
           -H "X-GitHub-Api-Version: 2022-11-28" \
