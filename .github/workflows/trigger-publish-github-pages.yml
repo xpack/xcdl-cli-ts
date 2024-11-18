@@ -20,7 +20,7 @@ on:
       - '**/tsconfig*.json'
       - 'src/**/*.ts'
       - 'README.md'
-      - '.github/workflows/publish-github-pages.yml'
+      - '.github/workflows/trigger-publish-github-pages.yml'
       - 'package.json'
 
   # Allows you to run this workflow manually from the Actions tab
