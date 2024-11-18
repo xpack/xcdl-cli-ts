@@ -1,0 +1,74 @@
+{
+  "name": "website",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "docusaurus": "docusaurus",
+    "start": "docusaurus start",
+    "build": "docusaurus build",
+    "swizzle": "docusaurus swizzle",
+    "deploy": "docusaurus deploy",
+    "clear": "docusaurus clear",
+    "serve": "docusaurus serve",
+    "write-translations": "docusaurus write-translations",
+    "write-heading-ids": "docusaurus write-heading-ids",
+    "generate-typedoc": "docusaurus generate-typedoc",
+    "typecheck": "tsc",
+    "npm-outdated": "npm outdated",
+    "npm-install": "npm install",
+    "npm-link-helper": "npm link @xpack/docusaurus-template-liquid @xpack/npm-packages-helper",
+    "generate-website-commons": "bash node_modules/@xpack/docusaurus-template-liquid/maintenance-scripts/generate-commons.sh",
+    "generate-website-blog-post": "bash node_modules/@xpack/docusaurus-template-liquid/maintenance-scripts/generate-blog-post.sh"
+  },
+  "dependencies": {
+    "@docusaurus/core": "3.5.2",
+    "@docusaurus/plugin-client-redirects": "3.5.2",
+    "@docusaurus/plugin-ideal-image": "3.5.2",
+    "@docusaurus/preset-classic": "3.5.2",
+    "@mdx-js/react": "^3.0.0",
+    "clsx": "^2.0.0",
+    "prism-react-renderer": "^2.3.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "devDependencies": {
+    "@docusaurus/module-type-aliases": "3.5.2",
+    "@docusaurus/tsconfig": "3.5.2",
+    "@docusaurus/types": "3.5.2",
+    "docusaurus-plugin-typedoc": "^1.0.5",
+    "json": "^11.0.0",
+    "typedoc": "^0.26.11",
+    "typedoc-plugin-markdown": "^4.2.10",
+    "typescript": "~5.6.3"
+  },
+  "browserslist": {
+    "production": [
+      ">0.5%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 3 chrome version",
+      "last 3 firefox version",
+      "last 5 safari version"
+    ]
+  },
+  "engines": {
+    "node": ">=18.0"
+  },
+  "websiteConfig": {
+    "shortName": "xcdl",
+    "longName": "xPack Component Manager",
+    "title": "xcdl - The xPack Component Manager",
+    "tagline": "A tool to manage component configurations, inspired by eCos (work in progress)",
+    "metadataDescription": "The xPack Component Manager command line tool",
+    "metadataKeywords": "xcdl, xpack, components, manager, cli, cdl, ecos",
+    "hasCli": "true",
+    "isInstallGlobally": "true",
+    "shareOnTwitter": "true",
+    "hasTopHomepageFeatures": "true",
+    "hasCustomUserSidebar": "true",
+    "hasCustomUserInformation": "true",
+    "nodeVersion": "18.20.4"
+  }
+}

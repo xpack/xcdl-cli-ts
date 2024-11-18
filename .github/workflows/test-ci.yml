@@ -1,0 +1,67 @@
+# DO NOT EDIT!
+# Automatically generated from npm-packages-helper/templates
+
+# https://help.github.com/en/actions
+
+# https://github.com/actions
+# https://github.com/actions/checkout
+# https://github.com/actions/setup-node
+
+name: CI on Push
+
+on:
+  push:
+    branches:
+      - 'master'
+      - 'development'
+    tags-ignore:
+      - '**'
+    paths-ignore:
+      - 'docs/**'
+      - 'website/**'
+      - 'LICENSE'
+      - '**.md'
+      - '.gitignore'
+      - '.npmignore'
+      - '.vscode/**'
+      - '.github/FUNDING.yml'
+      - 'typedoc.json'
+
+jobs:
+  npm-test:
+
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        # https://github.com/actions/setup-node
+        node-version: [18, 20, 22]
+        # https://docs.github.com/en/actions/using-github-hosted-runners/using-github-hosted-runners/about-github-hosted-runners
+        os: [ubuntu-24.04, macos-13, macos-14, windows-2022]
+
+    steps:
+    - name: Checkout
+      # https://github.com/actions/checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 1
+
+    - name: Setup Node.js ${{ matrix.node-version }} on ${{ matrix.os }}
+      # https://github.com/actions/setup-node
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Show node & npm versions, environment
+      run: |
+        node --version
+        npm --version
+        env | sort
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Run test
+      run: npm run test-ci
+      env:
+        CI: true
