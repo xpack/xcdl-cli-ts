@@ -43,14 +43,6 @@ jobs:
     runs-on: ubuntu-24.04
 
     steps:
-      # https://docs.github.com/en/rest/actions/workflows?apiVersion=2022-11-28#create-a-workflow-dispatch-event
       - name: Trigger
         run: |
-          curl --verbose --location --fail-early --fail-with-body --include \
-            --header "Authorization: token ${{secrets.DISPATCH_TOKEN}}" \
-            --header "Content-Type: application/json" \
-            --header "Accept: application/vnd.github.v3+json" \
-            --data '{"ref":"master","inputs":{}}' \
-            https://api.github.com/repos/xpack/xcdl-preview/actions/workflows/publish-github-pages-from-remote.yml/dispatches
-
-
+          curl --version

@@ -4,7 +4,6 @@
   "description": "The xPack Component Manager command line tool",
   "main": "index.js",
   "scripts": {
-    "generate-top-commons-init": "bash node_modules/@xpack/npm-packages-helper/maintenance-scripts/generate-top-commons.sh --init",
     "create-website-init": "bash node_modules/@xpack/docusaurus-template-liquid/maintenance-scripts/generate-commons.sh --init",
     "compile-watch": "tsc --build --verbose --watch src",
     "compile": "tsc --build --verbose src",
