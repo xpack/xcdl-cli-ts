@@ -46,7 +46,7 @@ jobs:
       - name: Trigger
         run: |
           curl --verbose --location --fail-early --fail-with-body --include \
-            --header "Authorization: token $" \
+            --header "Authorization: token ${{secrets.DISPATCH_TOKEN}}" \
             --header "Content-Type: application/json" \
             --header "Accept: application/vnd.github.v3+json" \
             --data '{"ref":"master","inputs":{}}' \
