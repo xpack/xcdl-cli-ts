@@ -2,6 +2,7 @@
 // Automatically generated from docusaurus-template-liquid/templates/docusaurus.
 
 import type {SidebarsConfig} from '@docusaurus/plugin-content-docs';
+import typedocSidebarItems from "./docs/api/typedoc-sidebar.cjs";
 import cliSidebar from "./sidebar-cli";
 import {userSidebarCategory} from "./sidebar-user";
 
@@ -76,6 +77,17 @@ const sidebars: SidebarsConfig = {
       type: 'doc',
       id: 'maintainer/index',
       label: 'Maintainer Information'
+    },
+  ],
+  typedocSidebar: [
+    {
+      type: "category",
+      label: "API Reference (TypeDoc)",
+      link: {
+        type: "doc",
+        id: "api/index",
+      },
+      items: typedocSidebarItems,
     },
   ],
   cliSidebar

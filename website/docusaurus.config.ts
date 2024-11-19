@@ -155,6 +155,46 @@ const config: Config = {
         disableInDev: false,
       },
     ],
+    [
+      'docusaurus-plugin-typedoc',
+      {
+        // https://typedoc-plugin-markdown.org/docs/options#display-options
+        blockTagsPreserveOrder: [
+          "@example"
+        ],
+        categorizeByGroup: false, // Otherwise it fails to load the sidebar.
+        classPropertiesFormat: "list", // "table" not, it may have examples
+        entryPointStrategy: "resolve",
+        entryPoints: [
+          "../src/index.ts"
+        ],
+        enumMembersFormat: "table",
+        excludeExternals: true,
+        excludeInternal: true,
+        expandObjects: true,
+        expandParameters: true,
+        indexFormat: "table",
+        interfacePropertiesFormat: "list", // "table" not, it may have examples
+        logLevel: "Verbose",
+        parametersFormat: "table",
+        plugin: [
+          "typedoc-plugin-markdown"
+        ],
+        propertyMembersFormat: "table",
+        readme: "none",
+        skipErrorChecking: true,
+        sort: [
+          "instance-first",
+          "visibility"
+        ],
+        tsconfig: '../tsconfig.json',
+        "tableColumnSettings": {
+          "leftAlignHeaders": true
+        },
+        typeDeclarationFormat: "table",
+        useCodeBlocks: false, // Nice, but it might be mistaken for examples.
+      }
+    ],
 
     // Local plugins.
     './src/plugins/SelectReleasesPlugin',
@@ -263,6 +303,11 @@ const config: Config = {
           ],
         },
         cliNavbar,
+        {
+          to: '/docs/api',
+          label: 'API Reference',
+          position: 'left',
+        },
         {
           type: 'dropdown',
           to: '/blog',
@@ -383,7 +428,5 @@ const config: Config = {
 
   customFields: customFields,
 };
-
-logger.info(config.baseUrl);
 
 export default config;

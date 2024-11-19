@@ -64,6 +64,7 @@
     "metadataDescription": "The xPack Component Manager command line tool",
     "metadataKeywords": "xcdl, xpack, components, manager, cli, cdl, ecos",
     "hasCli": "true",
+    "hasApi": "true",
     "isInstallGlobally": "true",
     "shareOnTwitter": "true",
     "hasTopHomepageFeatures": "true",
