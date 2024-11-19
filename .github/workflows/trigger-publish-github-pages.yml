@@ -45,4 +45,9 @@ jobs:
     steps:
       - name: Trigger
         run: |
-          curl --version
+          curl --verbose --location --fail-early --fail-with-body --include \
+            --header "Authorization: token $" \
+            --header "Content-Type: application/json" \
+            --header "Accept: application/vnd.github.v3+json" \
+            --data '{"ref":"master","inputs":{}}' \
+            https://api.github.com/repos/xpack/xcdl-preview/actions/workflows/publish-github-pages-from-remote.yml/dispatches
