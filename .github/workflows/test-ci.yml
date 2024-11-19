@@ -25,6 +25,8 @@ on:
       - '.npmignore'
       - '.vscode/**'
       - '.github/FUNDING.yml'
+      - '.github/workflows/publish-github-pages*.yml'
+      - '.github/workflows/trigger-publish-github-pages*.yml'
       - 'typedoc.json'
 
 jobs:
