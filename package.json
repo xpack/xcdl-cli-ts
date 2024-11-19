@@ -2,7 +2,19 @@
   "name": "xcdl",
   "version": "2.0.0-pre",
   "description": "The xPack Component Manager command line tool",
-  "main": "index.js",
+  "type": "module",
+  "exports": {
+    "request": "./index.cjs",
+    "import": "./index.mjs"
+  },
+  "directories": {
+    "bin": "./bin",
+    "lib": "./lib",
+    "test": "./tests"
+  },
+  "bin": {
+    "xpm": "bin/xpm.js"
+  },
   "scripts": {
     "create-website-init": "bash node_modules/@xpack/docusaurus-template-liquid/maintenance-scripts/generate-commons.sh --init",
     "compile-watch": "tsc --build --verbose --watch src",
@@ -26,14 +38,15 @@
     "test-coverage": "tap --show-full-coverage",
     "test-no-coverage": "tap --disable-coverage",
     "tap": "tap --reporter=tap",
+    "test": "npm run test-no-coverage",
+    "test-ci": "npm run test-no-coverage",
     "prepublishOnly": "npm run lint && npm run test",
     "postpublish": "git push origin --follow-tags",
     "clean": "del-cli cjs 'tests/**/cjs' 'src/**/*.d.ts' 'src/**/*.d.ts.map' 'src/**/*.js' 'src/**/*.js.map' 'tests/**/*.d.ts' 'tests/**/*.d.ts.map' 'tests/**/*.js' 'tests/**/*.js.map' '**/tsconfig.tsbuildinfo' .nyc_output coverage",
     "deep-clean": "npm run clean && rm -rf node_modules package-lock.json",
     "show-versions": "echo $(which node) $(node --version) && echo $(which npm) $(npm --version)",
     "dumpconf": "env | sort | uniq",
-    "generate-top-commons": "bash node_modules/@xpack/npm-packages-helper/maintenance-scripts/generate-top-commons.sh",
-    "create-website": "mkdir -p website && cd website && npm link @xpack/docusaurus-template-liquid @xpack/npm-packages-helper && bash node_modules/@xpack/docusaurus-template-liquid/maintenance-scripts/generate-commons.sh"
+    "generate-top-commons": "bash node_modules/@xpack/npm-packages-helper/maintenance-scripts/generate-top-commons.sh"
   },
   "repository": {
     "type": "git",
@@ -59,12 +72,15 @@
   },
   "homepage": "https://xpack.github.io/xcdl-preview/",
   "homepagePreview": "https://xpack.github.io/xcdl-cli-ts/",
+  "dependencies": {
+    "@ilg/cli-start-options": "^0.8.2"
+  },
   "devDependencies": {
-    "json": "^11.0.0",
-    "liquidjs": "^10.18.0",
     "@types/node": "^18.11.9",
     "@types/tap": "^15.0.12",
     "del-cli": "^6.0.0",
+    "json": "^11.0.0",
+    "liquidjs": "^10.18.0",
     "standard": "^17.1.2",
     "tap": "^21.0.1",
     "ts-node": "^10.9.2",
@@ -76,7 +92,10 @@
   "engines": {
     "node": " >=18.0.0"
   },
-  "bundledDependencies": [],
+  "buildConfig": {
+    "greeting": "The xPack components manager command line tool",
+    "isTypeScript": "true"
+  },
   "tap": {
     "files": [
       "tests/tap/*.ts"
@@ -100,6 +119,5 @@
       "**/*.d.ts",
       "**/*.js"
     ]
-  },
-  "dependencies": {}
+  }
 }
