@@ -384,4 +384,6 @@ const config: Config = {
   customFields: customFields,
 };
 
+logger.info(config.baseUrl);
+
 export default config;
