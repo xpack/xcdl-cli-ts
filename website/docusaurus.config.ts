@@ -40,8 +40,7 @@ function getCustomFields() {
   const enginesNodeVersionMajor = enginesNodeVersion.replace(/[.].*/, '');
   const customFields = {
     enginesNodeVersion,
-    enginesNodeVersionMajor,
-    baseUrl: process.env.DOCUSAURUS_BASEURL ?? '/xcdl-cli-ts/'
+    enginesNodeVersionMajor
   }
 
   return {
@@ -60,7 +59,8 @@ logger.info(customFields);
 // ----------------------------------------------------------------------------
 
 const config: Config = {
-  title: 'xcdl - The xPack Component Manager',
+  title: 'xcdl - The xPack Component Manager' +
+    ((process.env.DOCUSAURUS_IS_PREVIEW === 'true') ? ' (preview)' : ''),
   tagline: 'A tool to manage component configurations, inspired by eCos (work in progress)',
   favicon: 'img/favicon.ico',
 
@@ -68,7 +68,8 @@ const config: Config = {
   url: 'https://xpack.github.io/',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: customFields.baseUrl,
+  baseUrl: process.env.DOCUSAURUS_BASEURL ??
+    '/xcdl-cli-ts/',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
