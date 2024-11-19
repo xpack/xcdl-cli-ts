@@ -38,8 +38,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # Single deploy job since we're just deploying
-  trigger:
+  # Dispatch the event to the destination project.
+  dispatch:
     runs-on: ubuntu-24.04
 
     steps:
