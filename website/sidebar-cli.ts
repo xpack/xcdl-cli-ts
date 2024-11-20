@@ -28,6 +28,21 @@ const cliSidebar = [
         items: [
           {
             type: 'doc',
+            id: 'cli/xcdl/prepare/index',
+            label: 'xcdl prepare'
+          },
+          {
+            type: 'doc',
+            id: 'cli/xcdl/build/index',
+            label: 'xcdl build'
+          },
+          {
+            type: 'doc',
+            id: 'cli/xcdl/test/index',
+            label: 'xcdl test'
+          },
+          {
+            type: 'doc',
             id: 'cli/xcdl/export/index',
             label: 'xcdl export'
           },
