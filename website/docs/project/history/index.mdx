@@ -11,4 +11,60 @@ date: 2024-10-24 23:58:00 +0300
 
 # The history of xcdl
 
-The project was created in **DATE**.
+The current project was created in **November 2024**, but its origins
+are from early 2000.
+
+## Prehistory
+
+The first contact with configuration definitions languages happened in the early 2000, when I used eCos in an embedded project. Since the GUI based eCos configuration tools were mainly Windows tools, and at that time I was a hard core command line Unix user, the configuration framework was more of a nuisance than a useful technology.
+
+The situation changed when work started on µOS++, a C++ embedded framework. Although the design was influenced by eCos, the eCos CDL was considered too eCos specific to be useful in other projects, not to mention that Tcl was already a bit too rusty, even then.
+
+However, after using µOS++ for several years, it became clear that managing large collections of sources without an automated tool is more and more difficult.
+
+## December 2012
+
+In December 2012, after several studies the idea of a Python implementation of a CDL proved feasible, and a rapid prototyping version in Python was implemented.
+
+To give this new project a new home, the SourceForge project
+[eXtensible Component Definition Language](https://sourceforge.net/projects/xcdl/)
+was created, basically a Git repository and two ticketing systems, one for bugs and one for feature requests, complemented by a
+[Wiki](https://xcdl.sourceforge.net/wiki/).
+
+## January 2013
+
+In January 2013, after the successful rapid prototyping phase, the SRS wiki page was written, followed by the xCDL Definition Reference for all objects and properties.
+
+This was followed by a more or less exhaustive implementation, and on January 13th the xCDL framework produced the first functional run of a build generated with the configMakefile tool, the conversions test for the Debug class.
+
+## April 2014
+
+In early 2014, ARM released a preliminary version of CMSIS Pack, as a *"a delivery mechanism for software components, device parameters, and evaluation board support"*. Although far from eCos and aiming at different purposes, the CMSIS Pack was considered an important step forward, and discussions with the CMSIS team; on April 14th an invitation to join the internal CMSIS Google Group was received.
+
+On April 27th, a branch was created in the GNU ARM Eclipse repository, and work on an Eclipse plug-in to manage xCDL/CMSIS packs was started.
+
+The first goal was to write a plug-in to manage the existing [Keil CMSIS packages](https://www.keil.com/pack), to be used as a base for future xCDL specific extensions. The release candidate of the packs manager plug-in was made available for review on June 16th, 2014.
+
+## June 2014
+
+In June 2014, a more or less complete set of specifications, based on *The eCos Component Writer's Guide*, with multiple changes, was put together on the xCDL MediaWiki site.
+
+## August 2015
+
+In August 2015, the project wiki was migrated to GitHub Wiki. The initial version is still available from [SourceForge](https://xcdl.sourceforge.net/wiki/).
+
+## October 2015
+
+In October 2015, the GitHub Wiki pages were migrated to [GitHub Pages](https://xcdl.github.io), as XCDL.
+
+## February 2017
+
+In February 2017, after the xPack project was created, the name was
+changed to **xPack/XCDL**, with the intent to include the CDL
+functionality into the xPack project.
+
+Development on the component configurations specific features was
+postponed in favour
+of dependencies management and build configurations,
+handled by **xpm*.
+
