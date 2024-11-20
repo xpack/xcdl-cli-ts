@@ -68,7 +68,7 @@
     "isInstallGlobally": "true",
     "shareOnTwitter": "true",
     "hasTopHomepageFeatures": "true",
-    "hasCustomUserSidebar": "true",
+    "hasCustomSidebar": "true",
     "hasCustomUserInformation": "true",
     "nodeVersion": "18.20.4"
   }
