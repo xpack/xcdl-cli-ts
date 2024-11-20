@@ -1,0 +1,39 @@
+---
+title: Glossary
+
+---
+
+# Terms used across the **xcdl** project
+
+### CDL
+
+**CDL** stands for **Component Definition Language**. It was introduced
+by eCos and is documented in [The eCos Component Writer's Guide](http://ecos.sourceware.org/docs-3.0/cdl-guide/cdl-guide.html).
+
+### xCDL
+
+**xCDL** is the xPack Configuration Definition Language and framework,
+inspired by eCos CDL.
+
+xCDL uses several concepts inherited from eCos CDL:
+
+- xCDL **software component**: a set of source files that perform a given
+function, standalone or depending on other components, together with
+some metadata
+- xCDL **component metadata**: additional informations added to
+software components to describe dependencies, requirements and constraints
+- xCDL **configuration tools**: tools running on development machines
+to create and manage xCDL configurations and component metadata
+- xCDL **configurations**: specific metadata definitions, that describe
+the requirements of an application, like which components are used, the values for preprocessor definitions, toolchain selection, build details, etc
+- xCDL **build configurations**: the result of processing an xCDL
+configuration, usually a build folder with associated build related
+files (like CMake/meson/GNU Make files); when IDEs (like VS Code or Eclipse) are used, it translates to an IDE build configuration
+- xCDL **requirements**: direct requirements, generally components
+that are mandatory for the build to succeed, like base classes
+- xCDL **constraints**: in general hardware dependencies, like the
+presence of a certain peripheral, but dependencies to software
+options can also be used
+
+The xPack build configurations and xCDL build configurations
+should be more or less the same, but details should be worked out.
