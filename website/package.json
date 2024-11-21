@@ -53,9 +53,6 @@
       "last 5 safari version"
     ]
   },
-  "engines": {
-    "node": ">=18.0"
-  },
   "websiteConfig": {
     "shortName": "xcdl",
     "longName": "xPack Component Manager",
@@ -71,5 +68,8 @@
     "hasCustomSidebar": "true",
     "hasCustomUserInformation": "true",
     "nodeVersion": "18.20.4"
+  },
+  "engines": {
+    "node": ">=18.0"
   }
 }
