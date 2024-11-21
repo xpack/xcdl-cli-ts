@@ -31,9 +31,39 @@ export const customDocsSidebar = [
     label: 'Install Guide'
   },
   {
-    type: 'doc',
-    id: 'user/index',
-    label: 'User Information'
+    type: 'category',
+    label: 'User Information',
+    link: {
+      type: 'doc',
+      id: 'user/index',
+    },
+    "items": [
+      {
+        type: 'doc',
+        id: 'user/index',
+        label: 'Overview'
+      },
+      {
+        type: 'category',
+        label: 'Metadata',
+        link: {
+          type: 'doc',
+          id: 'user/metadata/index',
+        },
+        "items": [
+          {
+            type: 'doc',
+            id: 'user/metadata/cdlComponents/index',
+            label: 'cdlComponents'
+          },
+          {
+            type: 'doc',
+            id: 'user/metadata/cdlOptions/index',
+            label: 'cdlOptions'
+          },
+        ]
+      }
+    ]
   },
   {
     type: 'doc',
