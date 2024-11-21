@@ -20,7 +20,7 @@ import Link from '@docusaurus/Link';
 import type {FeatureItem} from './FeatureItem'
 
 
-import {FeatureList} from './TopFeatureList';
+import {FeatureList} from './CustomFeatureList';
 
 
 function Feature({title, Svg, description}: FeatureItem) {
