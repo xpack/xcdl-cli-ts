@@ -67,6 +67,7 @@
     "hasCustomHomepageFeatures": "true",
     "hasCustomSidebar": "true",
     "hasCustomUserInformation": "true",
+    "hasCustomDocsNavbarItem": "true",
     "nodeVersion": "18.20.4"
   },
   "engines": {

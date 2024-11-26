@@ -18,9 +18,9 @@ import {customDocsSidebar} from "./sidebar-docs-custom";
  */
 const sidebars: SidebarsConfig = {
 
-
+  
   docsSidebar: customDocsSidebar,
-
+  
   typedocSidebar: [
     {
       type: 'category',
@@ -34,7 +34,7 @@ const sidebars: SidebarsConfig = {
     },
   ],
   cliSidebar
-
+  
 };
 
 export default sidebars;
