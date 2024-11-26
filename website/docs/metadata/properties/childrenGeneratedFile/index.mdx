@@ -13,6 +13,10 @@ date: 2015-11-25 19:32:00 +0200
 
 ---
 
+import MetadataPropertyLink from '@site/src/components/MetadataPropertyLink';
+
+{/* ------------------------------------------------------------------------ */}
+
 # The `childrenGeneratedFile` definition
 
 :::note
@@ -21,7 +25,42 @@ Work in progress.
 
 :::
 
+## Purpose
 
-### eCos reference
+Specify the configuration header file that will be generated for the children of a given component.
+
+## Syntax
+
+```json
+    <component name="...">
+
+      <display>...</display>
+      <description>...</description>
+
+      <childrenGeneratedFile>file name</childrenGeneratedFile>
+
+      ... other properties ...
+      ... children objects ...
+
+    </component>
+```
+
+The value of the `childrenGeneratedFile` property is a string containing a file name.
+
+## Default value
+
+If missing, the definition from the parent node is used, first the `childrenGeneratedFile` then `generatedFile`.
+
+## Description
+
+When the configuration tools generate a build tree, one of the steps is to output each objects's configuration data to a header file. Instead of defining a `generatedFile` for each individual _Option_ of a _Component_, it is recommended to define the file once, in the parent _Component_, and this definition will be used for all children nodes without a `generatedFile`.
+
+The name specified in a `childrenGeneratedFile` property will always be interpreted as relative to the build folder.
+
+## Example
+
+TBD
+
+## eCos reference
 
 - none

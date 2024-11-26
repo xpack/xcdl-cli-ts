@@ -25,18 +25,18 @@ Work in progress.
 
 :::
 
-### Purpose
+## Purpose
 
 Allow additional control over the active state of an xCDL configuration object.
 
-### Syntax
+## Syntax
 
 ```json {5}
 {
     "cdlOptions": {
         "<key>": {
             ...
-            "activeIf": ["<expression>",...],
+            "activeIf": [ "<expression>",... ],
             ...
         }
     }
@@ -45,11 +45,11 @@ Allow additional control over the active state of an xCDL configuration object.
 
 The value of the `activeIf` property is an array of boolean expressions to be evaluated, usually to check hardware properties; if all these expression are true, the active state of this object is true.
 
-### Default value
+## Default value
 
 If missing, no additional constraints are considered, the object is active.
 
-### Description
+## Description
 
 Configuration options or other objects may be either active or inactive. Typically this is controlled by the object's location in the overall hierarchy. Consider the option `.../utils-lists/trace`, which exists below the component `.../utils-lists`. If the whole component is disabled then all options it contains are inactive: there is no point in enabling trace for the `utils-lists` if the `utils-lists` are not used; any `requires` constraints associated with trace are irrelevant; any `sourceFile` property or other build-related property are ignored.
 
@@ -67,7 +67,7 @@ The `activeIf` and `requires` properties have certain similarities, but they ser
 - If option B exists to provide additional debugging information about the functionality provided by A then again an `activeIf` constraint is appropriate. There is no point in letting users enable extra debugging facilities for a feature that is not actually present.
 - The configuration system's inference engine will cope equally well with `activeIf` and `requires` properties. Suppose there is a conflict because some third option depends on B. If *B activeIf A* then the inference engine will attempt to make A active and enabled, and then to enable B if necessary. If B requires A then the inference engine will attempt to enable B and resolve the resulting conflict by causing A to be both active and enabled. Although the inference occurs in a different order, in most cases the effect will be the same.
 
-### Examples
+## Examples
 
 Do not provide extra semaphore debugging if there are no semaphores:
 
@@ -77,7 +77,7 @@ Do not provide extra semaphore debugging if there are no semaphores:
         "binsem": {
             ...
             "parent": "kernel/instrument",
-            "activeIf": ["isEnabled('kernel/synch')"],
+            "activeIf": [ "isEnabled('kernel/synch')" ],
             "generatedDefinition": "OS_PACKAGE_KERNEL_SYNCH_MUTEX_PRIORITY_INHERITANCE_SIMPLE_RELAY"
             ...
         }
@@ -93,7 +93,7 @@ Avoid another level in the configuration hierarchy:
         "relay": {
             ...
             "parent": "kernel/synch/mutex/priorityInheritance/simple",
-            "activeIf": ["isEnabled('kernel/synch/mutex/priorityInheritance/simple')"],
+            "activeIf": [ "isEnabled('kernel/synch/mutex/priorityInheritance/simple')" ],
             "generatedDefinition": "OS_PACKAGE_KERNEL_SYNCH_MUTEX_PRIORITY_INHERITANCE_SIMPLE_RELAY",
             ...
         }
@@ -109,7 +109,7 @@ Functionality that is only relevant if another package is loaded:
         "uitron-compatibility": {
             ...
             "parent": "start",
-            "activeIf": ["isLoaded('uitron')"],
+            "activeIf": [ "isLoaded('uitron')" ],
             "generatedDefinition": "OS_PACKAGE_START_UITRON_COMPATIBILITY",
             ...
         }
@@ -119,13 +119,13 @@ Functionality that is only relevant if another package is loaded:
 
 Check that the hardware or HAL provide the appropriate functionality:
 
-```json
+```json {6}
 {
     "cdlOptions": {
         "debug-break-support": {
             ...
             "parent": "hal/debug/gdb/break-support",
-            "activeIf": ["isEnabled('hal/debug/gdb/stubs-break')"],
+            "activeIf": [ "isEnabled('hal/debug/gdb/stubs-break')" ],
             "generatedDefinition": "OS_DEBUG_HAL_DEBUG_GDB_BREAK_SUPPORT",
             ...
         }
@@ -133,10 +133,10 @@ Check that the hardware or HAL provide the appropriate functionality:
 }
 ```
 
-### See also
+## See also
 
-- <MetadataPropertyLink name="requires" />
+- <MetadataPropertyLink name="requires" /> property
 
-### eCos reference
+## eCos reference
 
-- [`active-if`](https://ecos.sourceware.org/docs-latest/cdl-guide/ref.active-if.html)
+- [`active-if`](https://ecos.sourceware.org/docs-latest/cdl-guide/ref.active-if.html) property

@@ -13,6 +13,10 @@ date: 2015-11-25 19:32:00 +0200
 
 ---
 
+import MetadataPropertyLink from '@site/src/components/MetadataPropertyLink';
+
+{/* ------------------------------------------------------------------------ */}
+
 # The `defaultValue` definition
 
 :::note
@@ -21,7 +25,64 @@ Work in progress.
 
 :::
 
-### eCos reference
+## Purpose
 
-- [`default-value`](https://ecos.sourceware.org/docs-latest/cdl-guide/ref.default-value.html)
+Provide a default value for this option using an xCDL expression.
+
+## Syntax
+
+```json
+    <option name="...">
+
+      <display>...</display>
+      <description>...</description>
+
+      <defaultValue>expression</defaultValue>
+
+      ... other properties ...
+      ... children objects ...
+
+    </option>
+```
+
+The value of the `defaultValue` property is a string containing an expression to be evaluated each time the object is referred.
+
+## Default value
+
+If missing the default object value depends on the object state, active objects have the value 1/true and non active objects have the value 0/false.
+
+## Description
+
+The `defaultValue` property usually allows to define the default value for the object, in case no other value is set during configuration.
+
+The arguments to the `defaultValue` property should be an xCDL expression, see the Section called Ordinary Expressions in [xCDL packages](/docs/guide/packages) for the syntactic details. In many cases a simple constant value will suffice.
+
+However it is also possible for an object's default value to depend on other objects. For example the common HAL package provides some support functions that are needed by the kernel, but are unlikely to be useful if the kernel is not being used.
+
+If the kernel is loaded then this HAL option is automatically enabled, although the user can still disable it explicitly should this prove necessary. If the kernel is not loaded then the option is disabled, although it can still be enabled by the user if desired. `defaultValue` expressions can be more complicated than this if appropriate, and provide a very powerful facility for component writers who want their code to “just do the right thing” in a wide variety of configurations.
+
+An object can have at most one `defaultValue` property, and it is illegal to have both a `computed` and a `defaultValue` property in one body. If an object does not have either a `defaultValue` or a `computed` property and it does not have the `valueType` none then the configuration tools will assume a default value expression of 1/true if the object is active and 0/false otherwise.
+
+On occasion it is useful to have a configuration object A which has both a `requires` constraint on some other object B and a `defaultValue` expression of B. If option B is not enabled then A will also be disabled by default and no conflict arises. If B is enabled then A also becomes enabled and again no conflict arises. If a user attempts to enable B but not A then there will be a conflict. Users should be able to deduce that the two options are closely interlinked and should not be manipulated independently except in very unusual circumstances.
+
+## Example
+
+```json
+    <option name="threadSupport">
+
+      <parent>hal/debug/gdb</parent>
+      <display>Include GDB multi-threading debug support</display>
+      <description>This option enables some extra HAL code which is needed
+      to support multi-threaded source level debugging.</description>
+
+      <generatedDefinition>OS_DEBUG_HAL_DEBUG_GDB_THREAD_SUPPORT</generatedDefinition>
+      <requires>isEnabled('kernel/debug/gdb/threadSupport')</requires>
+      <defaultValue>valueOf('kernel/debug/gdb/threadSupport')</defaultValue>
+
+    </option>
+```
+
+## eCos reference
+
+- [`default-value`](https://ecos.sourceware.org/docs-latest/cdl-guide/ref.default-value.html) property
 

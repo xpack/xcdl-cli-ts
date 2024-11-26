@@ -132,13 +132,18 @@ export const customDocsSidebar = [
               },
               {
                 type: 'doc',
-                id: 'metadata/properties/category/index',
-                label: 'category'
+                id: 'metadata/properties/childrenGeneratedFile/index',
+                label: 'childrenGeneratedFile'
               },
               {
                 type: 'doc',
-                id: 'metadata/properties/childrenGeneratedFile/index',
-                label: 'childrenGeneratedFile'
+                id: 'metadata/properties/compilerIncludeFolders/index',
+                label: 'compilerIncludeFolders'
+              },
+              {
+                type: 'doc',
+                id: 'metadata/properties/compilerSourceFiles/index',
+                label: 'compilerSourceFiles'
               },
               {
                 type: 'doc',
@@ -162,6 +167,21 @@ export const customDocsSidebar = [
               },
               {
                 type: 'doc',
+                id: 'metadata/properties/description/index',
+                label: 'description'
+              },
+              {
+                type: 'doc',
+                id: 'metadata/properties/display/index',
+                label: 'display'
+              },
+              {
+                type: 'doc',
+                id: 'metadata/properties/docsUrl/index',
+                label: 'docsUrl'
+              },
+              {
+                type: 'doc',
                 id: 'metadata/properties/generatedDefinition/index',
                 label: 'generatedDefinition'
               },
@@ -177,8 +197,8 @@ export const customDocsSidebar = [
               },
               {
                 type: 'doc',
-                id: 'metadata/properties/includeXcdl/index',
-                label: 'includeXcdl'
+                id: 'metadata/properties/includeCDLs/index',
+                label: 'includeCDLs'
               },
               {
                 type: 'doc',
@@ -194,11 +214,6 @@ export const customDocsSidebar = [
                 type: 'doc',
                 id: 'metadata/properties/requires/index',
                 label: 'requires'
-              },
-              {
-                type: 'doc',
-                id: 'metadata/properties/sourceFiles/index',
-                label: 'sourceFiles'
               },
               {
                 type: 'doc',

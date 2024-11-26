@@ -1,0 +1,78 @@
+---
+
+title: xCDL docsUrl
+description: The definition of the xCDL docsUrl property
+keywords:
+  - xpack
+  - xcdl
+  - cdl
+  - property
+  - docsUrl
+
+date: 2015-11-25 19:32:00 +0200
+
+---
+
+import MetadataPropertyLink from '@site/src/components/MetadataPropertyLink';
+
+{/* ------------------------------------------------------------------------ */}
+
+# The `docsUrl` definition
+
+:::note
+
+Work in progress.
+
+:::
+
+## Purpose
+
+Provide the location of online-documentation for a configuration object.
+
+## Syntax
+
+```json {4}
+{
+    "cdlOptions": {
+        "<key>": {
+            "docsUrl": "<string>",
+            ...
+        }
+    }
+}
+```
+
+The value of the `docsUrl` property is a string with a properly formed [URL](https://en.wikipedia.org/wiki/URL).
+
+## Default value
+
+There is no default value, if missing, the configuration tool will not display any link.
+
+## Description
+
+When presented with a (graphical) user interface, users can only be expected to manipulate configuration options sensibly if they are given sufficient information about these options. There are three properties which serve to explain an option in plain text: the `display` property gives a textual alias for an option, which is usually more comprehensible than something like CYGPKG_LIBC_TIME_ZONES; the `description` property gives a longer description, typically a paragraph or so; the `docsUrl` property specifies the location of additional on-line documentation related to a configuration option.
+
+The syntax is that of an absolute URL.
+
+## Example
+
+```json {6}
+{
+    "cdlPackages": {
+        "kernel": {
+            "display": "eCos kernel",
+            "description": "This package contains the core functionality of the eCos kernel. It relies on functionality provided by various HAL packages and by the eCos infrastructure. In turn the eCos kernel provides support for other packages such as the device drivers and the uITRON compatibility layer.",
+            "docsUrl": "https://ecos.sourceware.org/docs-latest/ref/kernel.html"
+        }
+    }
+}
+```
+
+## See also
+
+- <MetadataPropertyLink name="description" /> property
+- <MetadataPropertyLink name="display" /> property
+
+## eCos reference
+
+- [`doc`](https://ecos.sourceware.org/docs-latest/cdl-guide/ref.doc.html) property

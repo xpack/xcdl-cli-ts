@@ -13,6 +13,10 @@ date: 2015-11-25 19:32:00 +0200
 
 ---
 
+import MetadataPropertyLink from '@site/src/components/MetadataPropertyLink';
+
+{/* ------------------------------------------------------------------------ */}
+
 # The `parent` definition
 
 :::note
@@ -21,7 +25,82 @@ Work in progress.
 
 :::
 
+## Purpose
 
-### eCos reference
+Control the location of an option in the configuration hierarchy.
 
-- [`parent`](https://ecos.sourceware.org/docs-latest/cdl-guide/ref.parent.html)
+## Syntax
+
+```json
+    <option name="...">
+
+      <display>...</display>
+      <description>...</description>
+
+      <parent>...</parent>
+
+      ... other properties ...
+      ... children objects ...
+
+    </option>
+```
+
+The value of the `parent` property is a string containing the id of the parent object.
+
+## Default value
+
+If missing (the usual case), the surrounding object is considered the natural parent of this object. If none, the package object in the parent folder is used.
+
+## Description
+
+Configuration objects live in a hierarchy of packages and components. By default a given object's position in the hierarchy is a simple consequence of its position within the xCDL scripts, based on its position in the folder's hierarchy. Packages are generally placed at the top-level of the configuration. Any `cdlComponents` or `cdlOptions` objects that are defined at the same level as the `cdlPackage` object in a package's top-level xCDL script are placed immediately below that package in the hierarchy (TBI). Any `cdlOptions` or `cdlComponents` objects that are defined in the body of a `cdlPackage` or `cdlComponents` command, or that are read in as a result of processing a component's `includeCDLs` property, will be placed immediately below that `cdlPackage` or `cdlComponents` in the hierarchy.
+
+In some circumstances it is useful to specify an alternative position in the hierarchy for a given object. For example it is often convenient to re-parent device driver packages below `OS_PACKAGE_IO` in the configuration hierarchy, thus reducing the number of packages at the top level of the hierarchy and making navigation easier. The parent property can be used to achieve this.
+
+The parent property takes a single argument, which should be the id of a `cdlPackage` or `cdlComponents`.
+
+Although the `parent` property affects an object's position in the overall hierarchy and hence whether or not that object is active, a re-parented object still belongs to the package that defines it (?!?!?!). By default any `#define`'s will be exported to that package's configuration header file. Any `compilerSourceFiles` properties can only reference source files present in that package, and it is not directly possible to cause some file in another package to be built by re-parenting (???).
+
+As a special case, if an empty string is specified for the parent then the object is placed at the top of the hierarchy, ahead of any packages which are not explicitly re-parented in this way. This facility is useful for configuration options such as global preferences and default compiler flags.
+
+## Example
+
+```json
+    <component name="trace">
+
+      ...
+
+      <component name="assert buffer">
+
+        <display>Buffered tracing</display>
+        <description>An output module which buffers output from tracing and
+        assertion events. The stored messages are output when an
+        assert fires, or OS_TRACE_PRINT() (defined in
+        <os/infra/os_trac.h>) is called. Of course, there will
+        only be stored messages if tracing per se (OS_DEBUG_USE_TRACING) is enabled above.</description>
+
+        <generatedDefinition>OS_DEBUG_INFRA_DEBUG_TRACE_ASSERT_BUFFER</generatedDefinition>
+        <defaultEnable>true</defaultEnable>
+        <activeIf>isEnabled('use tracing')</activeIf>
+        ...
+      </component>
+
+      <option name="size">
+
+        <display>Trace buffer size</display>
+        <description>The size of the trace buffer. This counts the number of
+        trace records stored. When the buffer fills it either
+        wraps, stops recording, or generates output.</description>
+
+        <parent>trace/assert buffer</parent>
+        <valueType>int</valueType>
+        <defaultValue>32</defaultValue>
+        <legalValues>5 to 65535</legalValues>
+      </option>
+
+    <component>
+```
+
+## eCos reference
+
+- [`parent`](https://ecos.sourceware.org/docs-latest/cdl-guide/ref.parent.html) property

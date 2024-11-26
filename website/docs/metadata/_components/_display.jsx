@@ -14,7 +14,7 @@ import MetadataPropertyLink from '@site/src/components/MetadataPropertyLink';
 export default function func({objectType = 'TYPE'}) {
   return (
     <>
-      <MetadataPropertyLink name='includeXcdl' /> - an array of xCDL metadata files to be parsed and whose objects to be included as children of the current node
+      <MetadataPropertyLink name='display' /> - provides a node name for the {objectType} when rendered in the configuration tree
     </>
   )
 }

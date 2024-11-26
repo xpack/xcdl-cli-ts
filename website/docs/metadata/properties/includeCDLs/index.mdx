@@ -1,0 +1,81 @@
+---
+
+title: xCDL includeCDLs
+description: The definition of the xCDL includeCDLs property
+keywords:
+  - xpack
+  - xcdl
+  - cdl
+  - property
+  - includeCDLs
+
+date: 2015-11-25 19:32:00 +0200
+
+---
+
+import MetadataPropertyLink from '@site/src/components/MetadataPropertyLink';
+
+{/* ------------------------------------------------------------------------ */}
+
+# The `includeCDLs` definition
+
+:::note
+
+Work in progress.
+
+:::
+
+## Purpose
+
+Include additional configuration information from another xCDL definitions file.
+
+## Syntax
+
+```json
+    <option name="...">
+
+      <display>...</display>
+      <description>...</description>
+
+      <includeCDLs>file 1</includeCDLs>
+      <includeCDLs>file 2</includeCDLs>
+
+      ... other properties ...
+      ... children objects ...
+
+    </option>
+```
+
+The value of the `includeCDLs` property is a file name containing other xCDL definitions. Multiple properties are allowed.
+
+## Default value
+
+If missing, no additional xCDL files are parsed as children of the current object.
+
+## Description
+
+It is possible to define all the configuration options and sub-components for a given package in a single CDL script, either by nesting them in the appropriate command bodies, by extensive use of the parent property, or by some combination of these two. However for large packages this is inconvenient and it is better to split the raw configuration data over several different files. The `includeCDLs` property can be used to achieve this. It takes a list of filenames as argument. If the package follows the folders layout conventions then the configuration tools will look for the specified file in the meta sub-folder of the package, otherwise it will look for the file relative to the package's top-level folder.
+
+The `includeCDLs` property can only occur in the body of an `cdlComponents` or `cdlPackage` object.
+
+## Example
+
+```json
+    <component name="OS_PACKAGE_UITRON_TASKS">
+
+      <display>Tasks</display>
+      <description>uITRON Tasks are the basic blocks of multi-tasking
+      in the uITRON world; they are threads or lightweight
+      processes, sharing the address space and the CPU.
+      They communicate using the primitives outlined above.
+      Each has a stack, an entry point (a C or C++ function),
+      and (where appropriate) a scheduling priority.<description>
+
+      <valueType>none</valueType>
+      <includeCDLs>tasks.xml</includeCDLs>
+    </component>
+```
+
+## eCos reference
+
+- [`script`](https://ecos.sourceware.org/docs-latest/cdl-guide/ref.script.html)

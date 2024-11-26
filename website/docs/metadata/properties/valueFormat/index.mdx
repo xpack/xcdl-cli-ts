@@ -13,6 +13,10 @@ date: 2015-11-25 19:32:00 +0200
 
 ---
 
+import MetadataPropertyLink from '@site/src/components/MetadataPropertyLink';
+
+{/* ------------------------------------------------------------------------ */}
+
 # The `valueFormat` definition
 
 :::note
@@ -21,7 +25,61 @@ Work in progress.
 
 :::
 
+## Purpose
 
-### eCos reference
+Control how an option's value will appear in the configuration header file.
 
-- [`define-format`](https://ecos.sourceware.org/docs-latest/cdl-guide/ref.define-format.html)
+## Syntax
+
+```json
+    <option name="...">
+
+      <display>...</display>
+      <description>...</description>
+
+      <valueFormat>format</valueFormat>
+
+      ... other properties ...
+      ... children objects ...
+
+    </option>
+```
+
+The value of the `valueFormat` property is a string containing a format specification.
+
+## Default value
+
+The defaults, according to `valueType`, are intended to surround the value by parenthesis or double quotes:
+
+- none - '(%s)'
+- bool - '(%s)'
+- int - '(%d)'
+- float - '(%f)'
+- string - '"%s"'
+
+## Description
+
+For active and enabled objects, the configuration tools will normally generate one or two `#define` lines in the package's configuration header file. These take the following forms:
+
+```c
+     #define <name> <value>
+     #define <name>_<value>
+```
+
+The `valueFormat` property can be used to control exactly what appears as the value for the first of these `#define` lines.
+
+The second `#define` will be generated only if is a valid C/C++ preprocessor symbol results, and is not affected by the `valueFormat` property.
+
+The C formatting syntax is used.
+
+## Example
+
+To format a 32bit hex value, use:
+
+```json
+    <valueFormat>(0x%08X)</valueFormat>
+```
+
+## eCos reference
+
+- [`define-format`](https://ecos.sourceware.org/docs-latest/cdl-guide/ref.define-format.html) property

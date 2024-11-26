@@ -19,13 +19,16 @@ import PropertyCategory from '../../_components/_category';
 import PropertyChildrenGeneratedFile from '../../_components/_children-generated-file';
 import PropertyDefaultEnabled from '../../_components/_default-enabled';
 import PropertyDefaultValue from '../../_components/_default-value';
+import PropertyDescription from '../../_components/_description';
+import PropertyDisplay from '../../_components/_display';
+import PropertyDocsUrl from '../../_components/_docs-url';
 import PropertyGeneratedDefinition from '../../_components/_generated-definition';
 import PropertyGeneratedFile from '../../_components/_generated-file';
 import PropertyImplements from '../../_components/_implements';
-import PropertyIncludeXcdl from '../../_components/_include-xcdl';
+import PropertyIncludeXcdls from '../../_components/_include-xcdls';
 import PropertyParent from '../../_components/_parent';
 import PropertyRequires from '../../_components/_requires';
-import PropertySourceFiles from '../../_components/_source-files';
+import PropertyCompilerSourceFiles from '../../_components/_compiler-source-files';
 
 {/* ------------------------------------------------------------------------ */}
 
@@ -37,25 +40,25 @@ Work in progress.
 
 :::
 
-### Purpose
+## Purpose
 
 Define a package, a special component, that can be distributed separately.
 
-### Syntax
+## Syntax
 
 ```json
 {
-  "cdlPackage": {
-    "name": "<name>",
-    "display": "<short name>",
-    "description": "<long text>",
+    "cdlPackage": {
+        "name": "<name>",
+        "display": "<short name>",
+        "description": "<long text>",
 
-    ... package members ...
-  }
+        ... package members ...
+    }
 }
 ```
 
-### Description
+## Description
 
 The `cdlPackage` object is a unit of software distribution. It is also a configuration option in that users can choose whether or not a particular package is loaded into the configuration. It is also a component in that it can contain additional components and options in a hierarchy.
 
@@ -63,57 +66,61 @@ A `cdlPackage` can have most of the properties and behaviour of a `cdlComponents
 
 The top-level xCDL script for a package must begin with a `cdlPackage` object.
 
-### Containers
+## Containers
 
 The `cdlPackage` is inherently a container, so it may include `cdlComponents`, `cdlOptions`, `cdlInterfaces` objects that will go below this object in the configuration hierarchy.
 
-### Optional properties
+## Properties
 
 - <PropertyActiveIf objectType="package"/>
-- <PropertyCategory objectType="package"/>
 - <PropertyChildrenGeneratedFile objectType="package"/>
 - <PropertyDefaultEnabled objectType="package"/>
 - <PropertyDefaultValue objectType="package"/>
+- <PropertyDescription objectType="component"/>
+- <PropertyDisplay objectType="component"/>
+- <PropertyDocsUrl objectType="component"/>
 - <PropertyGeneratedDefinition objectType="package"/>
 - <PropertyGeneratedFile objectType="package"/>
 - <PropertyImplements objectType="package"/>
-- <PropertyIncludeXcdl objectType="package"/>
+- <PropertyIncludeXcdls objectType="package"/>
+- `name` - the internal name/key used to identify the package
 - <PropertyParent objectType="package"/>
 - <PropertyRequires objectType="package"/>
-- <PropertySourceFiles objectType="package"/>
+- <PropertyCompilerSourceFiles objectType="package"/>
 
-### Unavailable properties
+## Unavailable properties
 
-- `computed` - the package's value cannot be computed
-- `configurable` - packages can always be enabled/disabled by the user during the configuration process
-- `valueType` - packages do not have an associated value (might be changed to return the package version, when implemented)
-- `valueFormat` - if the header definition is generated, the value will always be (1)
+- `computed` - always false; the package's value cannot be computed
+- `configurable` - always true; packages can always be enabled/disabled by the user during the configuration process
+- `valueType` - always `bool`; packages do not have an associated value, they return 1 if enabled
+- `valueFormat` - if the header definition is generated, the value will always be `(1)` [TODO: perhaps booleans can be formatted as true/false]
 - `legalValues` - no restrictions can apply to package values
 
-### Example
+## Example
 
-    <package name="infra">
+```json
+{
+    "cdlPackage": {
+        "name": "infra",
+        "display" : "Infrastructure",
+        "description": "Common types and useful macros. Tracing and assertion facilities. Package startup options.",
+        "generatedFile": "os/infra/infra.h",
+        "sourceFiles": [
+            "startup.cpp",
+            "prestart.cpp",
+            "pkgstart.cpp",
+            "userstart.cpp"
+        ]
+    }
+}
+```
 
-      <display>Infrastructure</display>
-      <description>Common types and useful macros.
-      Tracing and assertion facilities.
-      Package startup options.</description>
-
-      <generatedFile>os/infra/infra.h</generatedFile>
-      <generatedDefinition>OS_PACKAGE_INFRA</generatedDefinition>
-      <sourceFile>startup.cpp</sourceFile>
-      <sourceFile>prestart.cpp</sourceFile>
-      <sourceFile>pkgstart.cpp</sourceFile>
-      <sourceFile>userstart.cpp</sourceFile>
-
-    </package>
-
-### See also
+## See also
 
 - <MetadataObjectLink name="cdlComponents" />
 - <MetadataObjectLink name="cdlInterfaces" />
 - <MetadataObjectLink name="cdlOptions" />
 
-### eCos
+## eCos reference
 
 - [`cdl-package`](https://ecos.sourceware.org/docs-latest/cdl-guide/ref.cdl-package.html)

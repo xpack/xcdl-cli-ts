@@ -14,17 +14,21 @@ date: 2015-11-15 12:00:00 +0200
 ---
 
 import MetadataObjectLink from '@site/src/components/MetadataObjectLink';
+import MetadataPropertyLink from '@site/src/components/MetadataPropertyLink';
 
-import PropertyActiveIf from '../../_components/_active-if'
-import PropertyCategory from '../../_components/_category'
-import PropertyDefaultEnabled from '../../_components/_default-enabled'
-import PropertyGeneratedDefinition from '../../_components/_generated-definition'
-import PropertyGeneratedFile from '../../_components/_generated-file'
-import PropertyLegalValues from '../../_components/_legal-values'
-import PropertyParent from '../../_components/_parent'
-import PropertyRequires from '../../_components/_requires'
-import PropertySourceFiles from '../../_components/_source-files'
-import PropertyValueFormat from '../../_components/_value-format'
+import PropertyActiveIf from '../../_components/_active-if';
+import PropertyCategory from '../../_components/_category';
+import PropertyDefaultEnabled from '../../_components/_default-enabled';
+import PropertyDescription from '../../_components/_description';
+import PropertyDisplay from '../../_components/_display';
+import PropertyDocsUrl from '../../_components/_docs-url';
+import PropertyGeneratedDefinition from '../../_components/_generated-definition';
+import PropertyGeneratedFile from '../../_components/_generated-file';
+import PropertyLegalValues from '../../_components/_legal-values';
+import PropertyParent from '../../_components/_parent';
+import PropertyRequires from '../../_components/_requires';
+import PropertyCompilerSourceFiles from '../../_components/_compiler-source-files';
+import PropertyValueFormat from '../../_components/_value-format';
 
 {/* ------------------------------------------------------------------------ */}
 
@@ -36,26 +40,26 @@ Work in progress.
 
 :::
 
-### Purpose
+## Purpose
 
 Define a map of interfaces, as generic functionalities that can be provided by a number of different implementations.
 
-### Syntax
+## Syntax
 
 ```json
 {
-  "cdlInterfaces": {
-    "<key>": {
-      "display": "<short name>",
-      "description": "<long text>",
+    "cdlInterfaces": {
+        "<key>": {
+            "display": "<short name>",
+            "description": "<long text>",
 
-      ... interface members ...
+            ... interface members ...
+        }
     }
-  }
 }
 ```
 
-### Description
+## Description
 
 The `cdlInterfaces` objects are a special type of computed `cdlOptions` object. They provide an abstraction mechanism that can be used to simplify xCDL expressions. A `cdlInterfaces` object can have most of the properties and behaviour of an `object`, but with some limitations (see the Unavailable properties below)
 
@@ -85,52 +89,53 @@ A commonly used constraint on interface values takes the form:
 
 This constraint specifies that there can be only one scheduler in the system. In some circumstances it is possible for the configuration tools to detect this pattern and act accordingly, so for example enabling the bitmap scheduler would automatically disable the mlqueue scheduler.
 
-### Containers
+## Containers
 
 The `cdlInterfaces` objects are not containers, so they cannot hold other objects such as `cdlOptions` or `cdlComponents` objects.
 
-### Optional properties
+## Properties
 
 - <PropertyActiveIf objectType="interface"/>
-- <PropertyCategory objectType="interface"/>
 - <PropertyDefaultEnabled objectType="interface"/>
+- <PropertyDescription objectType="component"/>
+- <PropertyDisplay objectType="component"/>
+- <PropertyDocsUrl objectType="component"/>
 - <PropertyGeneratedDefinition objectType="interface"/>
 - <PropertyGeneratedFile objectType="interface"/>
-- `legalValues` - interfaces always have a small numerical value; the legalValues can be used to apply additional constraints such as an upper limit
-- <PropertyLegalValues objectType="interface"/>
+- <MetadataPropertyLink name="legalValues" /> - interfaces always have a small numerical value; the legalValues can be used to apply additional constraints such as an upper limit
 - <PropertyParent objectType="interface"/>
 - <PropertyRequires objectType="interface"/>
-- <PropertySourceFiles objectType="interface"/>
+- <PropertyCompilerSourceFiles objectType="interface"/>
 - <PropertyValueFormat objectType="interface"/>
 
-### Unavailable properties
+## Unavailable properties
 
-- `computed` - the interface's value is always computed from the number of enabled and active components that implements it
-- `configurable` - interfaces are always enabled and this cannot be changed
-- `defaultValue` - meaningless since the interface's value is always computed
-- `implements` - interfaces cannot implemented other interfaces
-- `valueType` - interfaces always have integer values
+- `computed` - always true; the interface's value is always computed from the number of enabled and active components that implements it
+- `configurable` - always true; interfaces are always enabled and this cannot be changed
+- `defaultValue` - undefined; meaningless since the interface's value is always computed
+- `implements` - interfaces cannot implement other interfaces
+- `valueType` - always `int`; interfaces always have integer non-negative values
 
-### Example
+## Example
 
 ```json
 {
-  "cdlInterfaces": {
-    "scheduler": {
-      ...
-      "parent": "kernel",
-      "requires": ["implementationsOf('kernel/scheduler') === 1"]
+    "cdlInterfaces": {
+        "scheduler": {
+            ...
+            "parent": "kernel",
+            "requires": ["implementationsOf('kernel/scheduler') === 1"]
+        }
     }
-  }
 }
 ```
 
-### See also
+## See also
 
 - <MetadataObjectLink name="cdlComponents" />
 - <MetadataObjectLink name="cdlOptions" />
 - <MetadataObjectLink name="cdlPackage" />
 
-### eCos reference
+## eCos reference
 
 - [`cdl-interface`](https://ecos.sourceware.org/docs-latest/cdl-guide/ref.cdl-interface.html)

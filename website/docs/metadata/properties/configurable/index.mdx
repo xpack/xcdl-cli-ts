@@ -13,6 +13,10 @@ date: 2015-11-25 19:32:00 +0200
 
 ---
 
+import MetadataPropertyLink from '@site/src/components/MetadataPropertyLink';
+
+{/* ------------------------------------------------------------------------ */}
+
 # The `configurable` definition
 
 :::note
@@ -21,7 +25,43 @@ Work in progress.
 
 :::
 
+## Purpose
 
-### eCos reference
+Define whether the current object can be manually changed by the user during the configuration process.
+
+## Syntax
+
+```json {5}
+{
+    "cdlOptions": {
+        "<key>": {
+            ...
+            "configurable": true | false | "<boolean expression>",
+            ...
+        }
+    }
+}
+```
+
+The value of the `configurable` property is the **true/false** constant or a string containing an expression evaluating to a boolean value.
+
+## Default value
+
+If missing, the default is **true**, all objects are configurable.
+
+## Description
+
+Most of the objects can be individually configured using the configuration (graphical) tools, but some are automatically computed and the user shouldn't be allowed to change them.
+
+Setting `configurable` to false will instruct the configuration tools to no longer allow the user to enable/disable the object and the object will be enabled if it is active and `defaultEnable` is true. For graphical tools, the radio button will be greyed.
+
+Objects marked as non-configurable can still be active or inactive, this property does not affect the functional behaviour during builds, but only the behaviour of the configuration tools.
+
+## Example
+
+TBD
+
+
+## eCos reference
 
 - none

@@ -1,5 +1,5 @@
 ---
-title: The XCDL metadata reference (outdated)
+title: The xCDL metadata reference (outdated)
 permalink: /xcdl/reference/metadata/
 
 comments: true
@@ -13,7 +13,7 @@ tocLevels: 1
 
 ## Introduction
 
-This chapter contains reference information for the main XCDL objects `cdlOptions`, `cdlComponents`, `package`; and `cdlInterfaces`, followed by the various properties such as `activeIf` and `sourceFile` in alphabetical order.
+This chapter contains reference information for the main xCDL objects `cdlOptions`, `cdlComponents`, `cdlPackage`; and `cdlInterfaces`, followed by the various properties such as `activeIf` and `compilerSourceFiles` in alphabetical order.
 
 ## Mandatory properties
 
@@ -48,7 +48,7 @@ Define a single configuration option.
 
 The `cdlOptions` object is the basic unit of configurability. Generally each option corresponds to a single user choice. Typically there is a certain amount of information associated with an option to assist the user in manipulating that option, for example a textual description. There will also be some limits on the possible values that the user can choose, so an option may be a simple yes-or-no choice or it may be something more complicated such as an array size or a device name. Options may have associated constraints, so if that option is enabled then certain conditions have to satisfied elsewhere in the configuration. Options usually have direct consequences such as preprocessor `#define` symbols in a configuration header file.
 
-`cdlOptions` is defined as a XML element that has one name attribute and a body. Within a single configuration, names must be unique. If a configuration contained two packages which defined the same entity, any references to that entity in a `requires` property or any other expression would be ambiguous. It is possible for a given name to be used by two different packages if those packages should never be loaded into a single configuration. For example, architectural HAL packages are allowed to reuse names because a single configuration cannot target two different architectures. For a recommended naming convention see the Section called Package Contents and Layout in [XCDL packages]({{ site.baseurl }}/xcdl/guide/packages).
+`cdlOptions` is defined as a XML element that has one name attribute and a body. Within a single configuration, names must be unique. If a configuration contained two packages which defined the same entity, any references to that entity in a `requires` property or any other expression would be ambiguous. It is possible for a given name to be used by two different packages if those packages should never be loaded into a single configuration. For example, architectural HAL packages are allowed to reuse names because a single configuration cannot target two different architectures. For a recommended naming convention see the Section called Package Contents and Layout in [xCDL packages]({{ site.baseurl }}/xcdl/guide/packages).
 
 The user choice is expressed during the configuration process and is reflected in the enabled/disabled statues of the option. For options with associated values, it is also possible for the user to define a value (if missing, a default value, either implicit or defined as the property `defaultValue`, is applied). For these options it is also possible to define some limits on the possible values that the user can choose.
 
@@ -56,7 +56,7 @@ A separate class of options are the `computed` options, whose values cannot be s
 
 Options may have associated constraints, so if this option is enabled then certain conditions have to be satisfied elsewhere in the configuration for it to be active (the `activeIf` property) or it may mandate for some objects to be enabled or disabled (the `requires` property).
 
-If active and enabled, `cdlOptions` can generate preprocessor `#define` lines in a configuration header file (if the `generatedDefinition` property is also defined), and decide if a set of source files are included in the build process (if the `sourceFile` property is also defined).
+If active and enabled, `cdlOptions` can generate preprocessor `#define` lines in a configuration header file (if the `generatedDefinition` property is also defined), and decide if a set of source files are included in the build process (if the `compilerSourceFiles` property is also defined).
 
 ### Containers
 
@@ -76,7 +76,7 @@ If active and enabled, `cdlOptions` can generate preprocessor `#define` lines in
 - `legalValues` - a list of restrictions the value of this options must satisfy
 - `parent` - provides a method to break the default hierarchy and directly specify the id of the parent of this option
 - `requires` - a list of ids of other objects to be enabled when this option is enabled
-- `sourceFile` - a list of source files that should be built if this option is active and enabled
+- `compilerSourceFiles` - a list of source files that should be built if this option is active and enabled
 - `valueType` - specify the type of the variable associated with this option (none | bool | int | float | string)
 - `valueFormat` - control how the option's value will appear in the configuration header file
 
@@ -117,9 +117,9 @@ Define a component, a collection of configuration objects.
 
 ### Description
 
-The `cdlComponents` object is a configuration element that can contain additional options and subcomponents. A `cdlComponents` can have the same properties as an `cdlOptions`. There is an additional property, `includeXcdl` which allows configuration data to be split into multiple files, included below the current object in the configuration hierarchy.
+The `cdlComponents` object is a configuration element that can contain additional options and subcomponents. A `cdlComponents` can have the same properties as an `cdlOptions`. There is an additional property, `includeCDLs` which allows configuration data to be split into multiple files, included below the current object in the configuration hierarchy.
 
-The `cdlComponents` object is implemented as a XML element that has one name attribute and a body. Within a single configuration, names must be unique. If a configuration contained two packages which defined the same entity, any references to that entity in a `requires` property or any other expression would be ambiguous. It is possible for a given name to be used by two different packages if those packages should never be loaded into a single configuration. For example, architectural HAL packages are allowed to reuse certain names because a single configuration cannot target two different architectures. For a recommended naming convention see the Section called Package Contents and Layout in [XCDL packages]({{ site.baseurl }}/xcdl/guide/packages).
+The `cdlComponents` object is implemented as a XML element that has one name attribute and a body. Within a single configuration, names must be unique. If a configuration contained two packages which defined the same entity, any references to that entity in a `requires` property or any other expression would be ambiguous. It is possible for a given name to be used by two different packages if those packages should never be loaded into a single configuration. For example, architectural HAL packages are allowed to reuse certain names because a single configuration cannot target two different architectures. For a recommended naming convention see the Section called Package Contents and Layout in [xCDL packages]({{ site.baseurl }}/xcdl/guide/packages).
 
 Similarly to `cdlOptions` objects, if active and enabled, `cdlComponents` objects can generate preprocessor `#define` lines in a configuration header file, and decide if a set of source files are included in the build process.
 
@@ -139,11 +139,11 @@ Similarly to `cdlOptions` objects, if active and enabled, `cdlComponents` object
 - `generatedDefinition` - a valid C preprocessor identifier to be defined in the header file if the component is active and enabled
 - `generatedFile` - the full path file name of the header where the component will generate a definition (if missing, inherited from the parent node)
 - `implements` - a list of ids of the interfaces implemented by this component
-- `includeXcdl` - a list of XCDL metadata files to be parsed and whose objects to be included as children of the current node
+- `includeCDLs` - a list of xCDL metadata files to be parsed and whose objects to be included as children of the current node
 - `legalValues` - a list of restrictions the value of this component must satisfy
 - `parent` - provides a method to break the default hierarchy and directly specify the id of the parent of this component
 - `requires` - a list of ids of other objects to be enabled when this component is enabled
-- `sourceFile` - a list of source files that should be built if this component is active and enabled
+- `compilerSourceFiles` - a list of source files that should be built if this component is active and enabled
 - `valueType` - specify the type of the variable associated with this component (none | bool | int | float | string)
 - `valueFormat` - control how the component's value will appear in the configuration header file
 
@@ -160,10 +160,10 @@ Similarly to `cdlOptions` objects, if active and enabled, `cdlComponents` object
       conditions.</description>
 
       <defaultEnable>true</defaultEnable>
-      <includeXcdl>assert.xml</includeXcdl>
+      <includeCDLs>assert.xml</includeCDLs>
     </component>
 
-The `package` object
+The `cdlPackage` object
 ------------------------
 
 ### Purpose
@@ -184,11 +184,11 @@ Define a package, a special component, that can be distributed separately.
 
 ### Description
 
-A `package` is a unit of software distribution. It is also a configuration option in that users can choose whether or not a particular package is loaded into the configuration, and which version of that package should be loaded. It is also a component in that it can contain additional components and options in a hierarchy.
+A `cdlPackage` is a unit of software distribution. It is also a configuration option in that users can choose whether or not a particular package is loaded into the configuration, and which version of that package should be loaded. It is also a component in that it can contain additional components and options in a hierarchy.
 
-A `package` can have most of the properties and behaviour of a `cdlComponents`, but with some limitations (see the Unavailable properties below)
+A `cdlPackage` can have most of the properties and behaviour of a `cdlComponents`, but with some limitations (see the Unavailable properties below)
 
-The top-level XCDL script for a package should begin with a `package` object.
+The top-level xCDL script for a package should begin with a `cdlPackage` object.
 
 ### Containers
 
@@ -204,10 +204,10 @@ The top-level XCDL script for a package should begin with a `package` object.
 - `generatedDefinition` - a valid C preprocessor identifier to be defined in the header file if the package is active and enabled
 - `generatedFile` - the full path file name of the header where the package will generate a definition (if missing, inherited from the parent node)
 - `implements` - a list of ids of the interfaces implemented by this package
-- `includeXcdl` - a list of XCDL metadata files to be parsed and whose objects to be included as children of the current node
+- `includeCDLs` - a list of xCDL metadata files to be parsed and whose objects to be included as children of the current node
 - `parent` - provides a method to break the default hierarchy and directly specify the id of the parent of this package
 - `requires` - a list of ids of other objects to be enabled when this package is enabled
-- `sourceFile` - a list of source files that should be built if this package is active and enabled
+- `compilerSourceFiles` - a list of source files that should be built if this package is active and enabled
 
 ### Unavailable properties
 
@@ -256,11 +256,11 @@ Define a repository, a special package.
 
 ### Description
 
-The `repository` object is the root node of a component repository. A `repository` can have all the properties and behaviour of a `package`.
+The `repository` object is the root node of a component repository. A `repository` can have all the properties and behaviour of a `cdlPackage`.
 
 ### Containers
 
-`repository` are inherently containers, so they include `package`, `cdlComponents`, `cdlOptions` and `cdlInterfaces` objects that should go below this object in the configuration hierarchy.
+`repository` are inherently containers, so they include `cdlPackage`, `cdlComponents`, `cdlOptions` and `cdlInterfaces` objects that should go below this object in the configuration hierarchy.
 
 ### Optional properties
 
@@ -273,9 +273,9 @@ The `repository` object is the root node of a component repository. A `repositor
 - `generatedDefinition` - a valid C preprocessor identifier to be defined in the header file if the repository is active and enabled
 - `generatedFile` - the full path file name of the header where the repository will generate a definition (if missing, inherited from the parent node)
 - `implements` - a list of ids of the interfaces implemented by this package
-- `includeXcdl` - a list of XCDL metadata files to be parsed and whose objects to be included as children of the current node
+- `includeCDLs` - a list of xCDL metadata files to be parsed and whose objects to be included as children of the current node
 - `requires` - a list of ids of other objects to be enabled when this package is enabled
-- `sourceFile` - a list of source files that should be built if this package is active and enabled
+- `compilerSourceFiles` - a list of source files that should be built if this package is active and enabled
 - `sourcesPaths` - a list of paths where to search for the sources files
 
 ### Unavailable properties
@@ -308,7 +308,7 @@ The `repository` object is the root node of a component repository. A `repositor
 
         <!-- The default dynamically generated header file, where all definitions that
         call for inclusions must be created. -->
-        <generatedFile>include/portable/core/include/XCDL_Build_Defines.h</generatedFile>
+        <generatedFile>include/portable/core/include/xCDL_Build_Defines.h</generatedFile>
 
         <!-- The folders where to search for include files during build -->
 
@@ -341,7 +341,7 @@ Define an interface, a functionality that can be provided by a number of differe
 
 ### Description
 
-An `cdlInterfaces` is a special type of computed `cdlOptions` object. It provides an abstraction mechanism that can be used to simplify XCDL expressions. An `cdlInterfaces` can have most of the properties and behaviour of an `object`, but with some limitations (see the Unavailable properties below)
+An `cdlInterfaces` is a special type of computed `cdlOptions` object. It provides an abstraction mechanism that can be used to simplify xCDL expressions. An `cdlInterfaces` can have most of the properties and behaviour of an `object`, but with some limitations (see the Unavailable properties below)
 
 As an example, suppose that some package relies on the presence of code that implements the standard kernel scheduling interface. However the requirement is no more stringent than this, so the constraint can be satisfied by the mlqueue scheduler, the bitmap scheduler, or any additional schedulers that may get implemented in the future. A first attempt at expressing the dependency might be:
 
@@ -355,7 +355,7 @@ The interface *kernel/scheduler* is implemented by both the mlqueue and bitmap s
 
 Some component writers may prefer to use the first `requires` constraint on the grounds that the code will only have been tested with the mlqueue and bitmap schedulers and cannot be guaranteed to work with any new schedulers. Other component writers may take a more optimistic view and assume that their code will work with any scheduler until proven otherwise.
 
-`cdlInterfaces` is defined a XML element that has one name attribute and a body. Within a single configuration, names must be unique. If a configuration contained two packages which defined the same entity, any references to that entity in a `requires` property or any other expression would be ambiguous. It is possible for a given name to be used by two different packages if those packages should never be loaded into a single configuration. For example, architectural HAL packages are allowed to reuse names because a single configuration cannot target two different architectures. For a recommended naming convention see the Section called Package Contents and Layout in [XCDL packages]({{ site.baseurl }}/xcdl/guide/packages).
+`cdlInterfaces` is defined a XML element that has one name attribute and a body. Within a single configuration, names must be unique. If a configuration contained two packages which defined the same entity, any references to that entity in a `requires` property or any other expression would be ambiguous. It is possible for a given name to be used by two different packages if those packages should never be loaded into a single configuration. For example, architectural HAL packages are allowed to reuse names because a single configuration cannot target two different architectures. For a recommended naming convention see the Section called Package Contents and Layout in [xCDL packages]({{ site.baseurl }}/xcdl/guide/packages).
 
 A commonly used constraint on interface values takes the form:
 
@@ -377,7 +377,7 @@ This constraint specifies that there can be only one scheduler in the system. In
 - `legalValues` - interfaces always have a small numerical value; the legalValues can be used to apply additional constraints such as an upper limit
 - `parent` - provides a method to break the default hierarchy and directly specify the id of the parent of this interface
 - `requires` - a list of ids of other objects to be enabled when this interface is enabled
-- `sourceFile` - a list of source files that should be built if this interface is active and enabled
+- `compilerSourceFiles` - a list of source files that should be built if this interface is active and enabled
 - `valueFormat` - control how the interface's value will appear in the configuration header file
 
 ### Unavailable properties
@@ -422,7 +422,7 @@ TBD
 
 ### Containers
 
-*Toolchains* are containers, so they can hold other `toolchain` objects. *Toolchains* are generally hierarchical, and are placed below a `package` object.
+*Toolchains* are containers, so they can hold other `toolchain` objects. *Toolchains* are generally hierarchical, and are placed below a `cdlPackage` object.
 
 ### Optional properties
 
@@ -441,7 +441,7 @@ TBD
 - programNameSuffix
 - makeObjectsVariable
 - children
-- includeXcdl
+- includeCDLs
 - platformSystem
 - parent
 - category
@@ -530,13 +530,13 @@ If missing, no additional constraints are considered, the object is active.
 
 ### Description
 
-Configuration options or other objects may be either active or inactive. Typically this is controlled by the object's location in the overall hierarchy. Consider the option OS_DEBUG_INFRA_DEBUG_PRECONDITIONS, which exists below the component OS_DEBUG_USE_ASSERT. If the whole component is disabled then all options it contains are inactive: there is no point in enabling preconditions unless there is generic assertion support; any requirements constraints associated with preconditions are irrelevant; any `sourceFile` property or other build-related property is ignored.
+Configuration options or other objects may be either active or inactive. Typically this is controlled by the object's location in the overall hierarchy. Consider the option OS_DEBUG_INFRA_DEBUG_PRECONDITIONS, which exists below the component OS_DEBUG_USE_ASSERT. If the whole component is disabled then all options it contains are inactive: there is no point in enabling preconditions unless there is generic assertion support; any requirements constraints associated with preconditions are irrelevant; any `compilerSourceFiles` property or other build-related property is ignored.
 
 In some cases the hierarchy does not provide sufficient control over whether or not a particular object should be active. For example, the math library could have support for floating point exceptions which is only worthwhile if the hardware implements appropriate functionality, as specified by the architectural HAL. The relevant math library configuration options should remain below the OS_PACKAGE_LIBM package in the overall hierarchy, but should be inactive unless there is appropriate hardware support. In cases like this an `activeIf` property is appropriate.
 
 Another common use of `activeIf` properties is to avoid excessive nesting in the configuration hierarchy. If some option B is only relevant if option A is enabled, it is possible to turn A into a component that contains B. However adding another level to the hierarchy for a component which will contain just one entry may be considered excessive. In such cases it is possible for B to have an `activeIf` dependency on A.
 
-`activeIf` takes a list of goal expressions as argument and all of the conditions have to be satisfied for the object to be active. For details of goal expression syntax see see the Section called Goal Expressions in [XCDL packages]({{ site.baseurl }}/xcdl/guide/packages). In most cases the goal expressions will be very simple, often involving just one other object, but more complicated expressions can be used when appropriate.
+`activeIf` takes a list of goal expressions as argument and all of the conditions have to be satisfied for the object to be active. For details of goal expression syntax see see the Section called Goal Expressions in [xCDL packages]({{ site.baseurl }}/xcdl/guide/packages). In most cases the goal expressions will be very simple, often involving just one other object, but more complicated expressions can be used when appropriate.
 
 The `activeIf` and `requires` properties have certain similarities, but they serve a different purpose. Suppose there are two options A and B, and option B relies on functionality provided by A. This could be expressed as either *B activeIf A* or as *B requires A*. The points to note are:
 
@@ -626,7 +626,7 @@ Other metadata can be purely informative, like the kind of the object:
 - 'architecture'
 - 'family'
 
-It is recommended to use this extra metadata for `package` objects.
+It is recommended to use this extra metadata for `cdlPackage` objects.
 
 ### Example
 
@@ -674,7 +674,7 @@ The `computed` property
 
 ### Purpose
 
-Used if the current option's value is not user-modifiable, but is computed using a suitable XCDL expression.
+Used if the current option's value is not user-modifiable, but is computed using a suitable xCDL expression.
 
 ### Syntax
 
@@ -698,14 +698,14 @@ If missing, no computed value is used.
 
 ### Description
 
-In some cases it is useful to have a configuration option whose value cannot be modified directly by the user. This can be achieved using a `computed` property, which takes an XCDL expression as argument (see the Section called Ordinary Expressions in [XCDL packages]({{ site.baseurl }}/xcdl/guide/packages) for a description of expression syntax). The configuration system evaluates the expression whenever needed to generate the header line or when referred from another expression. The result depends on the object's `valueType`:
+In some cases it is useful to have a configuration option whose value cannot be modified directly by the user. This can be achieved using a `computed` property, which takes an xCDL expression as argument (see the Section called Ordinary Expressions in [xCDL packages]({{ site.baseurl }}/xcdl/guide/packages) for a description of expression syntax). The configuration system evaluates the expression whenever needed to generate the header line or when referred from another expression. The result depends on the object's `valueType`:
 
 - `<valueType>none</valueType>` - objects with this type have no value, so the computed property is not applicable
 - `<valueType>bool</valueType>` - the expression should evaluate to a boolean value
 - `<valueType>number</valueType>` - the expression should evaluate to a number, integer or float
 - `<valueType>string</valueType>` - the expression should evaluate to a string
 
-There are a number of valid uses for calculated options, and there are also many cases where some other XCDL facility would be more appropriate.
+There are a number of valid uses for calculated options, and there are also many cases where some other xCDL facility would be more appropriate.
 
 Valid uses of computed objects include the following:
 
@@ -713,13 +713,13 @@ Valid uses of computed objects include the following:
 
 - Computed objects can provide an alternative way for one package to affect the behaviour of another one. Suppose a package may provide two possible implementations, a preferred one involving self-modifying code and a slower alternative. If the system involves a ROM bootstrap then the slower alternative must be used, but it would be inappropriate to modify the startup option in every HAL to impose constraints on this package. Instead it is possible to have a calculated option whose value is `{ OS_HAL_STARTUP == "ROM" }`, and which has appropriate consequences. Arguably this is a spurious example, and it should be a user choice whether or not to use self-modifying code with a defaultValue based on OS_HAL_STARTUP, but that is for the component writer to decide.
 
-- Sometimes it should be possible to perform a particular test at compile-time, for example by using a C/C++ preprocessor `#if` construct. However the preprocessor has only limited functionality, for example it cannot perform string comparisons. XCDL expressions are more powerful.
+- Sometimes it should be possible to perform a particular test at compile-time, for example by using a C/C++ preprocessor `#if` construct. However the preprocessor has only limited functionality, for example it cannot perform string comparisons. xCDL expressions are more powerful.
 
-- Occasionally a particular sub-expression may occur multiple times in a XCDL script. If the sub-expression is sufficiently complex then it may be worthwhile to have a calculated option whose value is the sub-expression, and then reference that calculated option in the appropriate places.
+- Occasionally a particular sub-expression may occur multiple times in a xCDL script. If the sub-expression is sufficiently complex then it may be worthwhile to have a calculated option whose value is the sub-expression, and then reference that calculated option in the appropriate places.
 
 Alternatives to using calculated options include the following:
 
-- XCDL *Interfaces* are a form of computed objects intended as an abstraction mechanism. For example, an interface can be used to express the concept of any scheduler, as opposed to a specific one such as the bitmap scheduler.
+- xCDL *Interfaces* are a form of computed objects intended as an abstraction mechanism. For example, an interface can be used to express the concept of any scheduler, as opposed to a specific one such as the bitmap scheduler.
 
 ### Example
 
@@ -817,7 +817,7 @@ The `defaultValue` property
 
 ### Purpose
 
-Provide a default value for this option using an XCDL expression.
+Provide a default value for this option using an xCDL expression.
 
 ### Syntax
 
@@ -843,7 +843,7 @@ If missing the default object value depends on the object state, active objects 
 
 The `defaultValue` property usually allows to define the default value for the object, in case no other value is set during configuration.
 
-The arguments to the `defaultValue` property should be an XCDL expression, see the Section called Ordinary Expressions in [XCDL packages]({{ site.baseurl }}/xcdl/guide/packages) for the syntactic details. In many cases a simple constant value will suffice.
+The arguments to the `defaultValue` property should be an xCDL expression, see the Section called Ordinary Expressions in [xCDL packages]({{ site.baseurl }}/xcdl/guide/packages) for the syntactic details. In many cases a simple constant value will suffice.
 
 However it is also possible for an object's default value to depend on other objects. For example the common HAL package provides some support functions that are needed by the kernel, but are unlikely to be useful if the kernel is not being used.
 
@@ -901,7 +901,7 @@ In order for a header definition to be generated, the full path of the include f
 
 The name must be a valid C/C++ preprocessor identifier: a sequence of upper or lower case letters, digits or underscores, starting with a non-digit character; identifiers beginning with an underscore should normally be avoided because they may clash with system packages or with identifiers reserved for use by the compiler.
 
-Within a single configuration, names must be unique. If a configuration contained two packages which defined the same entity `OS_INTEGER_SOME_OPTION`, any references to that entity in a `requires` property or any other expression would be ambiguous. It is possible for a given name to be used by two different packages if those packages should never be loaded into a single configuration. For example, architectural HAL packages are allowed to reuse certain names because a single configuration cannot target two different architectures. For a recommended naming convention see the Section called Package Contents and Layout in [XCDL packages]({{ site.baseurl }}/xcdl/guide/packages).
+Within a single configuration, names must be unique. If a configuration contained two packages which defined the same entity `OS_INTEGER_SOME_OPTION`, any references to that entity in a `requires` property or any other expression would be ambiguous. It is possible for a given name to be used by two different packages if those packages should never be loaded into a single configuration. For example, architectural HAL packages are allowed to reuse certain names because a single configuration cannot target two different architectures. For a recommended naming convention see the Section called Package Contents and Layout in [xCDL packages]({{ site.baseurl }}/xcdl/guide/packages).
 
 For active and enabled objects, if the `generatedDefinition` property is defined, a line with the following structure will be generated in the file pointed by the `generatedFile` property:
 
@@ -993,7 +993,7 @@ If missing it is assumed that the current object does not implement any interfac
 
 ### Description
 
-The XCDL interface concept provides an abstraction mechanism that can be useful in many different circumstances. Essentially an interface is a computed option whose value is the number of active and enabled objects which implement that interface. For example the `interface('kernel/scheduler')` has a value corresponding to the number of schedulers in the system, typically just one.
+The xCDL interface concept provides an abstraction mechanism that can be useful in many different circumstances. Essentially an interface is a computed option whose value is the number of active and enabled objects which implement that interface. For example the `interface('kernel/scheduler')` has a value corresponding to the number of schedulers in the system, typically just one.
 
 The implements property takes a single argument, which should be a list of ids of the implemented interfaces (an object may implement multiple interfaces). These interface may be defined in the same package as the implementor or in some other package. In the latter case it may sometimes be appropriate for the implementor or the implementor's package to have a `requires` property for the package containing the interface.
 
@@ -1012,12 +1012,12 @@ It is possible for an object to implement a given interface multiple times, but 
       ...
     </option>
 
-The `includeXcdl` property
+The `includeCDLs` property
 ------------------------------
 
 ### Purpose
 
-Include additional configuration information from another XCDL definitions file.
+Include additional configuration information from another xCDL definitions file.
 
 ### Syntax
 
@@ -1026,25 +1026,25 @@ Include additional configuration information from another XCDL definitions file.
       <display>...</display>
       <description>...</description>
 
-      <includeXcdl>file 1</includeXcdl>
-      <includeXcdl>file 2</includeXcdl>
+      <includeCDLs>file 1</includeCDLs>
+      <includeCDLs>file 2</includeCDLs>
 
       ... other properties ...
       ... children objects ...
 
     </option>
 
-The value of the `includeXcdl` property is a file name containing other XCDL definitions. Multiple properties are allowed.
+The value of the `includeCDLs` property is a file name containing other xCDL definitions. Multiple properties are allowed.
 
 ### Default value
 
-If missing, no additional XCDL files are parsed as children of the current object.
+If missing, no additional xCDL files are parsed as children of the current object.
 
 ### Description
 
-It is possible to define all the configuration options and sub-components for a given package in a single CDL script, either by nesting them in the appropriate command bodies, by extensive use of the parent property, or by some combination of these two. However for large packages this is inconvenient and it is better to split the raw configuration data over several different files. The `includeXcdl` property can be used to achieve this. It takes a list of filenames as argument. If the package follows the directory layout conventions then the configuration tools will look for the specified file in the meta sub-directory of the package, otherwise it will look for the file relative to the package's top-level directory.
+It is possible to define all the configuration options and sub-components for a given package in a single CDL script, either by nesting them in the appropriate command bodies, by extensive use of the parent property, or by some combination of these two. However for large packages this is inconvenient and it is better to split the raw configuration data over several different files. The `includeCDLs` property can be used to achieve this. It takes a list of filenames as argument. If the package follows the folders layout conventions then the configuration tools will look for the specified file in the meta sub-folder of the package, otherwise it will look for the file relative to the package's top-level folder.
 
-The `includeXcdl` property can only occur in the body of an `cdlComponents` or `package` object.
+The `includeCDLs` property can only occur in the body of an `cdlComponents` or `cdlPackage` object.
 
 ### Example
 
@@ -1059,7 +1059,7 @@ The `includeXcdl` property can only occur in the body of an `cdlComponents` or `
       and (where appropriate) a scheduling priority.<description>
 
       <valueType>none</valueType>
-      <includeXcdl>tasks.xml</includeXcdl>
+      <includeCDLs>tasks.xml</includeCDLs>
     </component>
 
 The `legalValues` property
@@ -1092,7 +1092,7 @@ If missing, no value based constraints are imposed.
 
 ### Description
 
-Options with the number or string valueType can have an arbitrary sequence of characters as their data. In nearly all cases some restrictions have to be imposed, for example the data should correspond to a number within a certain range, or it should be one of a small number of constants. The legalValues property can be used to impose such constraints. The arguments to the property should be an XCDL list expression, see the Section called List Expressions in [XCDL packages]({{ site.baseurl }}/xcdl/guide/packages) for the syntactic details. Common examples include:
+Options with the number or string valueType can have an arbitrary sequence of characters as their data. In nearly all cases some restrictions have to be imposed, for example the data should correspond to a number within a certain range, or it should be one of a small number of constants. The legalValues property can be used to impose such constraints. The arguments to the property should be an xCDL list expression, see the Section called List Expressions in [xCDL packages]({{ site.baseurl }}/xcdl/guide/packages) for the syntactic details. Common examples include:
 
     <legalValues>0 to 0x7fff</legalValues>
     <legalValues>9600, 19200, 38400</legalValues>
@@ -1147,13 +1147,13 @@ If missing (the usual case), the surrounding object is considered the natural pa
 
 ### Description
 
-Configuration objects live in a hierarchy of packages and components. By default a given object's position in the hierarchy is a simple consequence of its position within the XCDL scripts, based on its position in the folder's hierarchy. Packages are generally placed at the top-level of the configuration. Any `cdlComponents` or `cdlOptions` objects that are defined at the same level as the `package` object in a package's top-level XCDL script are placed immediately below that package in the hierarchy (TBI). Any `cdlOptions` or `cdlComponents` objects that are defined in the body of a `package` or `cdlComponents` command, or that are read in as a result of processing a component's `includeXcdl` property, will be placed immediately below that `package` or `cdlComponents` in the hierarchy.
+Configuration objects live in a hierarchy of packages and components. By default a given object's position in the hierarchy is a simple consequence of its position within the xCDL scripts, based on its position in the folder's hierarchy. Packages are generally placed at the top-level of the configuration. Any `cdlComponents` or `cdlOptions` objects that are defined at the same level as the `cdlPackage` object in a package's top-level xCDL script are placed immediately below that package in the hierarchy (TBI). Any `cdlOptions` or `cdlComponents` objects that are defined in the body of a `cdlPackage` or `cdlComponents` command, or that are read in as a result of processing a component's `includeCDLs` property, will be placed immediately below that `cdlPackage` or `cdlComponents` in the hierarchy.
 
 In some circumstances it is useful to specify an alternative position in the hierarchy for a given object. For example it is often convenient to re-parent device driver packages below `OS_PACKAGE_IO` in the configuration hierarchy, thus reducing the number of packages at the top level of the hierarchy and making navigation easier. The parent property can be used to achieve this.
 
-The parent property takes a single argument, which should be the id of a `package` or `cdlComponents`.
+The parent property takes a single argument, which should be the id of a `cdlPackage` or `cdlComponents`.
 
-Although the `parent` property affects an object's position in the overall hierarchy and hence whether or not that object is active, a re-parented object still belongs to the package that defines it (?!?!?!). By default any `#define`'s will be exported to that package's configuration header file. Any `sourceFile` properties can only reference source files present in that package, and it is not directly possible to cause some file in another package to be built by re-parenting (???).
+Although the `parent` property affects an object's position in the overall hierarchy and hence whether or not that object is active, a re-parented object still belongs to the package that defines it (?!?!?!). By default any `#define`'s will be exported to that package's configuration header file. Any `compilerSourceFiles` properties can only reference source files present in that package, and it is not directly possible to cause some file in another package to be built by re-parenting (???).
 
 As a special case, if an empty string is specified for the parent then the object is placed at the top of the hierarchy, ahead of any packages which are not explicitly re-parented in this way. This facility is useful for configuration options such as global preferences and default compiler flags.
 
@@ -1225,7 +1225,7 @@ If missing, no additional requirements will be enforced/checked.
 
 Configuration objects are not independent. For example the C library can provide thread-safe implementations of certain functions, but only if the kernel is present, if the kernel provides multi-threading, and if the kernel options related to per-thread data are enabled. It is possible to express such constraints using `requires` properties.
 
-The arguments to a `requires` property should constitute a list of goal expressions, as described in the Section called List Expressions in [XCDL packages]({{ site.baseurl }}/xcdl/guide/packages). Most goal expressions are relatively simple because the constraints being described are simple, but complicated expressions can be used when necessary. If the object is active and enabled then all these constraints should be satisfied, and any goal expressions which evaluate to 0/false will result in conflicts being raised. It is possible for users to ignore such conflicts and attempt to build the current configuration anyway, but there is no guarantee that anything will work. If an object is inactive or disabled then its `requires` constraints will be ignored.
+The arguments to a `requires` property should constitute a list of goal expressions, as described in the Section called List Expressions in [xCDL packages]({{ site.baseurl }}/xcdl/guide/packages). Most goal expressions are relatively simple because the constraints being described are simple, but complicated expressions can be used when necessary. If the object is active and enabled then all these constraints should be satisfied, and any goal expressions which evaluate to 0/false will result in conflicts being raised. It is possible for users to ignore such conflicts and attempt to build the current configuration anyway, but there is no guarantee that anything will work. If an object is inactive or disabled then its `requires` constraints will be ignored.
 
 The configuration system contains an inference engine which can resolve many types of conflicts automatically. For example, if option A is enabled and requires an option B that is currently disabled then the inference engine may attempt to resolve the conflict by enabling B. However this will not always be possible, for example there may be other constraints in the configuration which force B to be disabled at present, in which case user intervention is required.
 
@@ -1243,7 +1243,7 @@ The configuration system contains an inference engine which can resolve many typ
       ...
     </component>
 
-The `sourceFile` property
+The `compilerSourceFiles` property
 -----------------------------
 
 ### Purpose
@@ -1265,7 +1265,7 @@ List the source files that should be built if this option is active and enabled.
 
     </option>
 
-The value of the `sourceFile` property is a file name containing source code to be included in the build. Multiple instances of this property are allowed.
+The value of the `compilerSourceFiles` property is a file name containing source code to be included in the build. Multiple instances of this property are allowed.
 
 ### Default value
 
@@ -1273,21 +1273,21 @@ If missing, no source files will be added to the build.
 
 ### Description
 
-The `sourceFile` property allows component developers to specify source files which should be compiled.
+The `compilerSourceFiles` property allows component developers to specify source files which should be compiled.
 
 Details of the build process including such issues as compiler flags and the order in which things happen can be found in [The build process]({{ site.baseurl }}/xcdl/guide/build-process/).
 
-The `sourceFile` properties can occur in any of `cdlOptions`, `cdlComponents`, `package` or `cdlInterfaces` objects. A `sourceFile` property has effect if and only if the object that contains it is active and enabled. Typically the body of a package will define any source files that need to be built irrespective of individual options, and each component, option, and interface will define source files that are more specific. The `sourceFile` property can list any number of source files. It is possible for a given source file to be specified in `sourceFile` properties for several different objects, in which case the source file will get built if any of these objects are active and enabled.
+The `compilerSourceFiles` properties can occur in any of `cdlOptions`, `cdlComponents`, `cdlPackage` or `cdlInterfaces` objects. A `compilerSourceFiles` property has effect if and only if the object that contains it is active and enabled. Typically the body of a package will define any source files that need to be built irrespective of individual options, and each component, option, and interface will define source files that are more specific. The `compilerSourceFiles` property can list any number of source files. It is possible for a given source file to be specified in `compilerSourceFiles` properties for several different objects, in which case the source file will get built if any of these objects are active and enabled.
 
-If the package follows the directory layout conventions then the configuration tools will search for the specified source files first in the src subdirectory of the package, then relative to the package directory itself.
+If the package follows the folders layout conventions then the configuration tools will search for the specified source files first in the src sub-folder of the package, then relative to the package folder itself.
 
-Note: A shortcoming of the current specification of `sourceFile` properties is that there is no easy way to specify source files that should be built unless an option is enabled. It would sometimes be useful to be able to say: “if option A is enabled then compile file x.c, otherwise compile file y.c. There are two simple ways of achieving this:
+Note: A shortcoming of the current specification of `compilerSourceFiles` properties is that there is no easy way to specify source files that should be built unless an option is enabled. It would sometimes be useful to be able to say: “if option A is enabled then compile file x.c, otherwise compile file y.c. There are two simple ways of achieving this:
 
-- Always compile y.c, typically by listing it in the body of the `package`, but use `#ifndef A` to produce an empty object file if option A is not enabled. This has the disadvantage that the file always gets compiled and hence for some configurations builds will take longer than necessary.
+- Always compile y.c, typically by listing it in the body of the `cdlPackage`, but use `#ifndef A` to produce an empty object file if option A is not enabled. This has the disadvantage that the file always gets compiled and hence for some configurations builds will take longer than necessary.
 
-- Use a computed option whose value is !A, and have a `sourceFile` y.c property in its body. This has the disadvantage of adding another calculated option to the configuration.
+- Use a computed option whose value is !A, and have a `compilerSourceFiles` y.c property in its body. This has the disadvantage of adding another calculated option to the configuration.
 
-Note: Currently it is not possible to control the priority of a `sourceFile` property, in other words the order in which a file gets compiled relative to other build steps. This functionality might prove useful for complicated packages and should be added.
+Note: Currently it is not possible to control the priority of a `compilerSourceFiles` property, in other words the order in which a file gets compiled relative to other build steps. This functionality might prove useful for complicated packages and should be added.
 
 ### Example
 
@@ -1340,7 +1340,7 @@ If missing, the default is *none*, except for interfaces (where the type is alwa
 
 ### Description
 
-The state of an XCDL configuration option is a somewhat complicated concept. This state determines what happens when a build tree is generated: it controls what files get built and what `#define`'s end up in configuration header files. The state also controls the values used during expression evaluation. The key concepts are:
+The state of an xCDL configuration option is a somewhat complicated concept. This state determines what happens when a build tree is generated: it controls what files get built and what `#define`'s end up in configuration header files. The state also controls the values used during expression evaluation. The key concepts are:
 
 - An object may or may not be loaded into the current configuration. However it is still possible for packages to reference objects which are not loaded, in a `requires` constraint or other expression. If an object is not loaded then it will have no direct effect on the build process, and 0/false will be used for expression evaluation.
 
@@ -1350,23 +1350,23 @@ The state of an XCDL configuration option is a somewhat complicated concept. Thi
 
 - An object may also have additional data associated with it, for example a numerical value used to control the size of an array, or a string used to define a greeting message.
 
-Most objects are simple selections and do not have any additional data associated to them. For certain objects it makes sense to have the ability to disable that object or to enable it and associate data as well. Finally, when constructing an option hierarchy it is occasionally useful to have objects which serve only as placeholders. The `valueType` property can be used to control all this. There are several possible values. It should be noted that the inactive state of an option takes priority over the enabled state: if an object is inactive then it is automatically not enabled, so no `#define`'s will be generated and any build-related properties such as `sourceFile` will be ignored.
+Most objects are simple selections and do not have any additional data associated to them. For certain objects it makes sense to have the ability to disable that object or to enable it and associate data as well. Finally, when constructing an option hierarchy it is occasionally useful to have objects which serve only as placeholders. The `valueType` property can be used to control all this. There are several possible values. It should be noted that the inactive state of an option takes priority over the enabled state: if an object is inactive then it is automatically not enabled, so no `#define`'s will be generated and any build-related properties such as `compilerSourceFiles` will be ignored.
 
 Object with the `configurable` property set to *false* are not configurable (or not writeable), which means that the user cannot change neither the boolean part nor the data part in the configuration tools.
 
-- enabled - is intended mainly for completeness, and is rarely needed. Objects with this type do not have any additional data associated with them, so there is no way for users to modify the option. For the purposes of expression evaluation an active object with type *enabled* has the value *true*. For active objects, normal `#define` processing will take place, so typically a single `#define` will be generated using the object `generatedDefinition` and a value of (1). Similarly build-related properties such as `sourceFile` will take effect.
+- enabled - is intended mainly for completeness, and is rarely needed. Objects with this type do not have any additional data associated with them, so there is no way for users to modify the option. For the purposes of expression evaluation an active object with type *enabled* has the value *true*. For active objects, normal `#define` processing will take place, so typically a single `#define` will be generated using the object `generatedDefinition` and a value of (1). Similarly build-related properties such as `compilerSourceFiles` will take effect.
 
-- none - is intended primarily for placeholder components in the hierarchy, although it can be used for other purposes. Objects with this type do not have any additional data associated with them. If active, such options can be manually enabled/disabled by the user (using the graphical or command line tools). For the purposes of expression evaluation an enabled object with type *none* has the value *true*. For enabled objects, normal `#define` processing will take place, so typically a single `#define` will be generated using the object `generatedDefinition` and a value of (1). Similarly build-related properties such as `sourceFile` will take effect.
+- none - is intended primarily for placeholder components in the hierarchy, although it can be used for other purposes. Objects with this type do not have any additional data associated with them. If active, such options can be manually enabled/disabled by the user (using the graphical or command line tools). For the purposes of expression evaluation an enabled object with type *none* has the value *true*. For enabled objects, normal `#define` processing will take place, so typically a single `#define` will be generated using the object `generatedDefinition` and a value of (1). Similarly build-related properties such as `compilerSourceFiles` will take effect.
 
-- bool - have a boolean data associated with them which can be edited by the user. For the purposes of expression evaluation an enabled object with type *bool* has the value *true* or *false*. For enabled objects, normal `#define` processing will take place, so typically a single `#define` will be generated using the object `generatedDefinition` and a value of *true/false*. Similarly build-related properties such as `sourceFile` will take effect.
+- bool - have a boolean data associated with them which can be edited by the user. For the purposes of expression evaluation an enabled object with type *bool* has the value *true* or *false*. For enabled objects, normal `#define` processing will take place, so typically a single `#define` will be generated using the object `generatedDefinition` and a value of *true/false*. Similarly build-related properties such as `compilerSourceFiles` will take effect.
 
-- int - have an integer data associated with them. For the purposes of expression evaluation an enabled object with type int has the value of the integer number associated. For enabled objects, normal `#define` processing will take place, so typically a single `#define` will be generated using the object `generatedDefinition` and an integer value. Similarly build-related properties such as `sourceFile` will take effect.
+- int - have an integer data associated with them. For the purposes of expression evaluation an enabled object with type int has the value of the integer number associated. For enabled objects, normal `#define` processing will take place, so typically a single `#define` will be generated using the object `generatedDefinition` and an integer value. Similarly build-related properties such as `compilerSourceFiles` will take effect.
 
-- float - have a float data associated with them. For the purposes of expression evaluation an enabled object with type float has the value of the float number associated. For enabled objects, normal `#define` processing will take place, so typically a single `#define` will be generated using the object `generatedDefinition` and a float value. Similarly build-related properties such as `sourceFile` will take effect.
+- float - have a float data associated with them. For the purposes of expression evaluation an enabled object with type float has the value of the float number associated. For enabled objects, normal `#define` processing will take place, so typically a single `#define` will be generated using the object `generatedDefinition` and a float value. Similarly build-related properties such as `compilerSourceFiles` will take effect.
 
-- string - have a string associated with them. For the purposes of expression evaluation an enabled object with type string has the value of the associated string. For enabled objects, normal `#define` processing will take place, and two `#define` lines will be generated using the object `generatedDefinition` and the string value (if the string is empty the symbol name will be extended with _EMPTY_ instead of the value). Similarly build-related properties such as `sourceFile` will take effect.
+- string - have a string associated with them. For the purposes of expression evaluation an enabled object with type string has the value of the associated string. For enabled objects, normal `#define` processing will take place, and two `#define` lines will be generated using the object `generatedDefinition` and the string value (if the string is empty the symbol name will be extended with _EMPTY_ instead of the value). Similarly build-related properties such as `compilerSourceFiles` will take effect.
 
-Regular objects (`cdlOptions`, `cdlComponents`, `package`) have the *none* type by default, but this can be changed as desired. Interfaces have the *int* type, and this cannot be changed, since the value of an interface is a count of the number of active and enabled interfaces. Packages have the *string* type, and this cannot be changed, since the value of a package is the version.
+Regular objects (`cdlOptions`, `cdlComponents`, `cdlPackage`) have the *none* type by default, but this can be changed as desired. Interfaces have the *int* type, and this cannot be changed, since the value of an interface is a count of the number of active and enabled interfaces. Packages have the *string* type, and this cannot be changed, since the value of a package is the version.
 
 ### Example
 

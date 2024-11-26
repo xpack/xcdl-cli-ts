@@ -1,0 +1,84 @@
+---
+
+title: xCDL description
+description: The definition of the xCDL description property
+keywords:
+  - xpack
+  - xcdl
+  - cdl
+  - property
+  - description
+
+date: 2015-11-25 19:32:00 +0200
+
+---
+
+import MetadataPropertyLink from '@site/src/components/MetadataPropertyLink';
+
+{/* ------------------------------------------------------------------------ */}
+
+# The `description` definition
+
+:::note
+
+Work in progress.
+
+:::
+
+## Purpose
+
+Provide a reasonably long paragraph with a textual description for a configuration object.
+
+## Syntax
+
+```json {4}
+{
+    "cdlOptions": {
+        "<key>": {
+            "description": "<string>",
+            ...
+        }
+    }
+}
+```
+
+The value of the `description` property is a longer string, usually a paragraph, ending with a dot.
+
+## Default value
+
+If missing, the value remains an empty string, but it is highly recommended to explicitly define it.
+
+## Description
+
+When presented with a (graphical) user interface, users can only be expected to manipulate configuration options sensibly if they are given sufficient information about these options. There are three properties which serve to explain an option in plain text: the `display` property gives a textual alias for an option, which is usually more comprehensible than something like CYGPKG_LIBC_TIME_ZONES; the `description` property gives a longer description, typically a paragraph or so; the `docsUrl` property specifies the location of additional on-line documentation related to a configuration option.
+
+In the context of a graphical tool the `display` string will be the primary way for users to identify configuration options; the `description` paragraph will be visible whenever the option is selected; the on-line documentation will only be accessed when the user explicitly requests it.
+
+Text is rendered as a long line. For multi-line descriptions, use `\n` as line separators.
+
+At present there is no way of providing any sort of formatting mark-up in a description. It is possible that future versions of the configuration tools will provide some control over the way the description text gets rendered, most probably using a subset of the [CommonMark](https://commonmark.org) syntax.
+
+## Example
+
+```json {5}
+{
+    "cdlOptions": {
+        "trace-message": {
+            "display": "Use trace text",
+            "description": "All trace calls within eCos contain a text message which should give some information about the circumstances. These text messages will end up being embedded in the  application image and hence there is a significant penalty  in terms of image size.\n It is possible to suppress the use of these messages by disabling this option.\n This results in smaller code size, but there is less human-readable information available in the trace output, possibly only filenames and line numbers.",
+            "parent": "infra-debug",
+            "defaultValue": "1",
+            "generatedDefinition": "CYGDBG_INFRA_DEBUG_TRACE_MESSAGE"
+        }
+    }
+}
+```
+
+## See also
+
+- <MetadataPropertyLink name="display" /> property
+- <MetadataPropertyLink name="docsUrl" /> property
+
+## eCos reference
+
+- [`description`](https://ecos.sourceware.org/docs-latest/cdl-guide/ref.description.html) property

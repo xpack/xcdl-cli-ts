@@ -1,0 +1,84 @@
+---
+
+title: xCDL display
+description: The definition of the xCDL display property
+keywords:
+  - xpack
+  - xcdl
+  - cdl
+  - property
+  - display
+
+date: 2015-11-25 19:32:00 +0200
+
+---
+
+import MetadataPropertyLink from '@site/src/components/MetadataPropertyLink';
+
+{/* ------------------------------------------------------------------------ */}
+
+# The `display` definition
+
+:::note
+
+Work in progress.
+
+:::
+
+## Purpose
+
+Provide a node name for the configuration object when rendered in the configuration tree.
+
+## Syntax
+
+```json {4}
+{
+    "cdlOptions": {
+        "<key>": {
+            "display": "<string>",
+            ...
+        }
+    }
+}
+```
+
+The value of the `display` property is a short string, starting with an upper case letter. No trailing dot is expected.
+
+## Default value
+
+If missing, the value will be replaced by the key, but it is highly recommended to explicitly define it.
+
+## Description
+
+When presented with a (graphical) user interface, users can only be expected to manipulate configuration options sensibly if they are given sufficient information about these options. There are three properties which serve to explain an option in plain text: the `display` property gives a textual alias for an option, which is usually more comprehensible than something like CYGPKG_LIBC_TIME_ZONES; the `description` property gives a longer description, typically a paragraph or so; the `docsUrl` property specifies the location of additional on-line documentation related to a configuration option.
+
+In the context of a graphical tool the `display` string will be the primary way for users to identify configuration options; the `description` paragraph will be visible whenever the option is selected; the on-line documentation will only be accessed when the user explicitly requests it.
+
+As implementation, the short `<key>` string is used internally to identify nodes in the configuration tree, while the `display` string is the external representation of tree nodes.
+
+## Example
+
+```json {4}
+{
+    "cdlOptions": {
+        "size": {
+            "display": "Message box queue size",
+            "description": "This configuration option controls the number of messages that can be queued in a message box before a non-blocking put() operation will fail or a blocking put() operation will block. The cost in memory is one pointer per message box for each possible message.",
+            "parent": "mbox-queue",
+            "valueType": "integer",
+            "legalValues": "1 to 65535",
+            "defaultValue": "10",
+            "generatedDefinition": "CYGNUM_KERNEL_SYNCH_MBOX_QUEUE_SIZE"
+        }
+    }
+}
+```
+
+## See also
+
+- <MetadataPropertyLink name="description" /> property
+- <MetadataPropertyLink name="docsUrl" /> property
+
+## eCos reference
+
+- [`display`](https://ecos.sourceware.org/docs-latest/cdl-guide/ref.display.html) property

@@ -13,6 +13,10 @@ date: 2015-11-25 19:32:00 +0200
 
 ---
 
+import MetadataPropertyLink from '@site/src/components/MetadataPropertyLink';
+
+{/* ------------------------------------------------------------------------ */}
+
 # The `valueType` definition
 
 :::note
@@ -21,7 +25,73 @@ Work in progress.
 
 :::
 
+## Purpose
 
-### eCos reference
+Specify the type of the value associated with a configuration object.
 
-- [`flavor`](https://ecos.sourceware.org/docs-latest/cdl-guide/ref.flavor.html)
+## Syntax
+
+```json
+    <option name="...">
+
+      <display>...</display>
+      <description>...</description>
+
+      <valueType>type</valueType>
+
+      ... other properties ...
+      ... children objects ...
+
+    </option>
+```
+
+The value of the `valueType` property can be one of the following strings:
+
+- 'enabled'
+- 'none'
+- 'bool'
+- 'int'
+- 'float'
+- 'string'
+
+## Default value
+
+If missing, the default is *none*, except for interfaces (where the type is always a non-modifiable *int*) and for packages (where the type is *string*, and corresponds to the version of the package).
+
+## Description
+
+The state of an xCDL configuration option is a somewhat complicated concept. This state determines what happens when a build tree is generated: it controls what files get built and what `#define`'s end up in configuration header files. The state also controls the values used during expression evaluation. The key concepts are:
+
+- An object may or may not be loaded into the current configuration. However it is still possible for packages to reference objects which are not loaded, in a `requires` constraint or other expression. If an object is not loaded then it will have no direct effect on the build process, and 0/false will be used for expression evaluation.
+
+- Even if an object is loaded it may still be inactive. Usually this is controlled by the object's location in the configuration hierarchy. If an object's parent is active and enabled then the option will normally be active. If the parent is either inactive or disabled then the object will be inactive. For example, if kernel timeslicing is disabled then `isEnabled('kernel/sched/timeslice/ticks')` is false and must have no effect. The `activeIf` property can be used to specify additional constraints. If an object is inactive then it will have no direct effect on the build process, in other words it will not cause any files to get built or `#define`'s to be generated. For the purposes of expression evaluation an inactive object has `isActive('...') == false`, `isEnabled('...') == false` and `valueOf(...)` returns 0/false.
+
+- An object may be enabled or disabled. Most object are simple selections, for example a particular function may get inlined or it may involve a full procedure call. If an object is disabled then it has no direct effect on the build process, and for the purposes of expression evaluation `isEnabled('...') == false` and it has a `valueOf('...')` 0/false.
+
+- An object may also have additional data associated with it, for example a numerical value used to control the size of an array, or a string used to define a greeting message.
+
+Most objects are simple selections and do not have any additional data associated to them. For certain objects it makes sense to have the ability to disable that object or to enable it and associate data as well. Finally, when constructing an option hierarchy it is occasionally useful to have objects which serve only as placeholders. The `valueType` property can be used to control all this. There are several possible values. It should be noted that the inactive state of an option takes priority over the enabled state: if an object is inactive then it is automatically not enabled, so no `#define`'s will be generated and any build-related properties such as `compilerSourceFiles` will be ignored.
+
+Object with the `configurable` property set to *false* are not configurable (or not writeable), which means that the user cannot change neither the boolean part nor the data part in the configuration tools.
+
+- enabled - is intended mainly for completeness, and is rarely needed. Objects with this type do not have any additional data associated with them, so there is no way for users to modify the option. For the purposes of expression evaluation an active object with type *enabled* has the value *true*. For active objects, normal `#define` processing will take place, so typically a single `#define` will be generated using the object `generatedDefinition` and a value of (1). Similarly build-related properties such as `compilerSourceFiles` will take effect.
+
+- none - is intended primarily for placeholder components in the hierarchy, although it can be used for other purposes. Objects with this type do not have any additional data associated with them. If active, such options can be manually enabled/disabled by the user (using the graphical or command line tools). For the purposes of expression evaluation an enabled object with type *none* has the value *true*. For enabled objects, normal `#define` processing will take place, so typically a single `#define` will be generated using the object `generatedDefinition` and a value of (1). Similarly build-related properties such as `compilerSourceFiles` will take effect.
+
+- bool - have a boolean data associated with them which can be edited by the user. For the purposes of expression evaluation an enabled object with type *bool* has the value *true* or *false*. For enabled objects, normal `#define` processing will take place, so typically a single `#define` will be generated using the object `generatedDefinition` and a value of *true/false*. Similarly build-related properties such as `compilerSourceFiles` will take effect.
+
+- int - have an integer data associated with them. For the purposes of expression evaluation an enabled object with type int has the value of the integer number associated. For enabled objects, normal `#define` processing will take place, so typically a single `#define` will be generated using the object `generatedDefinition` and an integer value. Similarly build-related properties such as `compilerSourceFiles` will take effect.
+
+- float - have a float data associated with them. For the purposes of expression evaluation an enabled object with type float has the value of the float number associated. For enabled objects, normal `#define` processing will take place, so typically a single `#define` will be generated using the object `generatedDefinition` and a float value. Similarly build-related properties such as `compilerSourceFiles` will take effect.
+
+- string - have a string associated with them. For the purposes of expression evaluation an enabled object with type string has the value of the associated string. For enabled objects, normal `#define` processing will take place, and two `#define` lines will be generated using the object `generatedDefinition` and the string value (if the string is empty the symbol name will be extended with _EMPTY_ instead of the value). Similarly build-related properties such as `compilerSourceFiles` will take effect.
+
+Regular objects (`cdlOptions`, `cdlComponents`, `cdlPackage`) have the *none* type by default, but this can be changed as desired. Interfaces have the *int* type, and this cannot be changed, since the value of an interface is a count of the number of active and enabled interfaces. Packages have the *string* type, and this cannot be changed, since the value of a package is the version.
+
+## Example
+
+TBD
+
+## eCos reference
+
+- [`flavor`](https://ecos.sourceware.org/docs-latest/cdl-guide/ref.flavor.html) property
