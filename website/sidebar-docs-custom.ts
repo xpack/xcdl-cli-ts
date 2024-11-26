@@ -17,6 +17,7 @@ export const customDocsSidebar = [
       type: 'doc',
       id: 'getting-started/index',
     },
+    collapsed: true,
     items: [
       {
         type: 'doc',
@@ -37,32 +38,182 @@ export const customDocsSidebar = [
       type: 'doc',
       id: 'user/index',
     },
+    collapsed: true,
     "items": [
       {
         type: 'doc',
         id: 'user/index',
-        label: 'Overview'
+        label: 'How to use'
+      },
+    ]
+  },
+  {
+    type: 'category',
+    label: 'Component Writer\'s Guide',
+    link: {
+      type: 'doc',
+      id: 'guide/index',
+    },
+    collapsed: true,
+    items: [
+      {
+        type: 'doc',
+        id: 'guide/concepts/index',
+        label: 'Concepts'
+      },
+      {
+        type: 'doc',
+        id: 'guide/packages/index',
+        label: 'Packages'
+      },
+      {
+        type: 'doc',
+        id: 'guide/language/index',
+        label: 'Language'
+      },
+      {
+        type: 'doc',
+        id: 'guide/workflow/index',
+        label: 'Workflow'
       },
       {
         type: 'category',
         label: 'Metadata',
         link: {
           type: 'doc',
-          id: 'user/metadata/index',
+          id: 'metadata/index',
         },
+        collapsed: false,
         "items": [
           {
-            type: 'doc',
-            id: 'user/metadata/cdlComponents/index',
-            label: 'cdlComponents'
+            type: 'category',
+            label: 'Objects',
+            link: {
+              type: 'doc',
+              id: 'metadata/objects/index',
+            },
+            collapsed: true,
+            "items": [
+              {
+                type: 'doc',
+                id: 'metadata/objects/cdlPackage/index',
+                label: 'cdlPackage'
+              },
+              {
+                type: 'doc',
+                id: 'metadata/objects/cdlComponents/index',
+                label: 'cdlComponents'
+              },
+              {
+                type: 'doc',
+                id: 'metadata/objects/cdlOptions/index',
+                label: 'cdlOptions'
+              },
+              {
+                type: 'doc',
+                id: 'metadata/objects/cdlInterfaces/index',
+                label: 'cdlInterfaces'
+              },
+            ]
           },
           {
-            type: 'doc',
-            id: 'user/metadata/cdlOptions/index',
-            label: 'cdlOptions'
+            type: 'category',
+            label: 'Properties',
+            link: {
+              type: 'doc',
+              id: 'metadata/properties/index',
+            },
+            collapsed: true,
+            "items": [
+              {
+                type: 'doc',
+                id: 'metadata/properties/activeIf/index',
+                label: 'activeIf'
+              },
+              {
+                type: 'doc',
+                id: 'metadata/properties/category/index',
+                label: 'category'
+              },
+              {
+                type: 'doc',
+                id: 'metadata/properties/childrenGeneratedFile/index',
+                label: 'childrenGeneratedFile'
+              },
+              {
+                type: 'doc',
+                id: 'metadata/properties/computed/index',
+                label: 'computed'
+              },
+              {
+                type: 'doc',
+                id: 'metadata/properties/configurable/index',
+                label: 'configurable'
+              },
+              {
+                type: 'doc',
+                id: 'metadata/properties/defaultEnabled/index',
+                label: 'defaultEnabled'
+              },
+              {
+                type: 'doc',
+                id: 'metadata/properties/defaultValue/index',
+                label: 'defaultValue'
+              },
+              {
+                type: 'doc',
+                id: 'metadata/properties/generatedDefinition/index',
+                label: 'generatedDefinition'
+              },
+              {
+                type: 'doc',
+                id: 'metadata/properties/generatedFile/index',
+                label: 'generatedFile'
+              },
+              {
+                type: 'doc',
+                id: 'metadata/properties/implements/index',
+                label: 'implements'
+              },
+              {
+                type: 'doc',
+                id: 'metadata/properties/includeXcdl/index',
+                label: 'includeXcdl'
+              },
+              {
+                type: 'doc',
+                id: 'metadata/properties/legalValues/index',
+                label: 'legalValues'
+              },
+              {
+                type: 'doc',
+                id: 'metadata/properties/parent/index',
+                label: 'parent'
+              },
+              {
+                type: 'doc',
+                id: 'metadata/properties/requires/index',
+                label: 'requires'
+              },
+              {
+                type: 'doc',
+                id: 'metadata/properties/sourceFiles/index',
+                label: 'sourceFiles'
+              },
+              {
+                type: 'doc',
+                id: 'metadata/properties/valueFormat/index',
+                label: 'valueFormat'
+              },
+              {
+                type: 'doc',
+                id: 'metadata/properties/valueType/index',
+                label: 'valueType'
+              },
+            ]
           },
         ]
-      }
+      },
     ]
   },
   {
@@ -83,11 +234,11 @@ export const customDocsSidebar = [
   {
     type: 'category',
     label: 'Project',
-    collapsed: false,
     link: {
-      type: "doc",
-      id: "project/about/index",
+      type: 'doc',
+      id: 'project/about/index',
     },
+    collapsed: true,
     items: [
       {
         type: 'doc',
@@ -113,6 +264,7 @@ export const customDocsSidebar = [
       type: 'doc',
       id: 'developer/index',
     },
+    collapsed: true,
     items: [
       {
         type: 'doc',

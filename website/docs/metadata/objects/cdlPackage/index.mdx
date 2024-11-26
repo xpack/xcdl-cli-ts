@@ -1,0 +1,119 @@
+---
+
+title: xCDL cdlPackage
+description: The members of the xCDL package object
+keywords:
+  - xpack
+  - xcdl
+  - cdl
+  - package
+
+date: 2015-11-15 12:00:00 +0200
+
+---
+
+import MetadataObjectLink from '@site/src/components/MetadataObjectLink';
+
+import PropertyActiveIf from '../../_components/_active-if';
+import PropertyCategory from '../../_components/_category';
+import PropertyChildrenGeneratedFile from '../../_components/_children-generated-file';
+import PropertyDefaultEnabled from '../../_components/_default-enabled';
+import PropertyDefaultValue from '../../_components/_default-value';
+import PropertyGeneratedDefinition from '../../_components/_generated-definition';
+import PropertyGeneratedFile from '../../_components/_generated-file';
+import PropertyImplements from '../../_components/_implements';
+import PropertyIncludeXcdl from '../../_components/_include-xcdl';
+import PropertyParent from '../../_components/_parent';
+import PropertyRequires from '../../_components/_requires';
+import PropertySourceFiles from '../../_components/_source-files';
+
+{/* ------------------------------------------------------------------------ */}
+
+# The `cdlPackage` definition
+
+:::note
+
+Work in progress.
+
+:::
+
+### Purpose
+
+Define a package, a special component, that can be distributed separately.
+
+### Syntax
+
+```json
+{
+  "cdlPackage": {
+    "name": "<name>",
+    "display": "<short name>",
+    "description": "<long text>",
+
+    ... package members ...
+  }
+}
+```
+
+### Description
+
+The `cdlPackage` object is a unit of software distribution. It is also a configuration option in that users can choose whether or not a particular package is loaded into the configuration. It is also a component in that it can contain additional components and options in a hierarchy.
+
+A `cdlPackage` can have most of the properties and behaviour of a `cdlComponents` object, but with some limitations (see the Unavailable properties below).
+
+The top-level xCDL script for a package must begin with a `cdlPackage` object.
+
+### Containers
+
+The `cdlPackage` is inherently a container, so it may include `cdlComponents`, `cdlOptions`, `cdlInterfaces` objects that will go below this object in the configuration hierarchy.
+
+### Optional properties
+
+- <PropertyActiveIf objectType="package"/>
+- <PropertyCategory objectType="package"/>
+- <PropertyChildrenGeneratedFile objectType="package"/>
+- <PropertyDefaultEnabled objectType="package"/>
+- <PropertyDefaultValue objectType="package"/>
+- <PropertyGeneratedDefinition objectType="package"/>
+- <PropertyGeneratedFile objectType="package"/>
+- <PropertyImplements objectType="package"/>
+- <PropertyIncludeXcdl objectType="package"/>
+- <PropertyParent objectType="package"/>
+- <PropertyRequires objectType="package"/>
+- <PropertySourceFiles objectType="package"/>
+
+### Unavailable properties
+
+- `computed` - the package's value cannot be computed
+- `configurable` - packages can always be enabled/disabled by the user during the configuration process
+- `valueType` - packages do not have an associated value (might be changed to return the package version, when implemented)
+- `valueFormat` - if the header definition is generated, the value will always be (1)
+- `legalValues` - no restrictions can apply to package values
+
+### Example
+
+    <package name="infra">
+
+      <display>Infrastructure</display>
+      <description>Common types and useful macros.
+      Tracing and assertion facilities.
+      Package startup options.</description>
+
+      <generatedFile>os/infra/infra.h</generatedFile>
+      <generatedDefinition>OS_PACKAGE_INFRA</generatedDefinition>
+      <sourceFile>startup.cpp</sourceFile>
+      <sourceFile>prestart.cpp</sourceFile>
+      <sourceFile>pkgstart.cpp</sourceFile>
+      <sourceFile>userstart.cpp</sourceFile>
+
+    </package>
+
+### See also
+
+- <MetadataObjectLink name="cdlComponents" />
+- <MetadataObjectLink name="cdlInterfaces" />
+- <MetadataObjectLink name="cdlOptions" />
+
+### eCos
+
+- [`cdl-package`](https://ecos.sourceware.org/docs-latest/cdl-guide/ref.cdl-package.html)

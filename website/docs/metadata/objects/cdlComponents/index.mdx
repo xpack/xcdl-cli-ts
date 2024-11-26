@@ -1,0 +1,122 @@
+---
+
+title: xCDL cdlComponents
+description: The members of the xCDL components
+keywords:
+  - xpack
+  - xcdl
+  - cdl
+  - component
+  - cdlComponents
+
+date: 2015-11-15 12:00:00 +0200
+
+---
+
+import MetadataObjectLink from '@site/src/components/MetadataObjectLink';
+
+import PropertyActiveIf from '../../_components/_active-if';
+import PropertyCategory from '../../_components/_category';
+import PropertyChildrenGeneratedFile from '../../_components/_children-generated-file';
+import PropertyComputed from '../../_components/_computed';
+import PropertyConfigurable from '../../_components/_configurable';
+import PropertyDefaultEnabled from '../../_components/_default-enabled';
+import PropertyDefaultValue from '../../_components/_default-value';
+import PropertyGeneratedDefinition from '../../_components/_generated-definition';
+import PropertyGeneratedFile from '../../_components/_generated-file';
+import PropertyImplements from '../../_components/_implements';
+import PropertyIncludeXcdl from '../../_components/_include-xcdl';
+import PropertyLegalValues from '../../_components/_legal-values';
+import PropertyParent from '../../_components/_parent';
+import PropertyRequires from '../../_components/_requires';
+import PropertySourceFiles from '../../_components/_source-files';
+import PropertyValueFormat from '../../_components/_value-format';
+import PropertyValueType from '../../_components/_value-type';
+
+{/* ------------------------------------------------------------------------ */}
+
+# The `cdlComponents` definition
+
+:::note
+
+Work in progress.
+
+:::
+
+### Purpose
+
+Define a map of configuration components.
+
+### Syntax
+
+```json
+{
+  "cdlComponents": {
+    "<key>": {
+      "display": "<short name>",
+      "description": "<long text>",
+
+      ... component members ...
+    }
+  }
+}
+```
+
+### Description
+
+The `cdlComponents` objects are configuration objects that can contain additional options and subcomponents. A `cdlComponents` object can have the same properties as an `cdlOptions` object. There is an additional property, `includeXcdl` which allows configuration data to be split into multiple files, included below the current object in the configuration hierarchy.
+
+Each `cdlComponents` object is defined as a JSON object that has an key and a body. Keys must be unique within a parent.
+
+Similarly to `cdlOptions` objects, if active and enabled, `cdlComponents` objects can generate preprocessor `#define` lines in a configuration header file, and decide if a set of source files are included in the build process.
+
+### Containers
+
+The `cdlComponents` objects are containers, so it is possible for a component to include `cdlComponents`, `cdlOptions`, `cdlInterfaces` objects that should go below this object in the configuration hierarchy. These objects can be defined either as embedded children, or can be read from included files.
+
+### Optional properties
+
+- <PropertyActiveIf objectType="component"/>
+- <PropertyCategory objectType="component"/>
+- <PropertyChildrenGeneratedFile objectType="component"/>
+- <PropertyComputed objectType="component"/>
+- <PropertyConfigurable objectType="component"/>
+- <PropertyDefaultEnabled objectType="component"/>
+- <PropertyDefaultValue objectType="component"/>
+- <PropertyGeneratedDefinition objectType="component"/>
+- <PropertyGeneratedFile objectType="component"/>
+- <PropertyImplements objectType="component"/>
+- <PropertyIncludeXcdl objectType="component"/>
+- <PropertyLegalValues objectType="component"/>
+- <PropertyParent objectType="component"/>
+- <PropertyRequires objectType="component"/>
+- <PropertySourceFiles objectType="component"/>
+- <PropertyValueFormat objectType="component"/>
+- <PropertyValueType objectType="component"/>
+
+### Example
+
+A boolean component, enabled by default.
+
+```json
+{
+  "cdlComponent": {
+    "useAsserts": {
+      "display": "Use asserts",
+      "description": "If this component is enabled, assertions in the code are tested at run-time. Assert functions (OS_ASSERT()) are defined in `include/os/infra/os_ass.h` within the install tree. If the component is disabled, these result in no additional object code and no checking of the asserted conditions.",
+      "defaultEnable": true,
+      "includeXcdl": "assert.json"
+    }
+  }
+}
+```
+
+### See also
+
+- <MetadataObjectLink name="cdlInterfaces" />
+- <MetadataObjectLink name="cdlOptions" />
+- <MetadataObjectLink name="cdlPackage" />
+
+### eCos reference
+
+- [`cdl-component`](https://ecos.sourceware.org/docs-latest/cdl-guide/ref.cdl-component.html)

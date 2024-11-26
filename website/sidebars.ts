@@ -18,22 +18,23 @@ import {customDocsSidebar} from "./sidebar-docs-custom";
  */
 const sidebars: SidebarsConfig = {
 
-  
+
   docsSidebar: customDocsSidebar,
-  
+
   typedocSidebar: [
     {
-      type: "category",
-      label: "API Reference (TypeDoc)",
+      type: 'category',
+      label: 'API Reference (TypeDoc)',
       link: {
-        type: "doc",
-        id: "api/index",
+        type: 'doc',
+        id: 'api/index',
       },
+      collapsed: false,
       items: typedocSidebarItems,
     },
   ],
   cliSidebar
-  
+
 };
 
 export default sidebars;
