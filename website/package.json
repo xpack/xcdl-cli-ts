@@ -18,7 +18,8 @@
     "npm-install": "npm install",
     "npm-link-helper": "npm link @xpack/docusaurus-template-liquid @xpack/npm-packages-helper",
     "generate-website-commons": "bash node_modules/@xpack/docusaurus-template-liquid/maintenance-scripts/generate-commons.sh",
-    "generate-website-blog-post": "bash node_modules/@xpack/docusaurus-template-liquid/maintenance-scripts/generate-blog-post.sh"
+    "generate-website-blog-post": "bash node_modules/@xpack/docusaurus-template-liquid/maintenance-scripts/generate-blog-post.sh",
+    "import-website-releases": "bash node_modules/@xpack/docusaurus-template-liquid/maintenance-scripts/website-import-releases.sh"
   },
   "dependencies": {
     "@docusaurus/core": "3.5.2",

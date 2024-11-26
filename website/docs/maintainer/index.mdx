@@ -178,12 +178,13 @@ to:
 - `npm run test`
 - `npm run pack`; check the list of packaged files, possibly
   update `.npmignore`
+- push all changes to GitHub
+
+### Set the new version
 
 <CodeBlock language="sh"> {
 `npm version ${customField('releaseVersion')}
 `} </CodeBlock>
-
-- push all changes to GitHub
 
 ### CI tests
 
@@ -204,7 +205,7 @@ npm --prefix ~/Work/npm-packages/xcdl-cli-ts.git/website run generate-website-bl
 - edit the front matter properties
 - select the correct summary
 - commit with _**website: blog post release {customField('releaseVersion')} published**_
-- push the `development` branch
+- push the `development` branch
 
 ## Publish the release to npmjs.com
 
