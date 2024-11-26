@@ -49,7 +49,7 @@ The component framework processes each package in the configuration one at a tim
 
 Within a given package the various components, options and interfaces will be processed in the order in which they were defined in the corresponding CDL scripts. Typically the data in the configuration headers consists only of a sequence of `#define`'s so the order in which these are generated is irrelevant, but some properties such as define_proc can be used to add arbitrary data to a configuration header and hence there may be dependencies on the order. It should be noted that re-parenting an option below some other package has no effect on which header file will contain the corresponding `#define`: the preprocessor directives will always end up in the header file for the package that defines the option, or in the global configuration header.
 
-There are six properties which affect the process of generating header files: define_header, no_define, de- fine_format, define, if_define, and define_proc.
+There are six properties which affect the process of generating header files: define_header, no_define, define_format, define, if_define, and define_proc.
 
 The define_header property can only occur in the body of a cdl_package command and specifies the name of the header file which should contain the package’s configuration data, for example:
 
