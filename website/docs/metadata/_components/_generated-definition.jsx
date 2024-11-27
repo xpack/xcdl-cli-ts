@@ -14,7 +14,7 @@ import MetadataPropertyLink from '@site/src/components/MetadataPropertyLink';
 export default function func({objectType = 'TYPE'}) {
   return (
     <>
-      <MetadataPropertyLink name='generatedDefinition' /> - a valid C preprocessor identifier to be defined in the header file if the {objectType} is active and enabled
+      <MetadataPropertyLink name='generatedDefinition' /> - a valid C/C++ preprocessor identifier to be defined in the header file if the {objectType} is active and enabled
     </>
   )
 }

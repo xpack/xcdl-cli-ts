@@ -14,7 +14,7 @@ import MetadataPropertyLink from '@site/src/components/MetadataPropertyLink';
 export default function func({objectType = 'TYPE'}) {
   return (
     <>
-      <MetadataPropertyLink name='legalValues' /> - an array of restrictions the value of this {objectType} must satisfy
+      <MetadataPropertyLink name='legalValues' /> - an array of restrictions that the value of this {objectType} must satisfy
     </>
   )
 }

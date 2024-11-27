@@ -1,6 +1,6 @@
 ---
 
-title: xCDL defaultEnabled
+title: defaultEnabled
 description: The definition of the xCDL defaultEnabled property
 keywords:
   - xpack
@@ -27,7 +27,7 @@ Work in progress.
 
 ## Purpose
 
-Define whether the current object is initially enabled or not.
+Specify whether the current object is initially enabled.
 
 ## Syntax
 
@@ -43,9 +43,9 @@ Define whether the current object is initially enabled or not.
 
     </option>
 
-The value of the `defaultEnable` property is the *true/false* constant or an expression evaluating to a boolean value.
+The `defaultEnable` property can be set to either the _true_/_false_ constant or a string that evaluates to a boolean value.
 
-If the value is constant, it is evaluated when parsing the file, if the value is a string, it is evaluated in a separate step that process the entire configurations trees, before processing the requirements.
+If the value is a constant, it is evaluated when parsing the file. If the value is a string, it is evaluated in a separate step that processes the entire configuration tree before processing the requirements.
 
 ## Default value
 

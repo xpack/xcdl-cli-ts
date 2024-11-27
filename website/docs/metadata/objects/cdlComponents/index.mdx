@@ -1,7 +1,7 @@
 ---
 
-title: xCDL cdlComponents
-description: The members of the xCDL components
+title: cdlComponents
+description: The definition of the xCDL cdlComponents objects
 keywords:
   - xpack
   - xcdl
@@ -18,6 +18,8 @@ import MetadataObjectLink from '@site/src/components/MetadataObjectLink';
 import PropertyActiveIf from '../../_components/_active-if';
 import PropertyCategory from '../../_components/_category';
 import PropertyChildrenGeneratedFile from '../../_components/_children-generated-file';
+import PropertyCompilerIncludeFolders from '../../_components/_compiler-include-folders';
+import PropertyCompilerSourceFiles from '../../_components/_compiler-source-files';
 import PropertyComputed from '../../_components/_computed';
 import PropertyConfigurable from '../../_components/_configurable';
 import PropertyDefaultEnabled from '../../_components/_default-enabled';
@@ -28,11 +30,10 @@ import PropertyDocsUrl from '../../_components/_docs-url';
 import PropertyGeneratedDefinition from '../../_components/_generated-definition';
 import PropertyGeneratedFile from '../../_components/_generated-file';
 import PropertyImplements from '../../_components/_implements';
-import PropertyIncludeXcdls from '../../_components/_include-xcdls';
+import PropertyincludeCDLs from '../../_components/_include-xcdls';
 import PropertyLegalValues from '../../_components/_legal-values';
 import PropertyParent from '../../_components/_parent';
 import PropertyRequires from '../../_components/_requires';
-import PropertyCompilerSourceFiles from '../../_components/_compiler-source-files';
 import PropertyValueFormat from '../../_components/_value-format';
 import PropertyValueType from '../../_components/_value-type';
 
@@ -48,7 +49,7 @@ Work in progress.
 
 ## Purpose
 
-Define a map of configuration components.
+Define a map of component objects (generic units of functionality).
 
 ## Syntax
 
@@ -67,20 +68,22 @@ Define a map of configuration components.
 
 ## Description
 
-The `cdlComponents` objects are configuration objects that can contain additional options and subcomponents. A `cdlComponents` object can have the same properties as an `cdlOptions` object. There is an additional property, `includeXcdl` which allows configuration data to be split into multiple files, included below the current object in the configuration hierarchy.
+The `cdlComponents` objects are configuration objects that can contain additional options and subcomponents. A `cdlComponents` object can have the same properties as an `cdlOptions` object. Additionally, it includes the `includeCDLs` property, which allows configuration data to be split into multiple files and included below the current object in the configuration hierarchy.
 
 Each `cdlComponents` object is defined as a JSON object that has an key and a body. Keys must be unique within a parent.
 
-Similarly to `cdlOptions` objects, if active and enabled, `cdlComponents` objects can generate preprocessor `#define` lines in a configuration header file, and decide if a set of source files are included in the build process.
+Similarly to `cdlOptions` objects, if active and enabled, `cdlComponents` objects can generate preprocessor `#define` lines in a configuration header file and decide if a set of source files are included in the build process.
 
 ## Containers
 
-The `cdlComponents` objects are containers, so it is possible for a component to include `cdlComponents`, `cdlOptions`, `cdlInterfaces` objects that should go below this object in the configuration hierarchy. These objects can be defined either as embedded children, or can be read from included files.
+The `cdlComponents` objects are inherently containers, allowing them to include `cdlComponents`, `cdlOptions`, `cdlInterfaces` hat should be organized below this object in the configuration hierarchy. These objects can be defined either as embedded children or can be read from included files.
 
 ## Properties
 
 - <PropertyActiveIf objectType="component"/>
 - <PropertyChildrenGeneratedFile objectType="component"/>
+- <PropertyCompilerIncludeFolders objectType="component"/>
+- <PropertyCompilerSourceFiles objectType="component"/>
 - <PropertyComputed objectType="component"/>
 - <PropertyConfigurable objectType="component"/>
 - <PropertyDefaultEnabled objectType="component"/>
@@ -91,11 +94,10 @@ The `cdlComponents` objects are containers, so it is possible for a component to
 - <PropertyGeneratedDefinition objectType="component"/>
 - <PropertyGeneratedFile objectType="component"/>
 - <PropertyImplements objectType="component"/>
-- <PropertyIncludeXcdls objectType="component"/>
+- <PropertyincludeCDLs objectType="component"/>
 - <PropertyLegalValues objectType="component"/>
 - <PropertyParent objectType="component"/>
 - <PropertyRequires objectType="component"/>
-- <PropertyCompilerSourceFiles objectType="component"/>
 - <PropertyValueFormat objectType="component"/>
 - <PropertyValueType objectType="component"/>
 

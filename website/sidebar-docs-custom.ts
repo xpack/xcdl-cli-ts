@@ -58,6 +58,11 @@ export const customDocsSidebar = [
     items: [
       {
         type: 'doc',
+        id: 'guide/index',
+        label: 'Overview'
+      },
+      {
+        type: 'doc',
         id: 'guide/concepts/index',
         label: 'Concepts'
       },
@@ -113,6 +118,11 @@ export const customDocsSidebar = [
                 type: 'doc',
                 id: 'metadata/objects/cdlInterfaces/index',
                 label: 'cdlInterfaces'
+              },
+              {
+                type: 'doc',
+                id: 'metadata/objects/cdlConfigurations/index',
+                label: 'cdlConfigurations'
               },
             ]
           },

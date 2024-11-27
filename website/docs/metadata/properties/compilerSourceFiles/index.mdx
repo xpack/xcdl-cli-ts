@@ -1,6 +1,6 @@
 ---
 
-title: xCDL compilerSourceFiles
+title: compilerSourceFiles
 description: The definition of the xCDL compilerSourceFiles property
 keywords:
   - xpack
@@ -27,7 +27,7 @@ Work in progress.
 
 ## Purpose
 
-List the source files that should be compiled if this object is active and enabled.
+Specify the source files that should be compiled when this object is active and enabled.
 
 ## Syntax
 
@@ -43,7 +43,7 @@ List the source files that should be compiled if this object is active and enabl
 }
 ```
 
-The value of the `compilerSourceFiles` property is an array of relative paths to files containing source code to be included in the build.
+The `compilerSourceFiles` property is an array of strings containing file paths, relative to the current xCDL file's folder, that include source code to be compiled as part of the build..
 
 ## Default value
 

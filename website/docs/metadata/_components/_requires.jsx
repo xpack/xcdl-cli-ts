@@ -14,7 +14,7 @@ import MetadataPropertyLink from '@site/src/components/MetadataPropertyLink';
 export default function func({objectType = 'TYPE'}) {
   return (
     <>
-      <MetadataPropertyLink name='requires' /> - an array of boolean goal expressions usually referring other objects that need to be enabled for this {objectType} to be enabled
+      <MetadataPropertyLink name='requires' /> - an array of boolean goal expressions usually referring to other objects that need to be enabled for this {objectType} to be enabled
     </>
   )
 }

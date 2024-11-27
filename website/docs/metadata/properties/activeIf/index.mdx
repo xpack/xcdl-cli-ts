@@ -1,6 +1,6 @@
 ---
 
-title: xCDL activeIf
+title: activeIf
 description: The definition of the xCDL activeIf property
 keywords:
   - xpack
@@ -27,7 +27,7 @@ Work in progress.
 
 ## Purpose
 
-Allow additional control over the active state of an xCDL configuration object.
+Provide additional control over the active state of an xCDL object.
 
 ## Syntax
 
@@ -43,7 +43,7 @@ Allow additional control over the active state of an xCDL configuration object.
 }
 ```
 
-The value of the `activeIf` property is an array of boolean expressions to be evaluated, usually to check hardware properties; if all these expression are true, the active state of this object is true.
+The `activeIf` property is an array of strings that contain boolean expressions, typically used to verify hardware properties. If all these expressions evaluate to true, the object is considered active.
 
 ## Default value
 

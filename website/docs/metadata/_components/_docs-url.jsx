@@ -14,7 +14,7 @@ import MetadataPropertyLink from '@site/src/components/MetadataPropertyLink';
 export default function func({objectType = 'TYPE'}) {
   return (
     <>
-      <MetadataPropertyLink name='docsUrl' /> - provides the location of online-documentation for the {objectType}
+      <MetadataPropertyLink name='docsUrl' /> - provides the location of online documentation for the {objectType}
     </>
   )
 }

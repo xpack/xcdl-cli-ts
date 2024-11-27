@@ -1,6 +1,6 @@
 ---
 
-title: xCDL requires
+title: requires
 description: The definition of the xCDL requires property
 keywords:
   - xpack
@@ -27,7 +27,7 @@ Work in progress.
 
 ## Purpose
 
-List constraints that the configuration should enforce/satisfy if a given option is active and enabled.
+List the constraints that the configuration should enforce or satisfy when a given option is active and enabled.
 
 ## Syntax
 
@@ -46,7 +46,7 @@ List constraints that the configuration should enforce/satisfy if a given option
     </option>
 ```
 
-The value of the `requires` property is a string containing expressions to be evaluated as boolean. Multiple instances of this property are allowed.
+The `requires` property is an array of strings containing expressions to be evaluated as boolean.
 
 ## Default value
 

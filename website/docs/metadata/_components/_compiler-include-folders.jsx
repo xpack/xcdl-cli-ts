@@ -14,7 +14,7 @@ import MetadataPropertyLink from '@site/src/components/MetadataPropertyLink';
 export default function func({objectType = 'TYPE'}) {
   return (
     <>
-      <MetadataPropertyLink name='defaultEnabled' /> - a boolean expression that provides an initial value for the {objectType}'s enabled/disabled state
+      <MetadataPropertyLink name='compilerIncludeFolders' /> - an array of folder paths that should be used during the built if this {objectType} is active and enabled
     </>
   )
 }

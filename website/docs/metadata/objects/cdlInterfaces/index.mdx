@@ -1,7 +1,7 @@
 ---
 
-title: xCDL cdlInterfaces
-description: The members of the xCDL interface
+title: cdlInterfaces
+description: The definition of the xCDL cdlInterfaces objects
 keywords:
   - xpack
   - xcdl
@@ -18,6 +18,8 @@ import MetadataPropertyLink from '@site/src/components/MetadataPropertyLink';
 
 import PropertyActiveIf from '../../_components/_active-if';
 import PropertyCategory from '../../_components/_category';
+import PropertyCompilerIncludeFolders from '../../_components/_compiler-include-folders';
+import PropertyCompilerSourceFiles from '../../_components/_compiler-source-files';
 import PropertyDefaultEnabled from '../../_components/_default-enabled';
 import PropertyDescription from '../../_components/_description';
 import PropertyDisplay from '../../_components/_display';
@@ -27,7 +29,6 @@ import PropertyGeneratedFile from '../../_components/_generated-file';
 import PropertyLegalValues from '../../_components/_legal-values';
 import PropertyParent from '../../_components/_parent';
 import PropertyRequires from '../../_components/_requires';
-import PropertyCompilerSourceFiles from '../../_components/_compiler-source-files';
 import PropertyValueFormat from '../../_components/_value-format';
 
 {/* ------------------------------------------------------------------------ */}
@@ -42,7 +43,7 @@ Work in progress.
 
 ## Purpose
 
-Define a map of interfaces, as generic functionalities that can be provided by a number of different implementations.
+Define a map of interface objects (generic functionalities that can be provided by a number of different implementations).
 
 ## Syntax
 
@@ -61,15 +62,15 @@ Define a map of interfaces, as generic functionalities that can be provided by a
 
 ## Description
 
-The `cdlInterfaces` objects are a special type of computed `cdlOptions` object. They provide an abstraction mechanism that can be used to simplify xCDL expressions. A `cdlInterfaces` object can have most of the properties and behaviour of an `object`, but with some limitations (see the Unavailable properties below)
+The `cdlInterfaces` objects are a special type of computed `cdlOptions` object. They provide an abstraction mechanism that can be used to simplify xCDL expressions. A `cdlInterfaces` object can have most of the properties and behaviour of a `cdlOptions` object, but with some limitations (see the Unavailable properties below)
 
-As an example, suppose that some package relies on the presence of code that implements the standard kernel scheduling interface. However the requirement is no more stringent than this, so the constraint can be satisfied by the mlqueue scheduler, the bitmap scheduler, or any additional schedulers that may get implemented in the future. A first attempt at expressing the dependency might be:
+As an example, suppose that some package relies on the presence of code that implements the standard kernel scheduling interface. However, the requirement is no more stringent than this, so the constraint can be satisfied by the mlqueue scheduler, the bitmap scheduler, or any additional schedulers that may get implemented in the future. A first attempt at expressing the dependency might be:
 
 ```json
     "requires": ["iEnabled('kernel/sched-mlqueue') || isEnabled('kernel/sched-bitmap')"]
 ```
 
-This constraint is limited, it may need to be changed if a new scheduler were to be added to the system. Interfaces provide a way of expressing more general relationships:
+This constraint is limited and may need to be changed if a new scheduler is added to the system. Interfaces provide a way of expressing more general relationships:
 
 ```json
     "requires": ["implementationsOf('kernel/scheduler') === 1"]
@@ -77,7 +78,7 @@ This constraint is limited, it may need to be changed if a new scheduler were to
 
 The interface `kernel/scheduler` is implemented by both the mlqueue and bitmap schedulers, and may be implemented by future schedulers as well. The value returned by `implementationsOf()` on an interface is the number of implementers that are active and enabled, so in a typical configuration only one scheduler will be in use and the value of `implementationsOf()` will be 1. If all schedulers are disabled then the value of `implementationsOf()` will be 0 and the `requires` constraint will not be satisfied.
 
-Some component writers may prefer to use the first `requires` constraint on the grounds that the code will only have been tested with the mlqueue and bitmap schedulers and cannot be guaranteed to work with any new schedulers. Other component writers may take a more optimistic view and assume that their code will work with any scheduler until proven otherwise.
+Some component writers may prefer to use the first `requires` constraint, believing that the code has only been tested with the mlqueue and bitmap schedulers and cannot be guaranteed to work with any new schedulers. Other component writers may take a more optimistic view, assuming that their code will work with any scheduler until proven otherwise.
 
 Each `cdlInterfaces` object is defined as a JSON object that has an key and a body. Keys must be unique within a parent.
 
@@ -87,7 +88,7 @@ A commonly used constraint on interface values takes the form:
     "requires": ["implementationsOf('kernel/scheduler') === 1"]
 ```
 
-This constraint specifies that there can be only one scheduler in the system. In some circumstances it is possible for the configuration tools to detect this pattern and act accordingly, so for example enabling the bitmap scheduler would automatically disable the mlqueue scheduler.
+This constraint specifies that there can be only one scheduler in the system. In some circumstances, the configuration tools can detect this pattern and act accordingly. For example, enabling the bitmap scheduler would automatically disable the mlqueue scheduler.
 
 ## Containers
 
@@ -96,6 +97,8 @@ The `cdlInterfaces` objects are not containers, so they cannot hold other object
 ## Properties
 
 - <PropertyActiveIf objectType="interface"/>
+- <PropertyCompilerIncludeFolders objectType="interface"/>
+- <PropertyCompilerSourceFiles objectType="interface"/>
 - <PropertyDefaultEnabled objectType="interface"/>
 - <PropertyDescription objectType="component"/>
 - <PropertyDisplay objectType="component"/>
@@ -105,7 +108,6 @@ The `cdlInterfaces` objects are not containers, so they cannot hold other object
 - <MetadataPropertyLink name="legalValues" /> - interfaces always have a small numerical value; the legalValues can be used to apply additional constraints such as an upper limit
 - <PropertyParent objectType="interface"/>
 - <PropertyRequires objectType="interface"/>
-- <PropertyCompilerSourceFiles objectType="interface"/>
 - <PropertyValueFormat objectType="interface"/>
 
 ## Unavailable properties

@@ -1,6 +1,6 @@
 ---
 
-title: xCDL compilerIncludeFolders
+title: compilerIncludeFolders
 description: The definition of the xCDL compilerIncludeFolders property
 keywords:
   - xpack
@@ -27,7 +27,7 @@ Work in progress.
 
 ## Purpose
 
-List the folders that contain public header files if this object is active and enabled.
+Specify the folders containing public header files that should be included in the build process when this object is active and enabled.
 
 ## Syntax
 
@@ -43,7 +43,7 @@ List the folders that contain public header files if this object is active and e
 }
 ```
 
-The value of the `compilerIncludeFolders` property is an array of relative paths to folders containing header files to be included in the build.
+The `compilerIncludeFolders` property is an array of strings that specify folder paths relative to the current xCDL file. These folders contain header files to be utilized during the build process.
 
 ## Default value
 

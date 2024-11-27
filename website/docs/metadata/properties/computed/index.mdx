@@ -1,6 +1,6 @@
 ---
 
-title: xCDL computed
+title: computed
 description: The definition of the xCDL computed property
 keywords:
   - xpack
@@ -27,7 +27,7 @@ Work in progress.
 
 ## Purpose
 
-Used if the current objects's value is not user-modifiable, but is computed using a suitable xCDL expression.
+Specify that the current object's value is not user-modifiable but is computed using an appropriate xCDL expression.
 
 ## Syntax
 
@@ -43,7 +43,7 @@ Used if the current objects's value is not user-modifiable, but is computed usin
 }
 ```
 
-The value of the `computed` property is an expression to be evaluated each time the object is referred.
+The `computed` property is a string containing an expression that is evaluated each time the object is referenced. The content is formatted according to the `valueType`.
 
 ## Default value
 

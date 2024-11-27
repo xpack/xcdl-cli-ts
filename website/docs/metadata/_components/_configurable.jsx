@@ -14,7 +14,7 @@ import MetadataPropertyLink from '@site/src/components/MetadataPropertyLink';
 export default function func({objectType = 'TYPE'}) {
   return (
     <>
-      <MetadataPropertyLink name='configurable' /> - a boolean expression that provides additional information to a configuration tool, to control if this {objectType} can be enabled/disabled by the user during the configuration process
+      <MetadataPropertyLink name='configurable' /> - a boolean expression that provides additional information to a configuration tool, controlling whether this {objectType} can be enabled/disabled by the user during the configuration process
     </>
   )
 }

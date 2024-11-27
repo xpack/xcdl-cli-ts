@@ -125,7 +125,7 @@ Similarly to `cdlOptions` objects, if active and enabled, `cdlComponents` object
 
 ### Containers
 
-*Components* are containers, so it is possible for a component to include `cdlComponents`, `cdlOptions`, `cdlInterfaces` and `configuration` objects that should go below this object in the configuration hierarchy. These objects can be defined either as embedded children, or can be read from included files.
+*Components* are containers, so it is possible for a component to include `cdlComponents`, `cdlOptions`, `cdlInterfaces` and `cdlConfigurations` objects that should go below this object in the configuration hierarchy. These objects can be defined either as embedded children, or can be read from included files.
 
 ### Optional properties
 
@@ -457,7 +457,7 @@ TBD
 
 TBD
 
-The `configuration` object
+The `cdlConfigurations` object
 ------------------------------
 
 ### Purpose
@@ -482,7 +482,7 @@ TBD
 
 ### Containers
 
-*Configurations* are containers, so they can hold other `configuration`. `configuration` are generally hierarchical, and they are placed below a `cdlComponents` related to the source files where the main() artefact code is located.
+*Configurations* are containers, so they can hold other `cdlConfigurations`. `cdlConfigurations` are generally hierarchical, and they are placed below a `cdlComponents` related to the source files where the main() artefact code is located.
 
 ### Optional properties
 
