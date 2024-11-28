@@ -14,7 +14,7 @@ import MetadataPropertyLink from '@site/src/components/MetadataPropertyLink';
 export default function func({objectType = 'TYPE'}) {
   return (
     <>
-      <MetadataPropertyLink name='display' /> - provides a node name for the {objectType} when rendered in the configuration tree
+      <MetadataPropertyLink name='display' /> - provides a node name for the {objectType} when rendered in the configuration hierarchy
     </>
   )
 }

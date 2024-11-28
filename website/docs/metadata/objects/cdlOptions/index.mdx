@@ -65,7 +65,7 @@ Define a map of option objects (basic units of configurability).
 
 ## Description
 
-The `cdlOptions` object is the basic unit of configurability. Generally, each option corresponds to a single user choice. Typically, there is a certain amount of information associated with an option to assist the user in manipulating it, such as a **displayed name** and a textual **description**. There are also limits on the possible values that the user can choose, so an option may be a simple yes-or-no choice or something more complex, like an array size or a device name. Options may have associated constraints, so if an option is enabled, certain conditions must be satisfied elsewhere in the configuration. Options usually have direct consequences, such as preprocessor `#define` symbols in a configuration header file.
+`cdlOptions` objects are the basic units of configurability. Generally, each `cdlOptions` object corresponds to a single user choice. Typically, there is a certain amount of information associated with an option to assist the user in manipulating it, such as a **displayed name** and a textual **description**. There are also limits on the possible values that the user can choose, so an option may be a simple yes-or-no choice or something more complex, like a stack size or a device name. Options may have associated constraints, so if an option is enabled, certain conditions must be satisfied elsewhere in the configuration. Options usually have direct consequences, such as preprocessor `#define` symbols in a configuration header file.
 
 Each `cdlOptions` object is defined as a JSON object that has an key and a body. Keys must be unique within a parent.
 

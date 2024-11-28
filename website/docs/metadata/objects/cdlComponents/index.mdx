@@ -69,7 +69,7 @@ Define a map of component objects (generic units of functionality).
 
 ## Description
 
-The `cdlComponents` objects are configuration objects that can contain additional options and subcomponents. A `cdlComponents` object can have the same properties as an `cdlOptions` object. Additionally, it includes the `includeCDLs` property, which allows configuration data to be split into multiple files and included below the current object in the configuration hierarchy.
+`cdlComponents` objects are configuration objects that can contain additional options and subcomponents. A `cdlComponents` object can have the same properties as an `cdlOptions` object. Additionally, the `includeCDLs` property enables the configuration definitions to be distributed across multiple files, to be included below the current object in the configuration hierarchy.
 
 Each `cdlComponents` object is defined as a JSON object that has an key and a body. Keys must be unique within a parent.
 
@@ -77,7 +77,7 @@ Similarly to `cdlOptions` objects, if active and enabled, `cdlComponents` object
 
 ## Containers
 
-The `cdlComponents` objects are inherently containers, allowing them to include `cdlComponents`, `cdlOptions`, `cdlInterfaces` hat should be organized below this object in the configuration hierarchy. These objects can be defined either as embedded children or can be read from included files.
+The `cdlComponents` objects are inherently containers, allowing them to include `cdlComponents`, `cdlOptions`, `cdlInterfaces` that should be organized below this object in the configuration hierarchy. These objects can be defined either as embedded children or can be read from included files.
 
 ## Properties
 
