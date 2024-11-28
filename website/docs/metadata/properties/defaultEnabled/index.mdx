@@ -13,6 +13,7 @@ date: 2015-11-25 19:32:00 +0200
 
 ---
 
+import MetadataObjectLink from '@site/src/components/MetadataObjectLink';
 import MetadataPropertyLink from '@site/src/components/MetadataPropertyLink';
 
 {/* ------------------------------------------------------------------------ */}
@@ -31,37 +32,49 @@ Specify whether the current object is initially enabled.
 
 ## Syntax
 
-    <option name="...">
+```json {5}
+{
+    "cdlOptions": {
+        "<key>": {
+            ...
+            "defaultEnable": true | false | "<expression>",
+            ...
+        }
+    }
+}
+```
 
-      <display>...</display>
-      <description>...</description>
-
-      <defaultEnable>true | false | expression</defaultEnable>
-
-      ... other properties ...
-      ... children objects ...
-
-    </option>
-
-The `defaultEnable` property can be set to either the _true_/_false_ constant or a string that evaluates to a boolean value.
+The `defaultEnable` property can be set to either the `true` or `false` constant or a string that evaluates to a boolean value.
 
 If the value is a constant, it is evaluated when parsing the file. If the value is a string, it is evaluated in a separate step that processes the entire configuration tree before processing the requirements.
 
 ## Default value
 
-If missing, the default is *true*, all objects are enabled.
+If missing, the default is `true`, all objects are enabled.
 
 ## Description
 
 The configuration trees are usually large, and not all objects are required in a specific configuration, so the need to individually enable/disable them.
 
-This property controls the initial state of the object, since goal expressions can enable individual objects to satisfy requirements. Objects marked as enabled can still be active or inactive.
+This property controls the initial state of the object, as goal expressions can enable individual objects to satisfy requirements. Objects marked as enabled can still be active or inactive.
 
-Disabling a component or package automatically disables all children objects.
+Disabling a component or package automatically disables all child objects.
 
 ## Example
 
-TBD
+An object can replicate the enabled state of another object:
+
+```json {5}
+{
+    "cdlOptions": {
+        "one": {
+            ...
+            "defaultEnable": "isEnabled('two')",
+            ...
+        }
+    }
+}
+```
 
 ## eCos reference
 

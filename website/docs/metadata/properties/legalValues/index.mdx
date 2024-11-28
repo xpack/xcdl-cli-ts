@@ -13,6 +13,7 @@ date: 2015-11-25 19:32:00 +0200
 
 ---
 
+import MetadataObjectLink from '@site/src/components/MetadataObjectLink';
 import MetadataPropertyLink from '@site/src/components/MetadataPropertyLink';
 
 {/* ------------------------------------------------------------------------ */}
@@ -31,22 +32,19 @@ Impose constraints on the possible values for an object.
 
 ## Syntax
 
-```json
-    <option name="...">
-
-      <display>...</display>
-      <description>...</description>
-
-      <legalValues>...</legalValues>
-      <legalValues>...</legalValues>
-
-      ... other properties ...
-      ... children objects ...
-
-    </option>
+```json {5}
+{
+    "cdlOptions": {
+        "<key>": {
+            ...
+            "legalValues": "expression" | [ "<expression>",... ],
+            ...
+        }
+    }
+}
 ```
 
-The `legalValues` property is an array of strings containing the restrictions.
+The `legalValues` property is a string or an array of strings containing the restrictions.
 
 ## Default value
 
@@ -54,35 +52,39 @@ If missing, no value based constraints are imposed.
 
 ## Description
 
-Options with the number or string valueType can have an arbitrary sequence of characters as their data. In nearly all cases some restrictions have to be imposed, for example the data should correspond to a number within a certain range, or it should be one of a small number of constants. The legalValues property can be used to impose such constraints. The arguments to the property should be an xCDL list expression, see the Section called List Expressions in [xCDL packages](/docs/guide/packages) for the syntactic details. Common examples include:
+Objects with a `valueType` of `int` or `string` can have any values as their data. In nearly all cases, some restrictions have to be imposed. For example, the data should correspond to a number within a certain range or be one of a small number of constants. The `legalValues` property can be used to impose such constraints.  The arguments to the property should be an xCDL list expression, see the Section called List Expressions in [xCDL packages](/docs/guide/packages) for the syntactic details. Common examples include:
 
 ```json
-    <legalValues>0 to 0x7fff</legalValues>
-    <legalValues>9600, 19200, 38400</legalValues>
-    <legalValues>"RAM", "ROM"</legalValues>
+"legalValues": "0 to 0x7fff"
+"legalValues": [ "9600", "19200", "38400" ],
+"legalValues": [ "RAM", "ROM" ]
 ```
 
-The `legalValues` property can only be used for objects with the number or string types, since it makes little sense to further constrain a boolean object.
+The `legalValues` property can only be used for objects with the `int` or `string` types, as it makes little sense to further constrain a boolean object.
 
 ## Example
 
 ```json
-    <option name="stdDefaultOffset">
-
-      <parent>libc/time</parent>
-      <display>Default Standard Time offset</display>
-      <description>This option controls the offset from UTC in
-                     seconds when in local Standard Time. This
-                     value can be positive or negative. It
-                     can also be set at run time using the
-                     os_libc_time_setzoneoffsets() function.</description>
-
-      <generatedDefinition>OS_INTEGER_LIBC_TIME_STD_DEFAULT_OFFSET</generatedDefinition>
-      <valueType>int</valueType>
-      <legalValues>-90000 to 90000</legalValues>
-      <defaultValue>0</defaultValue>
-    </option>
+{
+    "cdlOptions": {
+        "std-default-offset": {
+            "parent": "libc/time",
+            "display": "Default Standard Time offset",
+            "description": "This option controls the offset from UTC in seconds when in local Standard Time. This value can be positive or negative. It can also be set at run time using the os_libc_time_setzoneoffsets() function.",
+            "generatedDefinition": "OS_INTEGER_LIBC_TIME_STD_DEFAULT_OFFSET",
+            "valueType": "int",
+            "legalValues": "-90000 to 90000",
+            "defaultValue": "0"
+        }
+    }
+}
 ```
+
+## See also
+
+- <MetadataPropertyLink name="computed" /> property
+- <MetadataPropertyLink name="defaultValue" /> property
+- <MetadataPropertyLink name="valueType" /> property
 
 ## eCos reference
 

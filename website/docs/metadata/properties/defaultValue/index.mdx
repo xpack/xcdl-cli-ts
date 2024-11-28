@@ -13,6 +13,7 @@ date: 2015-11-25 19:32:00 +0200
 
 ---
 
+import MetadataObjectLink from '@site/src/components/MetadataObjectLink';
 import MetadataPropertyLink from '@site/src/components/MetadataPropertyLink';
 
 {/* ------------------------------------------------------------------------ */}
@@ -31,56 +32,65 @@ Specify a default value for this option using an xCDL expression.
 
 ## Syntax
 
-```json
-    <option name="...">
-
-      <display>...</display>
-      <description>...</description>
-
-      <defaultValue>expression</defaultValue>
-
-      ... other properties ...
-      ... children objects ...
-
-    </option>
+```json {5}
+{
+    "cdlOptions": {
+        "<key>": {
+            ...
+            "defaultValue": true | false | "<expression>",
+            ...
+        }
+    }
+}
 ```
 
-The `defaultValue` property is a string containing an expression that is evaluated each time the object is referenced.
+The `defaultValue` property is a boolean constant or a string containing an expression that is evaluated each time `valueOf(`object`)` is called.
 
 ## Default value
 
-If missing the default object value depends on the object state, active objects have the value 1/true and non active objects have the value 0/false.
+If missing, the object default value depends on the object type and state:
+
+- `none` - these object have no value, and the `defaultValue`  is not applicable
+- `bool` - enabled objects have the value `true` and non enabled objects have the value `false`
+- `int` - enabled objects have the value 1 and non enabled objects have the value 0
+- `float` - enabled objects have the value 1.0 and non enabled objects have the value 0.0
+- `string` - enabled objects have the value "1" and non enabled objects have the value "0"
 
 ## Description
 
-The `defaultValue` property usually allows to define the default value for the object, in case no other value is set during configuration.
+The `defaultValue` property usually defines the default value for the object with data, in case no other value is set during configuration.
 
-The arguments to the `defaultValue` property should be an xCDL expression, see the Section called Ordinary Expressions in [xCDL packages](/docs/guide/packages) for the syntactic details. In many cases a simple constant value will suffice.
+The data of the `defaultValue` property should be an xCDL expression; see the Section called Ordinary Expressions in [xCDL packages](/docs/guide/packages) for the syntactic details. In many cases a simple constant value will suffice.
 
-However it is also possible for an object's default value to depend on other objects. For example the common HAL package provides some support functions that are needed by the kernel, but are unlikely to be useful if the kernel is not being used.
+However it is also possible for an object's default value to depend on other objects. For example the common HAL package provides some support functions needed by the kernel, but are unlikely to be useful if the kernel is not being used.
 
-If the kernel is loaded then this HAL option is automatically enabled, although the user can still disable it explicitly should this prove necessary. If the kernel is not loaded then the option is disabled, although it can still be enabled by the user if desired. `defaultValue` expressions can be more complicated than this if appropriate, and provide a very powerful facility for component writers who want their code to “just do the right thing” in a wide variety of configurations.
+An object can have either a `computed` or a `defaultValue` property. If an object does not have either a `defaultValue` or a `computed` property and it does not have the `valueType` none then the configuration tools will assume a default value expression of 1/`true` if the object is enabled and 0/`false` otherwise.
 
-An object can have at most one `defaultValue` property, and it is illegal to have both a `computed` and a `defaultValue` property in one body. If an object does not have either a `defaultValue` or a `computed` property and it does not have the `valueType` none then the configuration tools will assume a default value expression of 1/true if the object is active and 0/false otherwise.
-
-On occasion it is useful to have a configuration object A which has both a `requires` constraint on some other object B and a `defaultValue` expression of B. If option B is not enabled then A will also be disabled by default and no conflict arises. If B is enabled then A also becomes enabled and again no conflict arises. If a user attempts to enable B but not A then there will be a conflict. Users should be able to deduce that the two options are closely interlinked and should not be manipulated independently except in very unusual circumstances.
+Occasionally, it is useful to have a configuration object A that has both a `requires` constraint on some other object B and a `defaultValue` expression of B. If option B is not enabled then A will also be disabled by default and no conflict arises. If B is enabled then A also becomes enabled, and again no conflict arises. If a user attempts to enable B but not A then there will be a conflict. Users should be able to deduce that the two options are closely interlinked and should not be manipulated independently except in very unusual circumstances.
 
 ## Example
 
+The HAL option replicates the kernel option.
+
 ```json
-    <option name="threadSupport">
-
-      <parent>hal/debug/gdb</parent>
-      <display>Include GDB multi-threading debug support</display>
-      <description>This option enables some extra HAL code which is needed
-      to support multi-threaded source level debugging.</description>
-
-      <generatedDefinition>OS_DEBUG_HAL_DEBUG_GDB_THREAD_SUPPORT</generatedDefinition>
-      <requires>isEnabled('kernel/debug/gdb/threadSupport')</requires>
-      <defaultValue>valueOf('kernel/debug/gdb/threadSupport')</defaultValue>
-
-    </option>
+{
+  "cdlOptions": {
+    "thread-support": {
+      "parent": "hal/debug/gdb",
+      "display": "Include GDB multi-threading debug support",
+      "generatedDefinition": "OS_DEBUG_HAL_DEBUG_GDB_THREAD_SUPPORT",
+      "requires": "isEnabled('kernel/debug/gdb/thread-support')",
+      "defaultValue": "valueOf('kernel/debug/gdb/thread-support')"
+    }
+  }
+}
 ```
+
+## See also
+
+- <MetadataPropertyLink name="computed" /> property
+- <MetadataPropertyLink name="legalValues" /> property
+- <MetadataPropertyLink name="valueType" /> property
 
 ## eCos reference
 

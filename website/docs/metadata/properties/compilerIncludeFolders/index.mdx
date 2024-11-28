@@ -13,6 +13,7 @@ date: 2024-11-27 00:28:00 +0200
 
 ---
 
+import MetadataObjectLink from '@site/src/components/MetadataObjectLink';
 import MetadataPropertyLink from '@site/src/components/MetadataPropertyLink';
 
 {/* ------------------------------------------------------------------------ */}
@@ -51,9 +52,13 @@ If missing, the current object will not contribute any header folders to the bui
 
 ## Description
 
-Most packages export one or more folders with header files defining their public interface. For example the C library exports header files such as `stdio.h` and `ctype.h`. If the package follows the folders layout conventions then the exported header files will normally be found in the package's `include` sub-folder.
+Most packages export one or more folders with header files defining their public interface. For example, the C library exports header files such as `stdio.h` and `ctype.h`. If the package follows the folders layout conventions then the exported header files will normally be found in the package's `include` sub-folder.
 
-It the build artefact is a library, the package's exported header files will be copied to the install tree. This is correct for packages like the C library because that is the correct location for files such as `stdio.h`. However to reduce the probability of name clashes it is desirable for packages to use different sub-folders, for example infrastructure header files should use `include/cyg/infra` rather than simply `include`.
+It the build artefact is a library, the package's exported header files will be copied to the install tree. This is correct for packages like the C library because that is the correct location for files such as `stdio.h`. However, to reduce the probability of name clashes, it is desirable for packages to use different sub-folders. For example infrastructure header files should use `include/cyg/infra` rather than simply `include`.
+
+## See also
+
+- <MetadataObjectLink name="cdlPackage" /> object
 
 ## eCos reference
 

@@ -13,6 +13,7 @@ date: 2015-11-25 19:32:00 +0200
 
 ---
 
+import MetadataObjectLink from '@site/src/components/MetadataObjectLink';
 import MetadataPropertyLink from '@site/src/components/MetadataPropertyLink';
 
 {/* ------------------------------------------------------------------------ */}
@@ -43,24 +44,23 @@ Specify if the current object can be manually modified by the user during the co
 }
 ```
 
-The value of the `configurable` property is either a _true_/_false_ constant or a string containing an expression that evaluates to a boolean value.
+The value of the `configurable` property is either a `true`/`false` constant or a string containing an expression that evaluates to a boolean value.
 
 ## Default value
 
-If missing, the default is **true**, all objects are configurable.
+If missing, the default is `true`, all objects are configurable.
 
 ## Description
 
-Most of the objects can be individually configured using the configuration (graphical) tools, but some are automatically computed and the user shouldn't be allowed to change them.
+Most of the objects can be individually enabled/disabled and/or their values changed using the configuration (graphical) tools; some are `computed` and cannot be changed by the user.
 
-Setting `configurable` to false will instruct the configuration tools to no longer allow the user to enable/disable the object and the object will be enabled if it is active and `defaultEnable` is true. For graphical tools, the radio button will be greyed.
+Setting `configurable` to false will instruct the configuration (graphical) tools to prevent the user from enabling or disabling the object. The object will be enabled if it is active and `defaultEnable` is true. For graphical tools, the radio button will be greyed out. Similarly, for objects with data, the editable widget will be greyed out, and the user will not be able to change the value.
 
-Objects marked as non-configurable can still be active or inactive, this property does not affect the functional behaviour during builds, but only the behaviour of the configuration tools.
+Objects marked as non-configurable can still be active or inactive; this property does not affect the functional behaviour during builds, only the behaviour of the configuration tools.
 
 ## Example
 
 TBD
-
 
 ## eCos reference
 

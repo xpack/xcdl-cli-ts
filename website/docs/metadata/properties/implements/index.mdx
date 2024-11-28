@@ -13,6 +13,7 @@ date: 2015-11-25 19:32:00 +0200
 
 ---
 
+import MetadataObjectLink from '@site/src/components/MetadataObjectLink';
 import MetadataPropertyLink from '@site/src/components/MetadataPropertyLink';
 
 {/* ------------------------------------------------------------------------ */}
@@ -31,19 +32,16 @@ Notify the framework that one or more general interfaces are implemented.
 
 ## Syntax
 
-```json
-    <option name="...">
-
-      <display>...</display>
-      <description>...</description>
-
-      <implements>interface 1</implements>
-      <implements>interface 2</implements>
-
-      ... other properties ...
-      ... children objects ...
-
-    </option>
+```json {5}
+{
+    "cdlOptions": {
+        "<key>": {
+            ...
+            "implements": [ "<path>",... ],
+            ...
+        }
+    }
+}
 ```
 
 The `implements` property is an array of strings containing xCDL paths of interface objects that this object implements.
@@ -54,26 +52,31 @@ If missing it is assumed that the current object does not implement any interfac
 
 ## Description
 
-The xCDL interface concept provides an abstraction mechanism that can be useful in many different circumstances. Essentially an interface is a computed option whose value is the number of active and enabled objects which implement that interface. For example the `interface('kernel/scheduler')` has a value corresponding to the number of schedulers in the system, typically just one.
+The xCDL interface concept provides an abstraction mechanism that can be useful in many different circumstances. Essentially, an interface is a computed option whose value is the number of active and enabled objects that implement that interface. For example, the interface `kernel/scheduler` has a value corresponding to the number of schedulers in the system, typically just one.
 
-The implements property takes a single argument, which should be a list of ids of the implemented interfaces (an object may implement multiple interfaces). These interface may be defined in the same package as the implementor or in some other package. In the latter case it may sometimes be appropriate for the implementor or the implementor's package to have a `requires` property for the package containing the interface.
+The `implements` property defines an array of xCDL paths of the implemented interfaces (an object may implement multiple interfaces). These interfaces may be defined in the same package as the implementor or in another package. In the latter case, it may sometimes be appropriate for the implementor or the implementor's package to have a `requires` property for the package containing the interface.
 
-It is possible for an object to implement a given interface multiple times, but only distinct implementor ids are counted.
+It is possible for an object to implement a given interface multiple times, but only distinct implementors are counted.
 
 ## Example
 
 ```json
-    <option name="schedMlqueue">
-
-      <parent>kernel</parent>
-      <display>Multi-level queue scheduler</display>
-
-      <generatedDefinition>OS_PACKEGE_KERNEL_SCHED_MLQUEUE</generatedDefinition>
-      <defaultEnable>true</defaultEnable>
-      <implements>kernel/scheduler</implements>
-      ...
-    </option>
+{
+  "cdlOptions": {
+    "mlqueue": {
+      "display": "Multi-level queue scheduler",
+      "parent": "kernel",
+      "generatedDefinition": "OS_PACKEGE_KERNEL_SCHED_MLQUEUE",
+      "defaultEnable": true,
+      "implements": [ "kernel/scheduler" ]
+    }
+  }
+}
 ```
+
+## See also
+
+- <MetadataObjectLink name="cdlInterfaces" /> object
 
 ## eCos reference
 

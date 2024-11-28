@@ -13,6 +13,7 @@ date: 2015-11-25 19:32:00 +0200
 
 ---
 
+import MetadataObjectLink from '@site/src/components/MetadataObjectLink';
 import MetadataPropertyLink from '@site/src/components/MetadataPropertyLink';
 
 {/* ------------------------------------------------------------------------ */}
@@ -31,18 +32,16 @@ Specify the configuration header file that will be generated for the children of
 
 ## Syntax
 
-```json
-    <component name="...">
-
-      <display>...</display>
-      <description>...</description>
-
-      <childrenGeneratedFile>file name</childrenGeneratedFile>
-
-      ... other properties ...
-      ... children objects ...
-
-    </component>
+```json {5}
+{
+    "cdlComponents": {
+        "<key>": {
+            ...
+            "childrenGeneratedFile": "<file path>",
+            ...
+        }
+    }
+}
 ```
 
 The `childrenGeneratedFile` property is a string that contains a file path relative to the build folder.
@@ -53,7 +52,7 @@ If missing, the definition from the parent node is used, first the `childrenGene
 
 ## Description
 
-When the configuration tools generate a build tree, one of the steps is to output each objects's configuration data to a header file. Instead of defining a `generatedFile` for each individual _Option_ of a _Component_, it is recommended to define the file once, in the parent _Component_, and this definition will be used for all children nodes without a `generatedFile`.
+When the configuration tools generate a build tree, one of the steps is to output each object's configuration data to a header file. Instead of defining a `generatedFile` for each individual `cdlOptions` or `cdlComponents` object, it is recommended to define the file path only once in the parent object. This definition will then be used for all child nodes without a `generatedFile`.
 
 The name specified in a `childrenGeneratedFile` property will always be interpreted as relative to the build folder.
 
@@ -61,6 +60,11 @@ The name specified in a `childrenGeneratedFile` property will always be interpre
 
 TBD
 
+## See also
+
+- <MetadataPropertyLink name="generatedFile" /> property
+
 ## eCos reference
 
-- none
+- [`define-header`](https://ecos.sourceware.org/docs-latest/cdl-guide/ref.define-header.html) property
+

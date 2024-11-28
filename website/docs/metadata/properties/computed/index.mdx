@@ -13,6 +13,7 @@ date: 2015-11-25 19:32:00 +0200
 
 ---
 
+import MetadataObjectLink from '@site/src/components/MetadataObjectLink';
 import MetadataPropertyLink from '@site/src/components/MetadataPropertyLink';
 
 {/* ------------------------------------------------------------------------ */}
@@ -51,7 +52,7 @@ If missing, no computed value is used and the object's value is static.
 
 ## Description
 
-In some cases it is useful to have a configuration object whose value cannot be modified directly by the user. This can be achieved using a `computed` property, which takes an xCDL expression as argument (see the Section called Ordinary Expressions in [xCDL packages](/docs/guide/packages/) for a description of expression syntax). The configuration system evaluates the expression whenever needed to generate the header line or when referred from another expression. The result depends on the object's `valueType`:
+In some cases it is useful to have a configuration object whose value cannot be modified directly by the user. This can be achieved using a `computed` property, which defines an xCDL expression (see the Section called Ordinary Expressions in [xCDL packages](/docs/guide/packages/) for a description of expression syntax). The configuration system evaluates the expression whenever needed to generate the header line or when referred from another expression. The result depends on the object's `valueType`:
 
 - `none` - objects with this type have no value, so the computed property is not applicable
 - `bool` - the expression should evaluate to a boolean value
@@ -59,19 +60,16 @@ In some cases it is useful to have a configuration object whose value cannot be 
 - `float` - the expression should evaluate to a float
 - `string` - the expression should evaluate to a string
 
-There are a number of valid uses for calculated options, and there are also many cases where some other xCDL facility would be more appropriate.
+There are a number of valid uses for `computed` options, and there are also many cases where some other xCDL facility would be more appropriate.
 
-Valid uses of computed objects include the following:
+Valid uses of `computed` objects include the following:
 
-- On some target hardware a particular feature may be user-configurable, while on other targets it is fixed. For example some processors can operate in either big-endian or little-endian mode, while other processors do not provide any choice. It is possible to have an option OS_BOOL_BIGENDIAN which is calculated in some architectural HAL packages but user-modifiable in others.
+- On some target hardware, a particular feature may be user-configurable, while on other targets it is fixed. For example, some processors can operate in either big-endian or little-endian mode, while other processors do not provide any choice. It is possible to have an option `bigendian` which is computed in some architectural HAL packages but user-modifiable in others.
+- Computed objects can provide an alternative way for one package to affect the behaviour of another one. Suppose a package may provide two possible implementations: a preferred one involving self-modifying code and a slower alternative. If the system involves a ROM bootstrap, then the slower alternative must be used, but it would be inappropriate to modify the startup option in every HAL to impose constraints on this package. Instead, it is possible to have a computed option whose value is `valueOf('hal/startup') === "ROM"`, and which has appropriate consequences. Arguably, this is a spurious example, and it should be a user choice whether or not to use self-modifying code with a `defaultValue` based on `hal/startup`, but that is for the component writer to decide.
+- Sometimes it should be possible to perform a particular test at compile-time, for example by using a C/C++ preprocessor `#if` construct. However the preprocessor has only limited functionality; for example, it cannot perform string comparisons. xCDL expressions are more powerful.
+- Occasionally, a particular sub-expression may occur multiple times in an xCDL file. If the sub-expression is sufficiently complex, then it may be worthwhile to have a computed option whose value is the sub-expression, and then reference that computed option in the appropriate places.
 
-- Computed objects can provide an alternative way for one package to affect the behaviour of another one. Suppose a package may provide two possible implementations, a preferred one involving self-modifying code and a slower alternative. If the system involves a ROM bootstrap then the slower alternative must be used, but it would be inappropriate to modify the startup option in every HAL to impose constraints on this package. Instead it is possible to have a calculated option whose value is `{ valueOf('hal/startup') === "ROM" }`, and which has appropriate consequences. Arguably this is a spurious example, and it should be a user choice whether or not to use self-modifying code with a `defaultValue` based on OS_HAL_STARTUP, but that is for the component writer to decide.
-
-- Sometimes it should be possible to perform a particular test at compile-time, for example by using a C/C++ preprocessor `#if` construct. However the preprocessor has only limited functionality, for example it cannot perform string comparisons. xCDL expressions are more powerful.
-
-- Occasionally a particular sub-expression may occur multiple times in a xCDL script. If the sub-expression is sufficiently complex then it may be worthwhile to have a calculated option whose value is the sub-expression, and then reference that calculated option in the appropriate places.
-
-Alternatives to using calculated options include the following:
+Alternatives to using computed options include the following:
 
 - The `cdlInterfaces` objects are a form of computed objects intended as an abstraction mechanism. For example, an interface can be used to express the concept of any scheduler, as opposed to a specific one such as the bitmap scheduler.
 
@@ -91,6 +89,12 @@ A constant on some target hardware, perhaps user-modifiable on other targets.
     }
 }
 ```
+
+## See also
+
+- <MetadataPropertyLink name="defaultValue" /> property
+- <MetadataPropertyLink name="legalValues" /> property
+- <MetadataPropertyLink name="valueType" /> property
 
 ## eCos reference
 

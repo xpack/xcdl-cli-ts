@@ -13,6 +13,7 @@ date: 2015-11-25 19:32:00 +0200
 
 ---
 
+import MetadataObjectLink from '@site/src/components/MetadataObjectLink';
 import MetadataPropertyLink from '@site/src/components/MetadataPropertyLink';
 
 {/* ------------------------------------------------------------------------ */}
@@ -53,17 +54,16 @@ If missing, the current object will not contribute any source files to the build
 
 The `compilerSourceFiles` property allows component developers to specify source files which should be compiled.
 
-Details of the build process including such issues as compiler flags and the order in which things happen can be found in [The xCDL workflow](/docs/guide/workflow/).
+Details of the build process, including such issues as compiler flags and the order in which things happen, can be found in [The xCDL workflow](/docs/guide/workflow/).
 
-The `compilerSourceFiles` properties can occur in any of `cdlOptions`, `cdlComponents`, `cdlPackage` or `cdlInterfaces` objects. A `compilerSourceFiles` property has effect if and only if the object that contains it is active and enabled. Typically the body of a package will define any source files that need to be built irrespective of individual options, and each component, option, and interface will define source files that are more specific. The `compilerSourceFiles` property can list any number of source files. It is possible for a given source file to be specified in `compilerSourceFiles` properties for several different objects, in which case the source file will get built if any of these objects are active and enabled.
+The `compilerSourceFiles` properties can occur in any of `cdlOptions`, `cdlComponents`, `cdlPackage` or `cdlInterfaces` objects. A `compilerSourceFiles` property has effect if and only if the object that contains it is active and enabled. Typically, the body of a package will define any source files that need to be built irrespective of individual options, and each component, option, and interface will define source files that are more specific. The `compilerSourceFiles` property can list any number of source files. It is possible for a given source file to be specified in `compilerSourceFiles` properties for several different objects, in which case the source file will get built if any of these objects are active and enabled.
 
-If the package follows the directory layout conventions then the configuration tools will search for the specified source files first in the src subdirectory of the package, then relative to the package directory itself.
+The configuration tools will search for the specified source files in the folder where the current xCDL file is located.
 
-Note: A shortcoming of the current specification of `compilerSourceFiles` properties is that there is no easy way to specify source files that should be built unless an option is enabled. It would sometimes be useful to be able to say: “if option A is enabled then compile file x.c, otherwise compile file y.c. There are two simple ways of achieving this:
+Note: A shortcoming of the current specification of `compilerSourceFiles` properties is that there is no easy way to specify source files that should be built unless an option is enabled. It would sometimes be useful to be able to say: "if option A is enabled then compile file x.c, otherwise compile file y.c". There are two simple ways of achieving this:
 
-- Always compile y.c, typically by listing it in the body of the `cdlPackage`, but use `#ifndef A` to produce an empty object file if option A is not enabled. This has the disadvantage that the file always gets compiled and hence for some configurations builds will take longer than necessary.
-
-- Use a computed option whose value is !A, and have a `compilerSourceFiles` y.c property in its body. This has the disadvantage of adding another calculated option to the configuration.
+- Always compile y.c, typically by listing it in the body of the `cdlPackage`, but use `#ifndef A` to produce an empty object file if option A is not enabled. This has the disadvantage that the file always gets compiled and hence for some configurations, builds will take longer than necessary.
+- Use a computed option whose value is !A, and have a `compilerSourceFiles` y.c property in its body. This has the disadvantage of adding another computed option to the configuration.
 
 :::info
 

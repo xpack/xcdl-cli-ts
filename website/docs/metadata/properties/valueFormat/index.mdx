@@ -13,6 +13,7 @@ date: 2015-11-25 19:32:00 +0200
 
 ---
 
+import MetadataObjectLink from '@site/src/components/MetadataObjectLink';
 import MetadataPropertyLink from '@site/src/components/MetadataPropertyLink';
 
 {/* ------------------------------------------------------------------------ */}
@@ -31,54 +32,74 @@ Control how an option's value is displayed in the configuration header file.
 
 ## Syntax
 
-```json
-    <option name="...">
-
-      <display>...</display>
-      <description>...</description>
-
-      <valueFormat>format</valueFormat>
-
-      ... other properties ...
-      ... children objects ...
-
-    </option>
+```json {5}
+{
+    "cdlOptions": {
+        "<key>": {
+            ...
+            "valueFormat": "<expression>",
+            ...
+        }
+    }
+}
 ```
 
-The `valueFormat` property is a string containing a format specification.
+The `valueFormat` property is a string containing a JavaScript expression.
 
 ## Default value
 
-The defaults, according to `valueType`, are intended to surround the value by parenthesis or double quotes:
+The defaults depend on `valueType`:
 
-- none - '(%s)'
-- bool - '(%s)'
-- int - '(%d)'
-- float - '(%f)'
-- string - '"%s"'
+- `none` - `undefined`
+- `bool` - `value ? "true" : "false"`
+- `int` - `parseInt(value).toString()`
+- `float` - `parseFloat(value).toString()`
+- `string` - `value.toString()`
 
 ## Description
 
-For active and enabled objects, the configuration tools will normally generate one or two `#define` lines in the package's configuration header file. These take the following forms:
+For active and enabled objects, if the `generatedDefinition` property is defined, a line with the following structure will be generated in the file pointed by the `generatedFile` property:
 
 ```c
-     #define <name> <value>
-     #define <name>_<value>
+#define <name> (<value>)
 ```
 
-The `valueFormat` property can be used to control exactly what appears as the value for the first of these `#define` lines.
+For nodes of type `none`, the default definition includes only the name:
 
-The second `#define` will be generated only if is a valid C/C++ preprocessor symbol results, and is not affected by the `valueFormat` property.
+```c
+#define <name>
+```
 
-The C formatting syntax is used.
+For string objects, a second line is generated, with the value appended to the name:
+
+```c
+#define <name>_<value>
+```
+
+The value is slightly adjusted to uppercase and all non-letter characters are changed with `_`. Empty strings are suffixed with `_EMPTY`.
+
+The `valueFormat` property can be set to a JavaScript expression. If the type is `none` and the expression returns `undefined`, no value is shown. For all other types, returning `undefined` triggers an error.
+
+The implementation creates an internal JavaScript function that has an input parameter named `value` and returns a string.
+
+:::info
+
+For security reasons, the string is not accepted if it includes words like `import` or `request`.
+
+:::
 
 ## Example
 
-To format a 32bit hex value, use:
+To format a 32bit hex value, a possible solution is:
 
 ```json
-    <valueFormat>(0x%08X)</valueFormat>
+"valueFormat": "const hex=parseInt(value).toString(16); return '0x'+'00000000'.substr(0, 8 - hex.length) + hex.toUpperCase()"
 ```
+
+## See also
+
+- <MetadataPropertyLink name="generatedDefinition" /> property
+- <MetadataPropertyLink name="valueType" /> property
 
 ## eCos reference
 

@@ -13,6 +13,7 @@ date: 2015-11-25 19:32:00 +0200
 
 ---
 
+import MetadataObjectLink from '@site/src/components/MetadataObjectLink';
 import MetadataPropertyLink from '@site/src/components/MetadataPropertyLink';
 
 {/* ------------------------------------------------------------------------ */}
@@ -27,22 +28,18 @@ Work in progress.
 
 ## Purpose
 
-Specify the configuration header file that will be generated for a given object, typically a package.
+Specify the configuration header file that will be generated for a given object, typically a `cdlPackage` or a `cdlComponents` object.
 
 ## Syntax
 
-```json
-    <option name="...">
-
-      <display>...</display>
-      <description>...</description>
-
-      <generatedFile>file name</generatedFile>
-
-      ... other properties ...
-      ... children objects ...
-
-    </option>
+```json {5}
+{
+    "cdlPackage": {
+        ...
+        "generatedFile": "<file path>",
+        ...
+    }
+}
 ```
 
 The `generatedFile` property is a string containing a file path relative to the build folder.
@@ -53,7 +50,7 @@ If missing, the definition from the parent node is used, first the `childrenGene
 
 ## Description
 
-When the configuration tools generate a build tree, one of the steps is to output each objects's configuration data to a header file. For example the kernel's configuration data gets output to *include/xcdl/kernel.h*. This allows each package's source code to `#include` the appropriate header file and adapt to the choices made by the user.
+When the configuration tools generate a build tree, one of the steps is to output each object's configuration data to a header file. For example, the kernel's configuration data is output to `generated/include/kernel-config.h`. This allows each package's source code to `#include` the appropriate header file and adapt to the choices made by the user.
 
 If multiple nodes use the same file, it is recommended to define the file only once, in the parent node, using `childrenGeneratedFile`.
 
@@ -62,14 +59,14 @@ The name specified in a `generatedFile` property will always be interpreted as r
 ## Example
 
 ```json
-    <package name="arm">
-
-      <display>ARM architecture</display>
-      <parent>hal</parent>
-      <hardware/>
-      <generatedFile>os/hal/hal_arm.h</generatedFile>
-       ...
-    </package>
+{
+    "cdlPackage": {
+        "name": "arm",
+        "display": "RM architecture",
+        "parent": "hal",
+        "generatedFile": "generated/include/os/hal/hal_arm.h"
+    }
+}
 ```
 
 ## eCos reference

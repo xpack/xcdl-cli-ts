@@ -67,13 +67,13 @@ The `cdlInterfaces` objects are a special type of computed `cdlOptions` object. 
 As an example, suppose that some package relies on the presence of code that implements the standard kernel scheduling interface. However, the requirement is no more stringent than this, so the constraint can be satisfied by the mlqueue scheduler, the bitmap scheduler, or any additional schedulers that may get implemented in the future. A first attempt at expressing the dependency might be:
 
 ```json
-    "requires": ["iEnabled('kernel/sched-mlqueue') || isEnabled('kernel/sched-bitmap')"]
+"requires": [ "iEnabled('kernel/sched-mlqueue') || isEnabled('kernel/sched-bitmap')" ]
 ```
 
 This constraint is limited and may need to be changed if a new scheduler is added to the system. Interfaces provide a way of expressing more general relationships:
 
 ```json
-    "requires": ["implementationsOf('kernel/scheduler') === 1"]
+"requires": [ "implementationsOf('kernel/scheduler') === 1" ]
 ```
 
 The interface `kernel/scheduler` is implemented by both the mlqueue and bitmap schedulers, and may be implemented by future schedulers as well. The value returned by `implementationsOf()` on an interface is the number of implementers that are active and enabled, so in a typical configuration only one scheduler will be in use and the value of `implementationsOf()` will be 1. If all schedulers are disabled then the value of `implementationsOf()` will be 0 and the `requires` constraint will not be satisfied.
@@ -85,7 +85,7 @@ Each `cdlInterfaces` object is defined as a JSON object that has an key and a bo
 A commonly used constraint on interface values takes the form:
 
 ```json
-    "requires": ["implementationsOf('kernel/scheduler') === 1"]
+"requires": [ "implementationsOf('kernel/scheduler') === 1" ]
 ```
 
 This constraint specifies that there can be only one scheduler in the system. In some circumstances, the configuration tools can detect this pattern and act accordingly. For example, enabling the bitmap scheduler would automatically disable the mlqueue scheduler.
@@ -112,11 +112,11 @@ The `cdlInterfaces` objects are not containers, so they cannot hold other object
 
 ## Unavailable properties
 
-- `computed` - always true; the interface's value is always computed from the number of enabled and active components that implements it
-- `configurable` - always true; interfaces are always enabled and this cannot be changed
-- `defaultValue` - undefined; meaningless since the interface's value is always computed
-- `implements` - interfaces cannot implement other interfaces
-- `valueType` - always `int`; interfaces always have integer non-negative values
+- <MetadataPropertyLink name="computed" /> - always true; the interface's value is always computed from the number of enabled and active components that implements it
+- <MetadataPropertyLink name="configurable" /> - always true; interfaces are always enabled and this cannot be changed
+- <MetadataPropertyLink name="defaultValue" /> - undefined; meaningless since the interface's value is always computed
+- <MetadataPropertyLink name="implements" /> - interfaces cannot implement other interfaces
+- <MetadataPropertyLink name="valueType" /> - always `int`; interfaces always have integer non-negative values
 
 ## Example
 
@@ -126,7 +126,7 @@ The `cdlInterfaces` objects are not containers, so they cannot hold other object
         "scheduler": {
             ...
             "parent": "kernel",
-            "requires": ["implementationsOf('kernel/scheduler') === 1"]
+            "requires": [ "implementationsOf('kernel/scheduler') === 1" ]
         }
     }
 }

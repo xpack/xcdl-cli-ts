@@ -13,6 +13,7 @@ date: 2015-11-25 19:32:00 +0200
 
 ---
 
+import MetadataObjectLink from '@site/src/components/MetadataObjectLink';
 import MetadataPropertyLink from '@site/src/components/MetadataPropertyLink';
 
 {/* ------------------------------------------------------------------------ */}
@@ -31,18 +32,16 @@ Specify additional grouping information to enable a configuration tool to provid
 
 ## Syntax
 
-```
-    <option name="...">
-
-      <display>...</display>
-      <description>...</description>
-
-      <category>string</category>
-
-      ... other properties ...
-      ... children objects ...
-
-    </option>
+```json {5}
+{
+    "cdlOptions": {
+        "<key>": {
+            ...
+            "category": "<string>",
+            ...
+        }
+    }
+}
 ```
 
 The `category` property is a string.
@@ -53,7 +52,7 @@ If missing no category is assigned to the current object.
 
 ## Description
 
-Configuration tools usually should be able to provide some choices to various selections, for example to choose from the hardware platform the build is intended for. For this to work, specific packages should be marked with additional metadata, recognised by the configuration tools.
+Configuration tools should usually be able to provide choices for various selections, such as choosing the hardware platform for the build. For this to work, specific packages should be marked with additional metadata recognized by the configuration tools.
 
 Examples of such metadata are:
 

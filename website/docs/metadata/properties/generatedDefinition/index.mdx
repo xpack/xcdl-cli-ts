@@ -13,6 +13,7 @@ date: 2015-11-25 19:32:00 +0200
 
 ---
 
+import MetadataObjectLink from '@site/src/components/MetadataObjectLink';
 import MetadataPropertyLink from '@site/src/components/MetadataPropertyLink';
 
 {/* ------------------------------------------------------------------------ */}
@@ -31,18 +32,16 @@ Specify the name of the header variable to be generated.
 
 ## Syntax
 
-```json
-    <option name="...">
-
-      <display>...</display>
-      <description>...</description>
-
-      <generatedDefinition>name</generatedDefinition>
-
-      ... other properties ...
-      ... children objects ...
-
-    </option>
+```json {5}
+{
+    "cdlOptions": {
+        "<key>": {
+            ...
+            "generatedDefinition": "<string>",
+            ...
+        }
+    }
+}
 ```
 
 The `generatedDefinition` property is a string containing a C/C++ preprocessor identifier.
@@ -53,25 +52,31 @@ If missing, no header definition is generated for this object.
 
 ## Description
 
-In order for a header definition to be generated, the full path of the include file where it will be added and the name of the preprocessor symbol is needed. The file name is provided by `generatedFile` and the preprocessor symbol by `generatedDefinition`.
+In order for a header definition to be generated, the full path of the include file where it will be added and the name of the preprocessor symbol are needed. The file name is provided by `generatedFile` and the preprocessor symbol by `generatedDefinition`.
 
-The name must be a valid C/C++ preprocessor identifier: a sequence of upper or lower case letters, digits or underscores, starting with a non-digit character; identifiers beginning with an underscore should normally be avoided because they may clash with system packages or with identifiers reserved for use by the compiler.
+The name must be a valid C/C++ preprocessor identifier: a sequence of uppercase or lowercase letters, digits, and underscores, starting with a non-digit character. Identifiers beginning with an underscore should normally be avoided because they may clash with system packages or identifiers reserved for use by the compiler.
 
-Within a single configuration, names must be unique. If a configuration contained two packages which defined the same entity `OS_INTEGER_SOME_OPTION`, any references to that entity in a `requires` property or any other expression would be ambiguous. It is possible for a given name to be used by two different packages if those packages should never be loaded into a single configuration. For example, architectural HAL packages are allowed to reuse certain names because a single configuration cannot target two different architectures. For a recommended naming convention see the Section called Package Contents and Layout in [xCDL packages](/docs/guide/packages).
+Within a file, names must be unique. For a recommended naming convention, see the section called Package Contents and Layout in [xCDL packages](/docs/guide/packages).
 
 For active and enabled objects, if the `generatedDefinition` property is defined, a line with the following structure will be generated in the file pointed by the `generatedFile` property:
 
 ```c
-     #define <name> <value>
+#define <name> <value>
 ```
 
-The format of the value is defined by the `valueFormat` property.
-
-For objects with type string, a second line should be generated, with the value concatenated to the name (if the resulting string can somehow be represented as a C/C++ preprocessor identifier):
+For nodes of type `none`, the default definition includes only the name:
 
 ```c
-     #define <name>_<value>
+#define <name>
 ```
+
+For objects with type `string`, a second line will be generated, with the value appended to the name.
+
+```c
+#define <name>_<value>
+```
+
+The value is slightly adjusted to uppercase and all non-letter characters are changed with `_`. Empty strings are suffixed with `_EMPTY`.
 
 ## Example
 

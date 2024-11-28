@@ -13,6 +13,11 @@ date: 2015-11-15 12:00:00 +0200
 
 ---
 
+import MetadataObjectLink from '@site/src/components/MetadataObjectLink';
+import MetadataPropertyLink from '@site/src/components/MetadataPropertyLink';
+
+{/* ------------------------------------------------------------------------ */}
+
 # The `cdlConfigurations` definition
 
 :::note
@@ -38,13 +43,20 @@ Define a map of configuration objects (persistent storages for user choices).
 ```
 ## Description
 
-TBD
+The `cdlConfigurations` objects store all definitions required to generate the build tree and to conduct the build process. These definitions include all user choices during the configuration process, and other settings, like toolchain details.
+
+There is one such configuration object for each build configuration.
+
+The `cdlConfigurations` definitions are stored persistently in a JSON file in the project, that must be committed to the versioning system.
+
 
 ## Containers
 
-TBD
+- `cdlObjects`
 
 ## Properties
+
+TBD
 
 - artifactFileName
 - buildConfigurationName
@@ -58,4 +70,21 @@ TBD
 
 ## Example
 
-TBD
+```json
+{
+    "cdlConfigurations": {
+        "debug": {
+            "cdlObjects": {
+                "kernel/scheduler/mlqueue": { "enabled": true },
+                "kernel/scheduler/bitmap": { "enabled": false },
+                "trace/buffer/size": { "value": "1024" },
+                ...
+            },
+            ... other definitions ...
+        },
+        "release": {
+            ...
+        }
+    }
+}
+```

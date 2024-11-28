@@ -14,7 +14,7 @@ import MetadataPropertyLink from '@site/src/components/MetadataPropertyLink';
 export default function func({objectType = 'TYPE'}) {
   return (
     <>
-      <MetadataPropertyLink name='computed' /> - the option's value is not directly user-modifiable; it is calculated using a suitable expression
+      <MetadataPropertyLink name='computed' /> - the option's value is not directly user-modifiable; it is computed using a suitable expression
     </>
   )
 }
