@@ -1,5 +1,5 @@
 ---
-title: XCDL concepts (outdated)
+title: xCDL concepts (outdated)
 permalink: /xcdl/guide/concepts/
 
 comments: true
@@ -10,11 +10,11 @@ date: 2015-10-25 12:00:00 +0200
 
 ## Terminology
 
-The XCDL component architecture involves a number of key concepts, presented below.
+The xCDL component architecture involves a number of key concepts, presented below.
 
 ### Metadata
 
-In the context of XCDL, metadata (generally defined as _data about data_) is additional data about the software project, to define build settings, dependencies, options, etc. Metadata is stored in various separate files, usually with names starting with dots, like `.xcdl.json`.
+In the context of xCDL, metadata (generally defined as _data about data_) is additional data about the software project, to define build settings, dependencies, options, etc. Metadata is stored in various separate files, usually with names starting with dots, like `.xcdl.json`.
 
 ### Components
 
@@ -34,17 +34,17 @@ A typical package contains the following:
 *  exported header files which define the interface provided by the package;
 *  on-line documentation, for example reference pages for each exported function;
 *  some number of test cases, shipped in source format, allowing users to check that the package is working as expected on their particular hardware and in their specific configuration;
-*  one or more XCDL metadata files describing the package to the component framework.
+*  one or more xCDL metadata files describing the package to the component framework.
 
-Not all packages need to contain all of these. For example some packages such as device drivers may not provide a new interface, instead they just provide another implementation of an existing interface. However **all packages must contain at least one metadata file** that describes the package to the component framework (a `.pdsc` file for CMSIS packages or a `.xpackage.json` and several `.xcdl.json` files for XCDL/xPack packages).
+Not all packages need to contain all of these. For example some packages such as device drivers may not provide a new interface, instead they just provide another implementation of an existing interface. However **all packages must contain at least one metadata file** that describes the package to the component framework (a `.pdsc` file for CMSIS packages or a `.xpackage.json` and several `.xcdl.json` files for xCDL/xPack packages).
 
 It is possible to create a binary distribution file for a package containing all of the source code, header files, documentation, and other relevant files.
 
-More details in the Packages section below and in the separate [XCDL Packages]({{ site.baseurl }}/xcdl/guide/packages/) section.
+More details in the Packages section below and in the separate [xCDL Packages]({{ site.baseurl }}/xcdl/guide/packages/) section.
 
 #### Portability
 
-Portability is a mandatory requirement, all XCDL tools must be able to run on all primary desktop environments, like Windows, OS X and GNU/Linux.
+Portability is a mandatory requirement, all xCDL tools must be able to run on all primary desktop environments, like Windows, OS X and GNU/Linux.
 
 #### Reference implementation
 
@@ -72,33 +72,33 @@ However, component writers need to modify files directly in the component reposi
 
 Usually component writers install packages by cloning one or more Git repositories (one main repository with multiple submodules linked to it, one for each package).
 
-## XCDL metadata
+## xCDL metadata
 
-The configuration tools require information about the various options provided by each package, their consequences and constraints, and other properties such as the location of online documentation. This information has to be provided in the form of **XCDL** metadata files. XCDL is short for **eXtensible Component Definition Language**, and is specifically designed as a way of describing configuration options.
+The configuration tools require information about the various options provided by each package, their consequences and constraints, and other properties such as the location of online documentation. This information has to be provided in the form of **xCDL** metadata files. xCDL is short for **eXtensible Component Definition Language**, and is specifically designed as a way of describing configuration options.
 
-### XCDL objects
+### xCDL objects
 
-The XCDL definition language includes several objects used to define all the configuration details.
+The xCDL definition language includes several objects used to define all the configuration details.
 
-The XCDL objects are organised hierarchically, from leaf option objects up to the root repository object.
+The xCDL objects are organised hierarchically, from leaf option objects up to the root repository object.
 
 ### The virtual hierarchy
 
-In addition to the physical view represented by the file system folders and files, the XCDL hierarchy can be considered a virtual view of the project resources.
+In addition to the physical view represented by the file system folders and files, the xCDL hierarchy can be considered a virtual view of the project resources.
 
 In Eclipse, this virtual hierarchy can be presented in a custom project explorer. Inactive nodes will not be shown in the virtual hierarchy at all.
 
 #### JavaScript mapping
 
-As a design decision, the XCDL objects must map 1:1 to JavaScript objects, i.e. have properties whose names match the JavaScript naming convention and have only values of type string, number, object or array of objects (not necessarily of same type).
+As a design decision, the xCDL objects must map 1:1 to JavaScript objects, i.e. have properties whose names match the JavaScript naming convention and have only values of type string, number, object or array of objects (not necessarily of same type).
 
-The main advantage of defining the XCDL objects using the JavaScript syntax (compared, for instance with XML definitions) is an inherent simplicity and uniformity. As a consequence, XCDL objects can be very easily serialised in JSON files, the preferred exchange format.
+The main advantage of defining the xCDL objects using the JavaScript syntax (compared, for instance with XML definitions) is an inherent simplicity and uniformity. As a consequence, xCDL objects can be very easily serialised in JSON files, the preferred exchange format.
 
 #### Hierarchy
 
-Except the root node, all XCDL objects have a single parent; in other words the nodes can be represented as a tree.
+Except the root node, all xCDL objects have a single parent; in other words the nodes can be represented as a tree.
 
-Except leaf nodes, all XCDL objects also have an ordered array of children nodes.
+Except leaf nodes, all xCDL objects also have an ordered array of children nodes.
 
 #### Node name
 
@@ -156,9 +156,9 @@ If a node has children, they are grouped as an array of objects.
       ]
     }
 
-#### XCDL paths
+#### xCDL paths
 
-Similar to files in a filesystem, XCDL nodes can be addressed as a sequence of slash separated node names:
+Similar to files in a filesystem, xCDL nodes can be addressed as a sequence of slash separated node names:
 
     /ilg/STM32/STM32F4/HAL/RCC
 
@@ -280,13 +280,13 @@ The **target** is the specific piece of hardware on which the application is exp
 
 ### Templates
 
-A **template** is a partial configuration, aimed at providing users with an appropriate starting point. XCDL/xPack repositories should be shipped with a small number of templates, which correspond closely to common ways of using them.
+A **template** is a partial configuration, aimed at providing users with an appropriate starting point. xCDL/xPack repositories should be shipped with a small number of templates, which correspond closely to common ways of using them.
 
 There is a minimal template which provides very little functionality, just enough to bootstrap the hardware and then jump directly to the application code. The default template adds more functionality, for example it causes an RTOS and various library packages to be used as well. Creating a new configuration typically involves specifying a template as well as a target, resulting in a configuration that can be built and linked with the application code and that will run on the actual hardware. It is then possible to fine-tune configuration options to produce something that better matches the specific requirements of the application.
 
 ### Properties
 
-The component framework needs a certain amount of information about each XCDL object. For example it needs to know what the legal values are, what the default should be, where to find the on-line documentation if the user needs to consult that in order to make a decision, and so on. These are all **properties** of the object. Every object (including components and packages) consists of a name and a set of properties.
+The component framework needs a certain amount of information about each xCDL object. For example it needs to know what the legal values are, what the default should be, where to find the on-line documentation if the user needs to consult that in order to make a decision, and so on. These are all **properties** of the object. Every object (including components and packages) consists of a name and a set of properties.
 
 ### Consequences
 

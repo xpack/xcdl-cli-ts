@@ -1,5 +1,5 @@
 ---
-title: The XCDL metadata (outdated)
+title: The xCDL metadata (outdated)
 permalink: /xcdl/guide/metadata/
 
 comments: true
@@ -10,14 +10,14 @@ date: 2015-11-15 12:00:00 +0200
 
 > Note: This file needs to be updated for JSON.
 
-The XCDL definitions are a key part of the XCDL component framework. All packages must come with at least one XCDL file, to describe that package to the framework. The information in that file includes details of all the configuration options and how to build the package. Implementing a new component or turning some existing code into an XCDL component always involves writing corresponding XCDL. This chapter provides a description of the XCDL language. Detailed information on specific parts of the language can be found in [Reference]({{ site.baseurl }}/xcdl/reference/metadata/) page.
+The xCDL definitions are a key part of the xCDL component framework. All packages must come with at least one xCDL file, to describe that package to the framework. The information in that file includes details of all the configuration options and how to build the package. Implementing a new component or turning some existing code into an xCDL component always involves writing corresponding xCDL. This chapter provides a description of the xCDL language. Detailed information on specific parts of the language can be found in [Reference]({{ site.baseurl }}/xcdl/reference/metadata/) page.
 
 Language overview
 -----------------
 
-XCDL originated as a representation in XML of the original eCos CDL definitions, then several changes were performed and the format was changed to JSON.
+xCDL originated as a representation in XML of the original eCos CDL definitions, then several changes were performed and the format was changed to JSON.
 
-A very simple XCDL file would look like this:
+A very simple xCDL file would look like this:
 
     <package name="errors">
 
@@ -38,11 +38,11 @@ A very simple XCDL file would look like this:
 
     </package>
 
-This describes a single package, the error code package, which does not have any sub-components or configuration options. The package has a name, *[errors]*, which can be referenced in other XCDL files using e.g. `<requires>isEnabled('errors')</requires>`. There will also be a `#define` for this package in a configuration header file. In addition to the package name, this file provides a number of properties for the package as a whole. The `<display>` property provides a short description. The `<description>` property involves a rather longer one, for when users need a bit more information. The `<sourceFile>` and `<header*>` properties list the consequences of this package at build-time. The package appears to lack any online documentation.
+This describes a single package, the error code package, which does not have any sub-components or configuration options. The package has a name, *[errors]*, which can be referenced in other xCDL files using e.g. `<requires>isEnabled('errors')</requires>`. There will also be a `#define` for this package in a configuration header file. In addition to the package name, this file provides a number of properties for the package as a whole. The `<display>` property provides a short description. The `<description>` property involves a rather longer one, for when users need a bit more information. The `<sourceFile>` and `<header*>` properties list the consequences of this package at build-time. The package appears to lack any online documentation.
 
 Packages could be even simpler than this. If the package only provides an interface and there are no files to be compiled then there is no need for a compile property. Alternatively if there are no exported header files, or if the exported header files should go to the top-level of the install/include directory, then there is no need for an `<generatedFile>` property. Strictly speaking the `<description>` and `<display>` properties are optional as well, although application developers would not appreciate the resulting lack of information about what the package is supposed to do.
 
-However many packages tend to be a bit more complicated than the error package, containing various subcomponents and configuration options. These are also defined in the XCDL files and in much the same way as the package. For example, the following excerpt comes from the infrastructure package:
+However many packages tend to be a bit more complicated than the error package, containing various subcomponents and configuration options. These are also defined in the xCDL files and in much the same way as the package. For example, the following excerpt comes from the infrastructure package:
 
     <component name="traceBuffer">
 
@@ -76,12 +76,12 @@ However many packages tend to be a bit more complicated than the error package, 
 
     </component>
 
-Like a `<package>`, a `<component>` has a name and a body. The body contains various properties for that component, and may also contain subcomponents or options. Similarly an `<option>` has a name and a body of properties. This example lists a number of new properties: `<defaultValue>`, `<activeIf>`, `<valueType>` and `<legalValues>`. The meaning of most of these should be fairly obvious. The next sections describe the various XCDL objects and properties.
+Like a `<package>`, a `<component>` has a name and a body. The body contains various properties for that component, and may also contain subcomponents or options. Similarly an `<option>` has a name and a body of properties. This example lists a number of new properties: `<defaultValue>`, `<activeIf>`, `<valueType>` and `<legalValues>`. The meaning of most of these should be fairly obvious. The next sections describe the various xCDL objects and properties.
 
-XCDL objects
+xCDL objects
 ------------
 
-There are several XCDL-related objects which can occur at the top-level of a XCDL file: `<package>`, `<component>`, `<option>` and `<interface>`. These correspond to the basic building blocks of the language. All of these take the same basic form:
+There are several xCDL-related objects which can occur at the top-level of a xCDL file: `<package>`, `<component>`, `<option>` and `<interface>`. These correspond to the basic building blocks of the language. All of these take the same basic form:
 
     <package name="...">
       ...
@@ -101,15 +101,15 @@ There are several XCDL-related objects which can occur at the top-level of a XCD
 
 All objects have a mandatory name and, inside their body, a list of properties and an optional list of children objects. All children names must be unique within a given parent. Addressing objects is similar to addressing files in a file system using forward slash separated paths. Paths may be absolute or relative. In addition relative paths may be incomplete, like `isEnabled('traceBuffer/size')`, as long as the uniqueness of the sub-path is assured.
 
-The various XCDL objects live in a hierarchy. There is no upper bound on how far components can be nested, but it is rarely necessary to go more than three or four levels deeper than the package level. Since the naming convention used for referring objects incorporates bits of the hierarchy, this has the added advantage of keeping the names down to a more manageable size.
+The various xCDL objects live in a hierarchy. There is no upper bound on how far components can be nested, but it is rarely necessary to go more than three or four levels deeper than the package level. Since the naming convention used for referring objects incorporates bits of the hierarchy, this has the added advantage of keeping the names down to a more manageable size.
 
 The hierarchy serves two purposes. It allows options to be controlled en masse, so disabling a component automatically disables all the options below it in the hierarchy. It also permits a much simpler representation of the configuration in the graphical configuration tool, facilitating navigation and modification.
 
-Each package has one top-level XCDL file meta/xcdl.xml. The first object in the top-level file should be `<package>` and there should be only one `<package>` object per package.
+Each package has one top-level xCDL file meta/xcdl.xml. The first object in the top-level file should be `<package>` and there should be only one `<package>` object per package.
 
 By default, an object is placed added to the children list of the top level object defined in the parent folder, so the objects hierarchy follows the file system folders hierarchy, but it is possible to override this using a parent property. This is generally useful for separately distributed packages, to attach in a convenient location in the hierarchy. Components, options and interfaces can also be re-parented, but this is less common.
 
-Components can also contain options and other XCDL objects, in fact that is what distinguishes them from options. These can be defined in the body of the `<component>`:
+Components can also contain options and other xCDL objects, in fact that is what distinguishes them from options. These can be defined in the body of the `<component>`:
 
     <component name="stdio">
 
@@ -129,7 +129,7 @@ Components can also contain options and other XCDL objects, in fact that is what
 
     </component>
 
-Nesting options inside the bodies of components like this is fine for simple packages with only a limited number of configuration options, but it becomes unsatisfactory as the number of options increases. Instead it is possible to split the XCDL data into multiple XCDL file, on a per-component basis. The `<includeFile>` property should be used for this. For example, in the case of the C library all stdio-related configuration options could be put into `stdio.xml`, and the top-level XCDL file `libc.xml` would contain the following:
+Nesting options inside the bodies of components like this is fine for simple packages with only a limited number of configuration options, but it becomes unsatisfactory as the number of options increases. Instead it is possible to split the xCDL data into multiple xCDL file, on a per-component basis. The `<includeFile>` property should be used for this. For example, in the case of the C library all stdio-related configuration options could be put into `stdio.xml`, and the top-level xCDL file `libc.xml` would contain the following:
 
     <package name="libc">
       ...
@@ -142,9 +142,9 @@ Nesting options inside the bodies of components like this is fine for simple pac
 
 The objects `component('floating point')` and the `option('thread safe streams')` can then be placed at the top-level of stdio.xml. It is possible to have some options nested in the body of a `<component>` object and other options in a separate file accessed by the `<includeFile>` property. In such a case the nested options would be processed first, and then the other file would be read in. A file specified by a `<includeFile>` property should only define new options, components or interfaces: it should not contain any additional properties for the current component.
 
-It is possible for a component’s XCDL file to have a sub-component which also has a `<includeFile>` property, and so on. In practice excessive nesting like this is rarely useful. It is also possible to ignore the XCDL language support for constructing hierarchies automatically and use the parent property explicitly for every single option and component. Again this is not generally useful.
+It is possible for a component’s xCDL file to have a sub-component which also has a `<includeFile>` property, and so on. In practice excessive nesting like this is rarely useful. It is also possible to ignore the xCDL language support for constructing hierarchies automatically and use the parent property explicitly for every single option and component. Again this is not generally useful.
 
-XCDL properties
+xCDL properties
 ---------------
 
 Each package, component, option, and interface has a list of string properties, which provide the component framework with information about how to handle each option. For example there is a property for a descriptive text message which can be displayed to a user who is trying to figure out just what effect manipulating the option would have on the target application. There is another property for the default value, for example whether a particular option should be enabled or disabled by default.
@@ -155,7 +155,7 @@ Because different properties serve very different purposes, their syntax is not 
 
 Many of the properties can be used in any of `<package>`, `<component>`, `<option>` or `<interface>`. Other properties are more specific. The `<includeFile>` property is only relevant to `<component>` objects. The `<generatedFile>`, `<hardware>` properties apply to a package as a whole, so can only occur in the body of a `<package>` object. The `<computed>`, `<defaultValue>`, `<legalValues>` and `<valueType>` properties are not relevant to packages, as will be explained later. The `<computed>` and `<defaultValue>` properties are also not relevant to interfaces.
 
-This section lists the various properties, grouped by purpose. Each property also has a full reference page in [The XCDL language specification]({{ site.baseurl }}/xcdl/guide/metadata/). Properties related to values and expressions are described in more detail in the Section called Values and Expressions. Properties related to header file generation and to the build process are described in [The build process]({{ site.baseurl }}/xcdl/guide/build-process/).
+This section lists the various properties, grouped by purpose. Each property also has a full reference page in [The xCDL language specification]({{ site.baseurl }}/xcdl/guide/metadata/). Properties related to values and expressions are described in more detail in the Section called Values and Expressions. Properties related to header file generation and to the build process are described in [The build process]({{ site.baseurl }}/xcdl/guide/build-process/).
 
 ### Information-providing properties
 
@@ -180,7 +180,7 @@ All three properties take a single argument. For display and description this ar
 
 There are two properties related to the hierarchical organization of components and options: `<parent>` and `<includeFile>`.
 
-The `<parent>` property can be used to move a XCDL entity somewhere else in the hierarchy. The most common use is for packages, to avoid having all the packages appear at the top-level of the configuration hierarchy. For example an architectural HAL package such as SH is placed below the common HAL package using a parent property.
+The `<parent>` property can be used to move a xCDL entity somewhere else in the hierarchy. The most common use is for packages, to avoid having all the packages appear at the top-level of the configuration hierarchy. For example an architectural HAL package such as SH is placed below the common HAL package using a parent property.
 
     <package name="sh">
 
@@ -192,7 +192,7 @@ The `<parent>` property can be used to move a XCDL entity somewhere else in the 
 
 The `<parent>` property can also be used in the body of a `<component>`, `<option>` or `<interface>`, but this is less common. However care has to be taken since excessive re-parenting can be confusing. Care also has to be taken when re-parenting below some other package that may not actually be loaded in a given configuration, since the resulting behaviour is undefined.
 
-The `<includeFile>` property can only be used in the body of a `<component>` object. The property takes a single filename as argument, and this should be another XCDL file containing additional options, subcomponents and interfaces that should go below the current component in the hierarchy. If the directory layout conventions are observed then the component framework will look for the specified file relative to the meta subdirectory of the package, otherwise the filename will be treated as relative to the package’s top-level directory.
+The `<includeFile>` property can only be used in the body of a `<component>` object. The property takes a single filename as argument, and this should be another xCDL file containing additional options, subcomponents and interfaces that should go below the current component in the hierarchy. If the directory layout conventions are observed then the component framework will look for the specified file relative to the meta subdirectory of the package, otherwise the filename will be treated as relative to the package’s top-level directory.
 
     <component name="stdio">
 
@@ -213,7 +213,7 @@ The `<includeFile>` property can only be used in the body of a `<component>` obj
 
 There are seven properties which are related to option values and state: `<valueType>`, `<computed>`, `<defaultValue>`, `<legalValues>`, `<activeIf>`, `<implements>`, and `<requires>`. More detailed information can be found in the section called Values and Expressions.
 
-In the context of configurability, the concept of an option’s value is somewhat non-trivial. First an option may or may not be loaded: it is possible to build a configuration which has the math library but not the kernel; however the math library’s XCDL file still reference kernel options, for example *[libm/threadSafeCompatMode]* has a <requires> constraint on *[kernel/threadsData]*. Even if an option is loaded it may or may not be active, depending on what is happening higher up in the hierarchy: if the C library’s `component('libc/stdio')` is disabled then some other options such as `option('libc/stdio/buffsize')` become irrelevant. In addition each option has both a boolean enabled/disabled flag and a data part. For many options only the boolean flag is of interest, while for others only the data part is of interest. The <valueType> property can be used to control this:
+In the context of configurability, the concept of an option’s value is somewhat non-trivial. First an option may or may not be loaded: it is possible to build a configuration which has the math library but not the kernel; however the math library’s xCDL file still reference kernel options, for example *[libm/threadSafeCompatMode]* has a <requires> constraint on *[kernel/threadsData]*. Even if an option is loaded it may or may not be active, depending on what is happening higher up in the hierarchy: if the C library’s `component('libc/stdio')` is disabled then some other options such as `option('libc/stdio/buffsize')` become irrelevant. In addition each option has both a boolean enabled/disabled flag and a data part. For many options only the boolean flag is of interest, while for others only the data part is of interest. The <valueType> property can be used to control this:
 
 -   `<valueType>enabled</valueType>` <br>
 This type indicates that neither the boolean nor the data parts are user-modifiable: if active, the option is enabled and the data is always set to true. The most common use for this is to have a component that just acts as a placeholder in the hierarchy, allowing various options to be grouped below it.
@@ -224,13 +224,13 @@ This type indicates that only the boolean part is user-modifiable: if active, th
 -   `<valueType>bool \| int \| float \| string</valueType>` <br>
 Both the boolean and the data part of the option are user-modifiable. To make the boolean part non user-configurable, use `<configurable>false</configurable>`. To make the data part non user-configurable, use `<computed>true</computed>`.
 
-For more details of XCDL flavors and how a flavour affects expression evaluation, and other consequences, see the Section called Values and Expressions.
+For more details of xCDL flavors and how a flavour affects expression evaluation, and other consequences, see the Section called Values and Expressions.
 
 The `<valueType>` property cannot be used for a package because packages always have the *string* type. Options and components have the *none* type by default, since most configuration choices are simple yes-or-no choices. Interfaces have the *int* type by default.
 
 The `<configurable>` property can disable the change of the boolean part in the interface, so the option cannot be enabled/disabled by the user.
 
-The `<computed>` property can be used for options which should not be user-modifiable, but which instead are fixed by the target hardware or determined from the current values of other options. In general calculated options should be avoided, since they can be confusing to users who need to figure out whether or not a particular option can actually be changed. There are a number of valid uses for calculated options, and quite a few invalid ones as well. The reference packages should be consulted for further details. The property takes an ordinary XCDL expression as argument, for example:
+The `<computed>` property can be used for options which should not be user-modifiable, but which instead are fixed by the target hardware or determined from the current values of other options. In general calculated options should be avoided, since they can be confusing to users who need to figure out whether or not a particular option can actually be changed. There are a number of valid uses for calculated options, and quite a few invalid ones as well. The reference packages should be consulted for further details. The property takes an ordinary xCDL expression as argument, for example:
 
     <!-- A constant on some target hardware, perhaps user-modifiable on other targets. -->
     <option name="period">
@@ -258,7 +258,7 @@ The `<defaultValue>` property is similar to `<computed>`, but only specifies a d
         ...
     </option>
 
-The `<legalValues>` property imposes a constraint on the possible values of the data part of an option. Hence it is only applicable to options with the data or booldata flavors. It cannot be used for a package since the only valid value for a package is its version number. The arguments to the `<legalValues>` property should constitute a XCDL list expression.
+The `<legalValues>` property imposes a constraint on the possible values of the data part of an option. Hence it is only applicable to options with the data or booldata flavors. It cannot be used for a package since the only valid value for a package is its version number. The arguments to the `<legalValues>` property should constitute a xCDL list expression.
 
     <component name="libc">
 
@@ -276,7 +276,7 @@ The `<legalValues>` property imposes a constraint on the possible values of the 
       </option>
     </component>
 
-The `<activeIf>` property does not relate directly to an option’s value, but rather to its active state. Usually this is controlled via the configuration hierarchy: if the *[libc/stdio]* component is disabled then all options below it are inactive and do not have any consequences. In some cases the hierarchy does not provide sufficient control, for example an option should only be active if two disjoint sets of conditions are satisfied: the hierarchy could be used for one of these conditions, and an additional `<activeIf>` property could be used for the other one. The arguments to `<activeIf>` should constitute a XCDL goal expression.
+The `<activeIf>` property does not relate directly to an option’s value, but rather to its active state. Usually this is controlled via the configuration hierarchy: if the *[libc/stdio]* component is disabled then all options below it are inactive and do not have any consequences. In some cases the hierarchy does not provide sufficient control, for example an option should only be active if two disjoint sets of conditions are satisfied: the hierarchy could be used for one of these conditions, and an additional `<activeIf>` property could be used for the other one. The arguments to `<activeIf>` should constitute a xCDL goal expression.
 
     <!--  Do not provide extra semaphore debugging if there are no semaphores -->
     <option name="binsem">
@@ -287,7 +287,7 @@ The `<activeIf>` property does not relate directly to an option’s value, but r
       ...
     </option>
 
-The `<implements>` property is related to the concept of XCDL interfaces. If an option is active and enabled and it implements a particular interface then it contributes 1 to that interface’s value.
+The `<implements>` property is related to the concept of xCDL interfaces. If an option is active and enabled and it implements a particular interface then it contributes 1 to that interface’s value.
 
     <package name="edb7xxx">
 
@@ -313,7 +313,7 @@ The <requires> property is used to impose constraints on the user’s choices. F
       ...
     </option>
 
-The arguments to the `<requires>` property should be a XCDL goal expression.
+The arguments to the `<requires>` property should be a xCDL goal expression.
 
 ### Generating the configuration header files
 
@@ -412,7 +412,7 @@ It is fairly reasonable to expect that enabling or disabling a configuration opt
 
 In a language like C the handling of variables is relatively straightforward. If a variable x gets referenced in an expression such as if (x != 0), and that variable is not defined anywhere, then the code will fail to build, typically with an unresolved error at link-time. Also in C a variable x does not live in any hierarchy, so its value for the purposes of expression evaluation is not affected by anything else. C variables also have a clear type such as int or long double.
 
-In XCDL things are not so straightforward.
+In xCDL things are not so straightforward.
 
 Option values
 -------------
@@ -426,14 +426,14 @@ There are four factors which go into an option’s value:
 
 ### Is the option **loaded**?
 
-At any one time a configuration will contain only a subset of all possible packages. In fact it is impossible to combine certain packages in a single configuration. For example architectural HAL packages should contain a set of options defining endianness, the sizes of basic data types and so on (many of which will of course be constant for any given architecture). Any attempt to load two architectural HAL packages into a configuration will fail because of the resulting name clash. Since XCDL expressions can reference options in other packages, and often need to do so, it is essential to define the resulting behaviour.
+At any one time a configuration will contain only a subset of all possible packages. In fact it is impossible to combine certain packages in a single configuration. For example architectural HAL packages should contain a set of options defining endianness, the sizes of basic data types and so on (many of which will of course be constant for any given architecture). Any attempt to load two architectural HAL packages into a configuration will fail because of the resulting name clash. Since xCDL expressions can reference options in other packages, and often need to do so, it is essential to define the resulting behaviour.
 
-One complication is that the component framework does not know about every single option in every single package. Obviously it cannot know about packages from arbitrary third parties which have not been installed. If a XCDL expression contains a reference to some `option('kernel/sched timeslice')` then the component framework will only know about this option if the kernel package is actually loaded into the current configuration.
+One complication is that the component framework does not know about every single option in every single package. Obviously it cannot know about packages from arbitrary third parties which have not been installed. If a xCDL expression contains a reference to some `option('kernel/sched timeslice')` then the component framework will only know about this option if the kernel package is actually loaded into the current configuration.
 
 Any options which are not in the current configuration are handled as follows:
 
 1.  Any references to that option will evaluate to 0/false, so `valueOf('...') == 0/false`, `isLoaded('...') == false`, `isActive('...') == false`, `isEnabled('...') == false`.
-2.  An option that is not loaded has no consequences on the build process. It cannot directly result in any `#define`’s in a configuration header file, nor in any files being compiled. This is only reasonable: if the option is not loaded then the component framework has no way of knowing about any compile or similar properties. An option that is not loaded can have indirect consequences by being referenced in XCDL expressions.
+2.  An option that is not loaded has no consequences on the build process. It cannot directly result in any `#define`’s in a configuration header file, nor in any files being compiled. This is only reasonable: if the option is not loaded then the component framework has no way of knowing about any compile or similar properties. An option that is not loaded can have indirect consequences by being referenced in xCDL expressions.
 3.  An option that is not loaded cannot impose any constraints on the rest of the configuration. Again this is the only reasonable behaviour: if the option is not loaded then any associated requires or `<legalValues>` properties will not be known.
 
 ### Is the option **active**?
@@ -446,15 +446,15 @@ The active or inactive state of an option may affect other packages. For example
 
 1.  An option is inactive if its parent is either inactive or disabled. For example if `component('libc/stdio')` is disabled then all the options and sub-components become inactive; since `component('libc/stdio/floating point')` is now inactive, `component('libc/stdio/floating point/printf')` is inactive as well.
 2.  Options may also be inactive as a result of an `<activeIf>` property. This is useful if a particular option is only relevant if two or more disjoint sets of conditions need to be satisfied, since the hierarchical structure can only cope with at most one such set.
-3.  If an option is inactive then any references to that option in XCDL expressions will evaluate to 0/false. So `valueOf('...') == 0/false`, `isActive('...') == false`, `isEnabled('...') == false`.
+3.  If an option is inactive then any references to that option in xCDL expressions will evaluate to 0/false. So `valueOf('...') == 0/false`, `isActive('...') == false`, `isEnabled('...') == false`.
 4.  An option that is inactive has no consequences on the build process. No `#define` will be generated. Any compile or similar properties will be ignored.
 5.  An option that is inactive cannot impose any constraints on the rest of the configuration. For example `option('libc/stdio/floating point/printf')` has a dependency `<requires>isEnabled('libm')</requires>`, but if all of the stdio functionality is disabled then this constraint is ignored (although of course there may be other packages which have a dependency on `package('libm')`).
 
 ### Is the option **enabled**? What is the option value?
 
-The majority of configuration options are boolean in nature, so the user can either enable or disable some functionality. Some options are different. For example `valueOf('libc/stdio/bufsize')` is a number, and `valueOf('libc/stdio/default console')` is a string corresponding to a device name. XCDL has to cope with this variety, and define the exact behaviour of the system in terms of constraints and build-time consequences.
+The majority of configuration options are boolean in nature, so the user can either enable or disable some functionality. Some options are different. For example `valueOf('libc/stdio/bufsize')` is a number, and `valueOf('libc/stdio/default console')` is a string corresponding to a device name. xCDL has to cope with this variety, and define the exact behaviour of the system in terms of constraints and build-time consequences.
 
-In XCDL the value of an option consists of two parts. There is a boolean part, controlling whether or not the option is enabled, that can be accessed with `isEnabled('...')`. There is also a data part, providing additional information and accessed with `valueOf('...')`. For most options one of these parts is fixed, as controlled by the option’s `<valueType>` property:
+In xCDL the value of an option consists of two parts. There is a boolean part, controlling whether or not the option is enabled, that can be accessed with `isEnabled('...')`. There is also a data part, providing additional information and accessed with `valueOf('...')`. For most options one of these parts is fixed, as controlled by the option’s `<valueType>` property:
 
 |valueType|isEnabled()|valueOf() when enabled|valueOf() when disabled|
 |---------|-----------|----------------------|-----------------------|
@@ -468,14 +468,14 @@ In XCDL the value of an option consists of two parts. There is a boolean part, c
 The effects of the boolean and data parts are as follows:
 
 1.  If an option is inactive, or disabled by the user, in other words if the boolean part is false, then `isEnabled('...') == false` and `valueOf('...')` is 0/false/"". The data part is not relevant. The type *enabled* specify that the option is always enabled, and the user cannot disable it.
-2.  If an option is enabled then any references to `valueOf('...')` in XCDL expressions will evaluate to the option’s data part, user-modifiable or fixed. For type *enabled*, this data part is fixed to the constant *true*. For type *none*, or when the type is not defined, `valueOf('...')` will return `isEnabled('...')`, modifiable by the user.
+2.  If an option is enabled then any references to `valueOf('...')` in xCDL expressions will evaluate to the option’s data part, user-modifiable or fixed. For type *enabled*, this data part is fixed to the constant *true*. For type *none*, or when the type is not defined, `valueOf('...')` will return `isEnabled('...')`, modifiable by the user.
 3.  If a component or package is disabled then all sub-components and options immediately below it in the hierarchy are inactive. By a process of recursion this will affect all the nodes in the subtree.
 4.  If an option is disabled then it can impose no constraints on the rest of the configuration, in particular `<requires>` and `<legalValues>` properties will be ignored. If an option is enabled then its constraints should be satisfied, or the component framework will report various conflicts. Note that the `<legalValues>` constraint only applies to the data part of the option’s value, so it is only useful with the *int, float, string* types. Options with type *enabled* are always enabled so their constraints always have to be satisfied (assuming the option is active).
 5.  If an option is disabled then it has no direct consequences at build-time, in particular `<generatedDefinition>` and `<sourceFile>` properties will be ignored: no `#define` will be generated, no files will get compiled, and so on. If an option is active and enabled then all the consequences take effect. The option name and data part are used to generate the `#define` in the appropriate configuration header file, subject to various properties such as `<valueFormat>`, but the data part has no other effects on the build system.
 
 Setting `<configurable>false</configurable>` prevents the user to manually change the enable/disable status of an option (the checkbox will be disabled in the interface). Setting the `<computed>` property prevents the user to manually change the value of an option (the text control will be disabled in the interface).
 
-By default all options and components have the type *none*: most options are simple selections, so making this the default allows for slightly more compact XCDL files. Packages have the type *string*, where the data part always corresponds to the version of the package that is loaded into the configuration: changing this value corresponds to unloading the old version and loading in a different one.
+By default all options and components have the type *none*: most options are simple selections, so making this the default allows for slightly more compact xCDL files. Packages have the type *string*, where the data part always corresponds to the version of the package that is loaded into the configuration: changing this value corresponds to unloading the old version and loading in a different one.
 
 ### Some examples
 
@@ -516,7 +516,7 @@ TODO
 ----
 
 -   clarify/add support to define library files, linker scripts, header files, include folders
--   clarify the link between XCDL configurations and Eclipse configurations
+-   clarify the link between xCDL configurations and Eclipse configurations
 -   clarify/add support to define the artefact type as library/executable; also consider for static/shared libraries
 -   clarify the additional properties needed for <package>, to make it compatible with CMSIS Pack
 -   clarify/add support to define boards

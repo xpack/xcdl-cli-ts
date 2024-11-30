@@ -1,5 +1,5 @@
 ---
-title: XCDL component repositories (outdated)
+title: xCDL component repositories (outdated)
 permalink: /xcdl/guide/repositories/
 
 comments: true
@@ -12,7 +12,7 @@ Generally a component repository is a collection of packages managed by the comp
 
 ## The local component repository
 
-All development tools using XCDL packages include a local component repository. Similarly to the CMSIS Pack repository, this is a local folder structure where all installed packages are located. The component framework comes with an administration tool that allows new packages or new versions of a package to be installed, old packages to be removed, and so on. Each package has its own folder hierarchy within the component repository. Keeping several packages in a single folder is illegal.
+All development tools using xCDL packages include a local component repository. Similarly to the CMSIS Pack repository, this is a local folder structure where all installed packages are located. The component framework comes with an administration tool that allows new packages or new versions of a package to be installed, old packages to be removed, and so on. Each package has its own folder hierarchy within the component repository. Keeping several packages in a single folder is illegal.
 
 To better accommodate the package separation for multi-vendor cases, the local folder hierarchy start with a folder with the vendor/originator name.
 
@@ -53,7 +53,7 @@ Unless explicitly requested for development reasons, after unpacking, the admini
 
 ## Binary packages
 
-To save space and to simplify management, each XCDL package may be packed into a ZIP archive and distributed via a web server, with each archive having its own URL.
+To save space and to simplify management, each xCDL package may be packed into a ZIP archive and distributed via a web server, with each archive having its own URL.
 
 The component framework should be able to download these archives, unpack them and add their content to the local component repository.
 
@@ -67,7 +67,7 @@ Contrary to the other files in the local repository, these files installed via s
 
 ## Local versioning
 
-Below each package directory there can be one or more subfolders, named after the package versions. This is a requirement of the component framework: it must be possible for users to install multiple versions of a package and select which one to use for any given application. This has a number of advantages to users: most importantly it allows a single component repository to be shared between multiple users and multiple projects, as required; also it facilitates experiments, for example it is relatively easy to try out the latest version of some package and see if it makes any difference. There is a potential disadvantage in terms of disk space. However since XCDL packages generally consist of source code intended for small embedded systems, and given typical modern disk sizes, keeping a number of different versions of a package installed will usually be acceptable. The administration tool can be used to remove versions that are no longer required.
+Below each package directory there can be one or more subfolders, named after the package versions. This is a requirement of the component framework: it must be possible for users to install multiple versions of a package and select which one to use for any given application. This has a number of advantages to users: most importantly it allows a single component repository to be shared between multiple users and multiple projects, as required; also it facilitates experiments, for example it is relatively easy to try out the latest version of some package and see if it makes any difference. There is a potential disadvantage in terms of disk space. However since xCDL packages generally consist of source code intended for small embedded systems, and given typical modern disk sizes, keeping a number of different versions of a package installed will usually be acceptable. The administration tool can be used to remove versions that are no longer required.
 
     Packages/ilg
     └── xyzw
@@ -78,7 +78,7 @@ Below each package directory there can be one or more subfolders, named after th
 
 The version *current* is special. Typically it corresponds to the very latest version of the package when using Git like source packages, i.e. versions that were not frozen in a release.
 
-All other subfolders of a package correspond to specific releases of that package. The component framework allows users to select the particular version of a package they want to use, but by default the most recent one will be used (by convention, this is the top-most version defined in the package XCDL metadata file).
+All other subfolders of a package correspond to specific releases of that package. The component framework allows users to select the particular version of a package they want to use, but by default the most recent one will be used (by convention, this is the top-most version defined in the package xCDL metadata file).
 
 ## Remote repositories
 

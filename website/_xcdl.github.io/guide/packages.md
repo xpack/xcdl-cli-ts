@@ -1,5 +1,5 @@
 ---
-title: XCDL packages (outdated)
+title: xCDL packages (outdated)
 permalink: /xcdl/guide/packages/
 
 comments: true
@@ -8,13 +8,13 @@ date: 2015-10-25 12:00:00 +0200
 
 ---
 
-For a package to be usable in the XCDL component framework it must conform to certain rules imposed by the framework. Packages must be distributed in a form that is understood by the component repository administration tool. For each package there must be a top-level XCDL metadata file which describes the package to the component framework. There are certain portability requirements related to how a package gets built, so that the package can be used in a variety of host environments. In addition to these rules, the component framework provides a number of guidelines. It is not mandatory for the packages to strictly conform to all guidelines, but sticking to them can simplify certain operations.
+For a package to be usable in the xCDL component framework it must conform to certain rules imposed by the framework. Packages must be distributed in a form that is understood by the component repository administration tool. For each package there must be a top-level xCDL metadata file which describes the package to the component framework. There are certain portability requirements related to how a package gets built, so that the package can be used in a variety of host environments. In addition to these rules, the component framework provides a number of guidelines. It is not mandatory for the packages to strictly conform to all guidelines, but sticking to them can simplify certain operations.
 
 ## Packages
 
 ### What is a package?
 
-An XCDL/xPack package is:
+An xCDL/xPack package is:
 
 1. a folder containing a valid `.xpack.json` file;
 2. a gzipped tarball containing 1);
@@ -23,7 +23,7 @@ An XCDL/xPack package is:
 
 The definition is inspired from the [NPM](https://docs.npmjs.com/misc/developers#what-is-a-package) package definition, and is intentionally Git and JavaScript centric, as these technologies are considered mature and worth considering.
 
-Since the external representation of the XCDL metadata will probably remain based on JSON, the documentation will use this syntax.
+Since the external representation of the xCDL metadata will probably remain based on JSON, the documentation will use this syntax.
 
 ### Package contents
 
@@ -33,7 +33,7 @@ In addition to the `.xpack.json` metadata file, a typical package contains the f
 *  exported header files which define the interface provided by the package;
 *  online documentation, for example reference pages for each exported function;
 *  some number of test cases, shipped in source format, allowing users to check that the package is working as expected on their particular hardware and in their specific configuration;
-*  other XCDL metadata files describing the package to the component framework.
+*  other xCDL metadata files describing the package to the component framework.
 
 It is also conventional to have a per-package `ChangeLog` file used to keep track of changes to that package. This is especially valuable to end users of the package who may not have convenient access to the source code control system used to manage the master copy of the package, and hence cannot find out easily what has changed. Often it can be very useful to the main developers as well.
 
@@ -63,7 +63,7 @@ Except for the name and location of the `.xpack.json` file, this folder layout i
 
 ### `$schema`
 
-To facilitate versioning and validation, all XCDL .json files are fully defined by a schema file.
+To facilitate versioning and validation, all xCDL .json files are fully defined by a schema file.
 
 The current schema for the `.xpack.json` file is:
 
@@ -356,7 +356,7 @@ Example:
 
 ## The `.xpackignore` file
 
-The `.xpackignore` file is used to keep stuff out of the binary package. Unlike `git`, the XCDL tools look for this file only in the package root folder.
+The `.xpackignore` file is used to keep stuff out of the binary package. Unlike `git`, the xCDL tools look for this file only in the package root folder.
 
 The syntax follow the same pattern rules as .gitignore files:
 
@@ -367,11 +367,11 @@ The syntax follow the same pattern rules as .gitignore files:
 
 ## Making a package binary distribution
 
-Developers of XCDL packages are advised to distribute their packages in the form of XCDL binary files. Packages distributed in this format may be added to existing XCDL component repositories in a robust manner using the package administration tools. This chapter describes the format of package distribution files and details how to prepare an XCDL package for distribution in this format.
+Developers of xCDL packages are advised to distribute their packages in the form of xCDL binary files. Packages distributed in this format may be added to existing xCDL component repositories in a robust manner using the package administration tools. This chapter describes the format of package distribution files and details how to prepare an xCDL package for distribution in this format.
 
 ### The binary distribution format
 
-XCDL package distribution files are zipped archives which contain both the source code and metadata. The distribution files are subject to the following rules:
+xCDL package distribution files are zipped archives which contain both the source code and metadata. The distribution files are subject to the following rules:
 
 1.  A metadata file must be named `.xpack.json` and must be located in the root of the archive.
 2.  The package source code must be placed in one or more folders.

@@ -1,5 +1,5 @@
 ---
-title: XCDL build (outdated)
+title: xCDL build (outdated)
 permalink: /xcdl/guide/build/
 
 comments: true
@@ -14,11 +14,11 @@ date: 2015-11-16 12:00:00 +0200
 
 ### Build artefact types
 
-The whole purpose of the XCDL components is to be used as reusable building blocks when creating standard artefacts like libraries and executables. It should be possible to create an executable from multiple libraries, each built from separate XCDL components.
+The whole purpose of the xCDL components is to be used as reusable building blocks when creating standard artefacts like libraries and executables. It should be possible to create an executable from multiple libraries, each built from separate xCDL components.
 
-The main development environment targeted by XCDL is Eclipse, so it should support the creation and management of CDT projects. As such, the definitions of the XCDL components should provide all information required by Eclipse CDT. Since XCDL is a superset of CMSIS Pack, it should be perfectly possible for the Eclipse projects to use/refer definitions provided by CMSIS Pack packages, like the list of devices/boards and their specific hardware details.
+The main development environment targeted by xCDL is Eclipse, so it should support the creation and management of CDT projects. As such, the definitions of the xCDL components should provide all information required by Eclipse CDT. Since xCDL is a superset of CMSIS Pack, it should be perfectly possible for the Eclipse projects to use/refer definitions provided by CMSIS Pack packages, like the list of devices/boards and their specific hardware details.
 
-As a alternate to Eclipse, it should be possible to create XCDL projects entirely using command line tools.
+As a alternate to Eclipse, it should be possible to create xCDL projects entirely using command line tools.
 
 ### Outline of the new project process
 
@@ -36,14 +36,14 @@ This separate editor should be available at any time during the lifespan of the 
 
 The full build process is moulded after the Eclipse CDT build system. It is described in [The build process]({{ site.baseurl }}/xcdl/guide/build-process/), but a summary is appropriate here. A build involves several directory structures:
 
-1.  The component repository. This is where all the package source code is held, along with XCDL files, documentation, and so on. For build purposes a component repository is read-only. Application developers will only modify the component repository when installing or removing packages, via the administration tool. Component writers will typically work with Git/local component repositories, which are read/write.
-2.  The local source tree. This is where artefact specific files are located. For Eclipse projects, this is the project folder. The artefacts are built using the source files in this tree and selected source files from the component repository. Upon user request, the component framework tools may copy files from the component repository to the local source tree. Several artefacts can be constructed from one local source tree, usually variants of the same configuration, like Debug/Release, but this is not restricted by the framework, with special care it might be possible to build artefacts for different boards from the same source tree. For a given local source tree there is a single .xcdlconfig.xml file, containing one XCDL configuration for each artefact to be build.
+1.  The component repository. This is where all the package source code is held, along with xCDL files, documentation, and so on. For build purposes a component repository is read-only. Application developers will only modify the component repository when installing or removing packages, via the administration tool. Component writers will typically work with Git/local component repositories, which are read/write.
+2.  The local source tree. This is where artefact specific files are located. For Eclipse projects, this is the project folder. The artefacts are built using the source files in this tree and selected source files from the component repository. Upon user request, the component framework tools may copy files from the component repository to the local source tree. Several artefacts can be constructed from one local source tree, usually variants of the same configuration, like Debug/Release, but this is not restricted by the framework, with special care it might be possible to build artefacts for different boards from the same source tree. For a given local source tree there is a single .xcdlconfig.xml file, containing one xCDL configuration for each artefact to be build.
 3.  The build tree. Each configuration has its own build tree. For Eclipse projects, this is the output folder of each Eclipse build configuration. The build tree contains only intermediate files, object files and final artefact, list files, map files, etc. Once a build is complete, the build tree contains no information that is useful for application development and can be wiped, although this would slow down any rebuilds following changes to the configuration.
 4.  An optional install tree, where the newly created artefacts are copied in a custom build step like *make install*. Eclipse projects do not use such a tree, but leave the artefacts to be used directly from the build tree.
 
 When used inside Eclipse, the build process involves the following steps:
 
-1.  Given a configuration, the component framework is responsible for updating the current project to match the definitions in the .xcdlconfig.xml. This extra step is implemented in a custom Eclipse builder, that requires, to be activated, a custom *nature* to be added to the project. The order of the builders associated to a project is significative, and the XCDL builder must be executed before the CDT builder. The usual case assumes that the actual source files are linked to those in the component repository. If, during the project creation, the user chose to keep local copies of the packs file, these are now copied locally.
+1.  Given a configuration, the component framework is responsible for updating the current project to match the definitions in the .xcdlconfig.xml. This extra step is implemented in a custom Eclipse builder, that requires, to be activated, a custom *nature* to be added to the project. The order of the builders associated to a project is significative, and the xCDL builder must be executed before the CDT builder. The usual case assumes that the actual source files are linked to those in the component repository. If, during the project creation, the user chose to keep local copies of the packs file, these are now copied locally.
 2.  After the source files are linked and all required folders are created, the component framework generates the configuration headers, also in the specific build tree locations.
 3.  The CDT builder is invoked and the library or executable artefact is created in the build tree.
 
@@ -58,7 +58,7 @@ When invoked from a command line, the build process involves the following steps
 
 All packages should be totally portable to all target hardware (with the obvious exceptions of HAL and device driver packages). They should also be totally bug-free, require the absolute minimum amount of code and data space, be so efficient that cpu time usage is negligible, and provide lots of configuration options so that application developers have full control over the behaviour. The configuration options are optional only if a package can meet the requirements of every potential application without any overheads. It is not the purpose of this guide to explain how to achieve all of these requirements.
 
-The XCDL component framework does have some important implications for the source code: compiler flag dependencies; package interfaces vs. implementations; and how configuration options affect source code.
+The xCDL component framework does have some important implications for the source code: compiler flag dependencies; package interfaces vs. implementations; and how configuration options affect source code.
 
 #### Compiler flag dependencies
 
@@ -66,9 +66,9 @@ Wherever possible component writers should avoid dependencies on particular comp
 
 #### Package interfaces and implementations
 
-The component framework provides encapsulation at the package level. A package *A* has no way of accessing the implementation details of another package *B* at compile-time. In particular, if there is a private header file somewhere in a package’s *src* sub-folder then this header file is completely invisible to other packages. Any attempts to cheat by using relative pathnames beginning with ../.. are generally doomed to failure because of the presence of package version directories. There are two ways in which one package can affect another: by means of the exported header files, which define a public interface; or via the XCDL scripts.
+The component framework provides encapsulation at the package level. A package *A* has no way of accessing the implementation details of another package *B* at compile-time. In particular, if there is a private header file somewhere in a package’s *src* sub-folder then this header file is completely invisible to other packages. Any attempts to cheat by using relative pathnames beginning with ../.. are generally doomed to failure because of the presence of package version directories. There are two ways in which one package can affect another: by means of the exported header files, which define a public interface; or via the xCDL scripts.
 
-This encapsulation is a deliberate aspect of the overall XCDL component framework design. In most cases it does not cause any problems for component writers. In some cases enforcing a clean separation between interface and implementation details can improve the code. Also it reduces problems when a package gets upgraded: component writers are free to do pretty much anything on the implementation side, including renaming every single source file; care has to be taken only with the exported header files and with the XCDL data, because those have the potential of impacting other packages. Application code is similarly unable to access package implementation details, only the exported interface.
+This encapsulation is a deliberate aspect of the overall xCDL component framework design. In most cases it does not cause any problems for component writers. In some cases enforcing a clean separation between interface and implementation details can improve the code. Also it reduces problems when a package gets upgraded: component writers are free to do pretty much anything on the implementation side, including renaming every single source file; care has to be taken only with the exported header files and with the xCDL data, because those have the potential of impacting other packages. Application code is similarly unable to access package implementation details, only the exported interface.
 
 Very occasionally the inability of one package to see implementation details of another does cause problems. One example occurs in HAL packages, where it may be desirable for the architectural, variant and platform HAL’s to share some information that should not be visible to other packages or to application code. This may be addressed in the future by introducing the concept of friend packages, just as a C++ class can have friend functions and classes which are allowed special access to a class internals. It is not yet clear whether such cases are sufficiently frequent to warrant introducing such a facility.
 
@@ -168,7 +168,7 @@ As a general rule, unnecessary `#include`’s should be avoided. A header file s
 
 Exported header files should avoid `#include`’ing configuration header files unless absolutely necessary, to avoid unnecessary rebuilding of both application code and other packages when there are minor configuration changes. A `#include` is needed only when a configuration option affects the exported interface, or when it affects some implementation details which is controlled by the header file such as whether or not a particular function gets inlined.
 
-There are a couple of ways in which the problem of unnecessary rebuilding could be addressed. The first would require more intelligent handling of header file dependency handling by the tools (especially the compiler) and the build system. This would require changes to various non-XCDL tools. An alternative approach would be to support finer-grained configuration header files, for example there could be a file `pkgconf/libc/inline.h` controlling which functions should be inlined. This could be achieved by some fairly simple extensions to the component framework, but it makes it more difficult to get the package header files and source code correct: a C preprocessor `#ifdef` directive does not distinguish between a symbol not being defined because the option is disabled, or the symbol not being defined because the appropriate configuration header file has not been `#include`’d. It is likely that a cross-referencing tool would have to be developed first to catch problems like this, before the component framework could support finer-grained configuration headers.
+There are a couple of ways in which the problem of unnecessary rebuilding could be addressed. The first would require more intelligent handling of header file dependency handling by the tools (especially the compiler) and the build system. This would require changes to various non-xCDL tools. An alternative approach would be to support finer-grained configuration header files, for example there could be a file `pkgconf/libc/inline.h` controlling which functions should be inlined. This could be achieved by some fairly simple extensions to the component framework, but it makes it more difficult to get the package header files and source code correct: a C preprocessor `#ifdef` directive does not distinguish between a symbol not being defined because the option is disabled, or the symbol not being defined because the appropriate configuration header file has not been `#include`’d. It is likely that a cross-referencing tool would have to be developed first to catch problems like this, before the component framework could support finer-grained configuration headers.
 
 ### Package documentation
 
@@ -180,9 +180,9 @@ Packages should normally come with one or more test cases. This allows applicati
 
 #### Google Test
 
-XCDL itself does not include a specific testing infrastructure and tests may use any C/C++ testing infrastructure.
+xCDL itself does not include a specific testing infrastructure and tests may use any C/C++ testing infrastructure.
 
-µOS++ fully supports the [Google Test](https://code.google.com/p/googletest/) testing infrastructure, and XCDL should be able to configure the environment required to run these tests.
+µOS++ fully supports the [Google Test](https://code.google.com/p/googletest/) testing infrastructure, and xCDL should be able to configure the environment required to run these tests.
 
 #### Running tests on the host
 
@@ -190,19 +190,19 @@ If possible, tests should be written highly portable, and should be able to run 
 
 #### Continuous integration
 
-XCDL should provide support to collect information about all tests contributed by all packages available in a configuration and run all of them from a scriptable environment, in order to facilitate integration into continuous integration tools like [Hudson](https://en.wikipedia.org/wiki/Hudson_(software)).
+xCDL should provide support to collect information about all tests contributed by all packages available in a configuration and run all of them from a scriptable environment, in order to facilitate integration into continuous integration tools like [Hudson](https://en.wikipedia.org/wiki/Hudson_(software)).
 
 #### Semihosted tests
 
-XCDL should also provide support to run the same tests on the actual hardware (or on simulators like QEMU), using the semihosting infrastructure.
+xCDL should also provide support to run the same tests on the actual hardware (or on simulators like QEMU), using the semihosting infrastructure.
 
-#### TODO: update XCDL tests definitions
+#### TODO: update xCDL tests definitions
 
 At the time of writing the application developer support for building and running test cases via the component framework is under review and likely to change. Currently each eCos test case should consist of a single C or C++ source file that can be compiled with the package’s set of compiler flags and linked like any application program. Each test case should use the testing API defined by the infrastructure. A magically-named calculated configuration option of the form `CYGPKG_<PACKAGE-NAME>_TESTS` lists the test cases.
 
 ### Host-side support
 
-On occasion it would be useful for an XCDL package to be shipped with host-side support. This could take the form of an additional tool needed to build that package. It could be an application intended to communicate with the target-side package code and display monitoring information. It could be a utility needed for running the package test cases, especially in the case of device drivers. The component framework does not yet provide any such support for host-side software, and there are obvious issues related to portability to the different machines that can be used for hosts. This issue may get addressed in some future release. In some cases custom build steps can be subverted to do things on the host side rather than the target side, but this is not recommended.
+On occasion it would be useful for an xCDL package to be shipped with host-side support. This could take the form of an additional tool needed to build that package. It could be an application intended to communicate with the target-side package code and display monitoring information. It could be a utility needed for running the package test cases, especially in the case of device drivers. The component framework does not yet provide any such support for host-side software, and there are obvious issues related to portability to the different machines that can be used for hosts. This issue may get addressed in some future release. In some cases custom build steps can be subverted to do things on the host side rather than the target side, but this is not recommended.
 
 ## Credits
 

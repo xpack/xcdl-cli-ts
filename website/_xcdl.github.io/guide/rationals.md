@@ -1,5 +1,5 @@
 ---
-title: XCDL rationals (outdated)
+title: xCDL rationals (outdated)
 permalink: /xcdl/guide/rationals/
 
 comments: true
@@ -8,7 +8,7 @@ date: 2015-11-16 12:00:00 +0200
 
 ---
 
-## Why XCDL? (for the impatient)
+## Why xCDL? (for the impatient)
 
 ### The very short answer
 
@@ -16,7 +16,7 @@ Well, if children can build complex toys from LEGO bricks, why couldn't we build
 
 ### Rationals
 
-Simple reasons behind the XCDL component framework design:
+Simple reasons behind the xCDL component framework design:
 
 * for better performance (size, optimisation, etc) libraries are not the solution, and compile time configuration is preferred;
 
@@ -45,15 +45,15 @@ There may be multiple compliance levels, from simple to complex, each adding mor
 
 ### Benefits
 
-The main beneficiaries of the XCDL component framework are software developers, and benefits are multifold, during the project creation, during project lifecycle, and improved testability.
+The main beneficiaries of the xCDL component framework are software developers, and benefits are multifold, during the project creation, during project lifecycle, and improved testability.
 
 #### Simplified project creation
 
-With proper metadata available, project creation is reduced to several clicks to select the main characteristics of the project; all required files will be pulled in by the dependencies, and all the usual project settings (source folders, include folders, compile options) will be automatically set by the XCDL project wizard.
+With proper metadata available, project creation is reduced to several clicks to select the main characteristics of the project; all required files will be pulled in by the dependencies, and all the usual project settings (source folders, include folders, compile options) will be automatically set by the xCDL project wizard.
 
 #### Simplified updates management
 
-If, during the lifetime of the project, other features that were not initially selected are needed (for example more device drivers, more application libraries, etc), the developer can invoke the XCDL project wizard and enable/disable further components and change any options; in the end the wizard will recompute all dependencies and update the project to use the new definitions.
+If, during the lifetime of the project, other features that were not initially selected are needed (for example more device drivers, more application libraries, etc), the developer can invoke the xCDL project wizard and enable/disable further components and change any options; in the end the wizard will recompute all dependencies and update the project to use the new definitions.
 
 The same is true when new package versions are released (for example STM releases a new version of the HAL for the STM32F4 family and the stm32f4-hal xPack is updated); the developer can choose to stick to a given version, or upgrade to the latest version; the wizard will recompute all dependencies and update the project to use the new definitions.
 
@@ -62,17 +62,17 @@ The same is true when new package versions are released (for example STM release
 With all metadata available in the packages, and the full configuration also saved as metadata, it is very easy to recreate the project from a script, and integrate the project build into a Continuous Integration systems (like GitHub Actions, or Jenkins/Hudson), greatly simplifying the definition and use of unit tests.
 
 
-## Why XCDL? (the long version)
+## Why xCDL? (the long version)
 
 As the complexity of embedded system grows, it is more and more difficult to put together multiple components with lots of dependencies and configuration options.
 
-To address this problem, XCDL defines and implements a component framework, as a set of metadata and a collection of tools specifically designed to support **multi-variant cross-building embedded system images** based on reusable components. This component framework is extensible, allowing additional components to be added to the build system at any time.
+To address this problem, xCDL defines and implements a component framework, as a set of metadata and a collection of tools specifically designed to support **multi-variant cross-building embedded system images** based on reusable components. This component framework is extensible, allowing additional components to be added to the build system at any time.
 
-Although designed to meed the requirements of building embedded applications, XCDL should be generic enough to be used to build regular applications/libraries too.
+Although designed to meed the requirements of building embedded applications, xCDL should be generic enough to be used to build regular applications/libraries too.
 
 ### Multi-variant
 
-In the XCDL context, _multi-variant_ covers the following:
+In the xCDL context, _multi-variant_ covers the following:
 
 * multiple processor architectures (like ARM Cortex-M), with multiple sub-architectures (like M3, M4, M0), multiple manufacturer families (like STM32F1, STM32F4), multiple sub-families (like STM32F10x Connectivity Line) and multiple devices (like ST STM32F107VG);
 * as an extension to architectures, synthetic architectures, like POSIX, can also be considered targets, mainly used to run test cases;
@@ -83,13 +83,13 @@ In the XCDL context, _multi-variant_ covers the following:
 
 ## Why manage dependencies?
 
-Automatic dependencies management is the first and foremost feature of the XCDL component framework.
+Automatic dependencies management is the first and foremost feature of the xCDL component framework.
 
 Properly defined components, with accurate dependencies, allow to automatically create projects with all required source files and headers, and with all required compile and link options properly set. For example if a configuration refers to the STM32F4-DISCOVERY board, this will refer to the STM32F407VG processor, which will refer to the STM32F4 startup code, which will refer to the CMSIS CORE headers, so all required pieces will fit together without user intervention.
 
 ## Why configurability?
 
-The XCDL component framework places a great deal of emphasis on configurability.
+The xCDL component framework places a great deal of emphasis on configurability.
 
 ### Reusability
 
@@ -117,7 +117,7 @@ Another approach is to control the behaviour at **link time**, typically by usin
 
 ### Compile-time
 
-The XCDL component framework allows the behaviour of components to be controlled at an even earlier time: when the component source code gets compiled.
+The xCDL component framework allows the behaviour of components to be controlled at an even earlier time: when the component source code gets compiled.
 
 In theory, **compile-time** configurability should give the best possible results in terms of code size, because it allows code to be controlled at the individual statement level rather than at the function or object level. **The overall result is that the final application image contains only the code and data that is really needed for the application to work, and nothing else**.
 
