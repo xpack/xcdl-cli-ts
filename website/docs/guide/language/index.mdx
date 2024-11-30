@@ -14,11 +14,632 @@ Work in progress.
 
 :::
 
-TBD
+TThe xCDL definitions are integral to the xCDL component framework. Each package must include at least one xCDL file to describe the package to the framework. This file contains details about the configuration options and instructions on how to build the package. Creating a new component or converting existing code into an xCDL component always requires writing the corresponding xCDL. This chapter provides an overview of the xCDL language. Detailed information on specific aspects of the language can be found in the [Metadata](../../metadata/) pages.
+
+## Language overview
+
+xCDL originated as a Python representation of the original eCos CDL definitions, which were plain TCL scripts. Over time, several changes were made, and the format evolved from XML to JSON.
+
+A very simple xCDL file would look like this:
+
+```json
+{
+    "cdlPackage": {
+        "name": "errors",
+        "display": "Common error code support",
+        "description": "This package contains the common list of error and status codes. It is held centrally to allow packages to interchange error codes and status codes in a common way, rather than each package having its own conventions for error/status reporting. The error codes are modelled on the POSIX style naming e.g. EINVAL etc. This package  also provides the standard strerror() function to convert error codes to textual representation.",
+        "compilerSourceFiles": [
+            "src/strerror.cpp"
+        ],
+        "compilerIncludeFolders": [
+            "include"
+        ],
+        "generatedFile": "os/error.h",
+        "generatedDefinition": "OS_PACKAGE_ERROR",
+    }
+}
+```
+
+This describes a single package, the error code package, which does not have any sub-components or configuration options. The package is named `errors`, and can be referenced in other xCDL files using, for example `"requires": [ "isEnabled('errors')" ],`. There will also be a `#define` for this package in a configuration header file.
+
+In addition to the package name, this file provides several properties for the package as a whole. The `display` property offers a short description, while the `description` property provides a more detailed one for users needing additional information. The `compilerSourceFiles` and `generated*` properties list the build-time consequences of this package. Notably, the package appears to lack any online documentation.
+
+Packages can be even simpler than this. If a package only provides an interface and has no files to be compiled, there is no need for a `compilerSourceFiles` property. Similarly, if there are no exported header files, or if the exported header files should be placed in the top-level of the install/include directory, there is no need for a `generatedFile` property. Strictly speaking, the description and display properties are also optional, although application developers would likely not appreciate the resulting lack of information about the package's purpose.
+
+However, many packages tend to be more complex than the error package, containing various subcomponents and configuration options. These are also defined in the xCDL files in much the same way as the package. For example, the following excerpt comes from the infrastructure package:
+
+```json
+{
+    "cdlComponents": {
+        "traceBuffer": {
+            "display": "Buffered tracing",
+            "description": "An output module which buffers output from tracing and assertion events. The stored messages are output when an  assert fires, or OS_TRACE_PRINT() (defined in <os/infra/os_trac.h>) is called. Of course, there will only be stored messages if tracing per se (OS_DEBUG_USE_TRACING) is enabled above.",
+
+            "defaultEnable": "true",
+            "activeIf": "isEnabled('debug/useTracing')",
+            "generatedDefinition": "OS_DEBUG_INFRA_DEBUG_TRACE_ASSERT_BUFFER",
+
+            "cdlOptions": {
+                "size": {
+                    "display": "Trace buffer size",
+                    "description": "The size of the trace buffer. This counts the number of trace records stored. When the buffer fills it either wraps, stops recording, or generates output.",
+                    "valueType": "int",
+                    "defaultValue": "32",
+                    "legalValues": "5 to 65535",
+                    "generatedDefinition": "OS_DEBUG_INFRA_DEBUG_TRACE_BUFFER_SIZE"
+                }
+            }
+        }
+    }
+}
+```
+
+Like a `cdlPackage`, a `cdlComponents` object has a name and a body. The body contains various properties for that component and may also include subcomponents or options. Similarly, a `cdlOptions` object has a name and a body of properties. This example introduces several new properties: `defaultValue`, `activeIf`, `valueType` and `legalValues`. The meanings of most of these should be fairly obvious. The next sections describe the various xCDL objects and properties in detail.
+
+## xCDL objects
+
+Several xCDL-related objects can occur at the top level of a xCDL file: `cdlPackage`, `cdlComponents`, `cdlOptions` and `cdlInterfaces`. These objects correspond to the basic building blocks of the language. All of them follow the same basic form:
+
+`cdlPackage` defines a single object.
+
+```json
+{
+    "cdlPackage": {
+        "name": "<key>",
+        ... body ...
+    }
+}
+```
+
+`cdlComponents`, `cdlOptions` and `cdlInterfaces` define maps of objects:
+
+```json
+{
+    "cdlComponents": {
+        "<key>": {
+            ... body ...
+        }
+    },
+    "cdlOptions": {
+        "<key>": {
+            ... body ...
+        }
+    },
+    "cdlInterfaces": {
+        "<key": {
+            ... body ...
+        }
+    }
+}
+```
+
+All objects have a mandatory name and, within their body, a list of properties and an optional list of child objects. All child names must be unique within a given parent. Addressing objects is similar to addressing files in a file system, using forward slash-separated paths. Paths can be absolute or relative. Additionally, relative paths may be incomplete, such as `isEnabled('traceBuffer/size')`, as long as the uniqueness of the sub-path is ensured.
+
+The various xCDL objects exist in a hierarchy. There is no upper limit on how deeply components can be nested, but it is rarely necessary to go more than three or four levels beyond the package level. The naming convention used for referring to objects incorporates elements of the hierarchy, which helps keep the names more manageable in size.
+
+The hierarchy serves two purposes. First, it allows objects to be controlled en masse, so disabling a component automatically disables all the objects below it in the hierarchy. Second, it permits a much simpler representation of the configuration in the graphical configuration tool, facilitating navigation and modification.
+
+Each package has one top-level xCDL file, `xcdl.json`. There should be a single top-level `cdlPackage` object per package.
+
+By default, an object is placed at the top level of the hierarchy, but it is possible to override this using a `parent` property. This is generally useful for separately distributed packages, allowing them to be attached at a convenient location in the hierarchy. Components, options, and interfaces can also be re-parented, although this is less common.
+
+Components can also contain options and other xCDL objects; in fact, this is what distinguishes them from options. These can be defined in the body of the `cdlComponents`:
+
+```json
+{
+    "cdlComponents": {
+        "stdio": {
+            ...
+            "generatedDefinition": "OS_PACKAGE_LIBC_STDIO",
+            ...
+            "cdlComponents": {
+                "floating-point": {
+                    ...
+                    "generatedDefinition": "OS_PACKAGE_LIBC_STDIO_FLOATING_POINT",
+                    ...
+                }
+            },
+            "cdlOptions": {
+                "thread-safe-streams": {
+                    ...
+                    "generatedDefinition": "OS_PACKAGE_LIBC_STDIO_THREAD_SAFE_STREAMS",
+                    ...
+                }
+            }
+        }
+    }
+}
+```
+
+Nesting options inside the bodies of components is fine for simple packages with only a limited number of configuration options. However, as the number of options increases, this approach becomes unsatisfactory. Instead, it is possible to split the xCDL data into multiple xCDL files on a per-component basis. The `includeCDLs` property should be used for this. For example, in the case of the C library, all stdio-related configuration options could be placed in `stdio-xcdl.json`, nd the top-level xCDL file `xcdl.json` would contain the following:
+
+```json {5}
+{
+    "cdlPackage": {
+        "name": "libc",
+        ...
+        "includeCDLs": [ "stdio-xcdl.json" ],
+    }
+}
+```
+
+The `cdlComponents` object `stdio`, with its `floating-point` and `thread-safe-streams` children, can be placed at the top level of `stdio-xcdl.json`. It is possible to have some options nested within the body of a `cdlComponents` object and other options in a separate file accessed via the `includeCDLs` property. In such cases, the nested options are processed first, followed by the other file. A file specified by an `includeCDLs` property should only define new objects (options, components, or interfaces); it should not contain any additional properties for the current component.
+
+A component's xCDL file can have a sub-component with its own `includeCDLs` property, and so on. However, excessive nesting like this is rarely useful in practice. It is also possible to bypass the xCDL language support for constructing hierarchies automatically and use the parent property explicitly for every single option and component, though this is generally not recommended.
+
+## xCDL properties
+
+Each package, component, option, and interface has a list of properties that provide the component framework with information on how to handle each object. For example, there is a property for a descriptive text message that can be displayed to a user who is trying to understand the impact of manipulating the object on the target application. Another property specifies the default value, and another defines whether an object should be enabled or disabled by default.
+
+All properties are optional, and it is legal (though not very useful) to define a configuration option with an empty body. However, some properties are more essential than others: users will not appreciate having to manipulate an object without any description or documentation.
+
+BBecause different properties serve various purposes, their syntax may vary slightly. Most properties take string values, but some may take boolean constants. In some cases, it may be necessary to define a list of arguments for a property (such as the `compilerSourceFiles` property, which specifies the files to be compiled if a given object is enabled). In these cases, the property will be an array of strings. The syntax of the property string value depends on the property and can include names, texts, integer values, file/folder paths, etc.  The values of `activeIf`, `computed`, `defaultValue`, `legalValues` and `requires` properties are various JavaScript expressions.
+
+Many of the properties can be used in any of the `cdlPackage`, `cdlComponents`, `cdlOptions` or `cdlInterfaces` objects. However, some properties are more specific. The `includeCDLs` property is only relevant to `cdlPackage` and `cdlComponents` objects. The `generatedFile` property usually applies to a package as a whole. The `computed`, `defaultValue`, `legalValues` and `valueType` properties are not relevant to packages, as will be explained later. Additionally, the `computed` and `defaultValue` properties are not relevant to interfaces.
+
+The next sections list the various properties, grouped by purpose. Each property also has a full reference page in [The xCDL Metadata](../../metadata/) section. Properties related to values and expressions are described in more detail in the [Values and expressions](#values-and-expressions) section. Properties related to header file generation and to the build process are described in [The xCDL Workflow](../workflow/) page.
+
+### Information-providing properties
+
+Users can only be expected to manipulate configuration options sensibly if they are given sufficient information about these objects. There are three properties that serve to explain an object in plain text: the `display` property provides a textual alias for an object, which is usually more comprehensible than something like `size`; the `description` property offers a longer description, typically a paragraph or so; and the `docsUrl` property specifies the location of additional online documentation related to a configuration option.
+
+In the context of a configuration (graphical) tool, the `display` string will be the primary way for users to identify nodes in the configuration hierarchy. The `description` paragraph will be visible whenever the object is selected, while the online documentation will only be accessed when the user explicitly requests it.
+
+```json {4-6}
+{
+    "cdlPackage": {
+        "name": "uitron",
+        "display": "uITRON compatibility layer",
+        "description": "eCos supports a uITRON Compatibility Layer, full Level S (Standard) compliance with Version 3.02 of the uITRON Standard, plus many Level E (Extended) features. uITRON is the premier Japanese embedded RTOS standard.",
+        "docsUrl": "https://ecos.com/reference/pacakge/uitron/",
+        "generatedDefinition": "OS_PACKAGE_UITRON"
+    }
+}
+```
+
+All three properties have string values. For `display` and `description`, this string is a descriptive text. For `docsUrl` the string should hold an URL.
+
+### The configuration hierarchy
+
+There are two properties related to the hierarchical organization of components and options: `parent` and `includeCDLs`.
+
+The `parent` property can be used to relocate an xCDL entity within the hierarchy. The most common use is for packages, to avoid having all packages appear at the top level of the configuration hierarchy. For example, an architectural HAL package such as Cortex-M is placed below the common HAL package using the parent property.
+
+```json {5}
+{
+    "cdlPackage": {
+        "name": "cortex-m",
+        "display": "Cortex-M architecture",
+        "parent": "hal",
+        ...
+    }
+}
+```
+
+The `parent` property can also be used in the body of a `cdlComponents`, `cdlOptions` or `cdlInterfaces` objects, though this is less common. Care must be taken, as excessive re-parenting can be confusing when reading xCDL files. Additionally, caution is needed when re-parenting below another package that may not be loaded in a given configuration, as this can result in undefined behaviour.
+
+The `includeCDLs` property can only be used in the body of a `cdlPackage` or a `cdlComponents` object. The property value is an array of strings, containing file paths of xCDL files with additional options, subcomponents, and interfaces that should be placed below the current object in the hierarchy. The file paths are treated as relative to the folder where the current xCDL file is located.
+
+```json {12-14}
+{
+    "cdlComponents": {
+        "stdio": {
+            "display": "Standard input/output functions",
+            "description": "This enables support for standard I/O functions from <stdio.h>.",
+            "requires": [
+                "isEnabled('io')",
+                "isEnabled('io/haldiag/serial')"
+            ],
+            "valueType": "bool",
+            "defaultValue": "true",
+            "includeCDLs": [
+                "stdio-xcdl.json"
+            ],
+            "generatedDefinition": "OS_PACKAGE_LIBC_STDIO",
+        }
+    }
+}
+```
+
+### Value-related properties
+
+There are seven properties which are related to object values and state: `valueType`, `computed`, `defaultValue`, `legalValues`, `activeIf`, `implements`, and `requires`. More detailed information can be found in the [Values and expressions](#values-and-expressions) section.
+
+In the context of configurability, the concept of an object's value is somewhat non-trivial. First, an object may or may not be loaded: it is possible to build a configuration that includes the math library but not the kernel. However, the math library's xCDL file may still reference kernel objects; for example, `libm/thread-safe-compat-mode` has a `requires` constraint on `kernel/threads-data`. Even if an object is loaded, it may or may not be active, depending on what is happening higher up in the hierarchy. For instance, if the C library's `cdlComponents` object `libc/stdio` is disabled, then other `cdlOptions` objects such as `libc/stdio/buffsize` become irrelevant.
+
+Additionally, each object has both a boolean enabled/disabled flag and a data part. For many objects, only the boolean flag is of interest, while for others, the data part is also important. The `valueType` property can be used to control this.
+
+#### `"valueType": "none"`
+
+This type indicates that the data part is not of interest. If active and `configurable`, the object can be enabled or disabled by the user, with the data always following the `isEnabled()` value. The most common use for this is to have a component that acts as a placeholder in the hierarchy, allowing various objects to be grouped below it. To make the object non-configurable by the user, set `"configurable": false`.
+
+#### `"valueType": "bool" | "int" | "float" | "string"`
+
+This type indicates that the data part is of interest and has a specific type. To make the boolean part non-configurable by the user, use `"configurable": false`. To make the data part non-configurable by the user, use `"computed": "<value>"`.
+
+For more details on xCDL types, how a type affects expression evaluation, and other consequences, see the [Values and expressions](#values-and-expressions) section.
+
+The `valueType` property cannot be used for a package because packages have no values. Options and components have the `none` type by default, as most configuration choices are simple yes-or-no decisions. Interfaces have the `int` type by default.
+
+Interface values cannot be changed by the user, so the `configurable` property is not available for `cdlInterfaces` objects.
+
+The `computed` property can be used for objects that should not be user-modifiable but are instead fixed by the target hardware or determined from the current values of other objects. In general, computed objects should be avoided, as they can confuse users who need to determine whether a particular object can be changed. There are valid uses for computed objects, but also many invalid ones. Consult the reference packages for further details. The property value is an xCDL expression, for example:
+
+```json {6}
+{
+    "cdlOptions": {
+        "period": {
+            "display": "Real-time clock period",
+            "valueType": "int",
+            "computed": "12500",
+            "generatedDefinition": "OS_INTEGER_HAL_RTC_PERIOD"
+        }
+    }
+}
+```
+
+The `computed` property cannot be used for packages or interfaces. Packages have no values, and interfaces are implicitly computed based on the number of active and enabled implementers.
+
+The `defaultValue` property is similar to `computed`, but it only specifies a default value that users can modify. Again, this property is not relevant to packages or interfaces. A typical example would be:
+
+```json {8}
+{
+    "cdlOptions": {
+        "thread-support": {
+            "display": "Include GDB multi-threading debug support",
+            "parent": "hal/gdb",
+            "generatedDefinition": "OS_DEBUG_HAL_DEBUG_GDB_THREAD_SUPPORT",
+            "requires": [ "isEnabled('kernel/debug/gdb/threadSupport')" ],
+            "defaultValue": "valueOf('kernel/debug/gdb/threadSupport')",
+            ...
+        }
+    }
+}
+```
+
+The `legalValues` property imposes a constraint on the possible values of the data part of an object. Therefore, it is not applicable to objects with the type `none`. It cannot be used for packages since packages have no values. The values of the `legalValues` property are arrays of xCDL list expressions.
+
+```json {10}
+{
+    "cdlComponents": {
+        "libc": {
+            ...
+            "cdlOptions": {
+                "std-default-offset": {
+                    "display": "Default Standard Time offset",
+                    "generatedDefinition": "OS_INTEGER_LIBC_TIME_STD_DEFAULT_OFFSET",
+                    "valueType": "int",
+                    "legalValues": "-90000 to 90000",
+                    "defaultValue": "0"
+                }
+            }
+        }
+    }
+}
+```
+
+The `activeIf` property does not relate directly to an object's value but rather to its active state. Usually, this is controlled via the configuration hierarchy: if the `libc/stdio` component is disabled, then all options below it are inactive and do not have any consequences. In some cases, the hierarchy does not provide sufficient control. For example, an object should only be active if two disjoint sets of conditions are satisfied: the hierarchy could be used for one of these conditions, and an additional `activeIf` property could be used for the other. The value of an `activeIf` property is an array of xCDL goal expressions.
+
+```json {6-8}
+{
+    "cdlOptions": {
+        "binsem": {
+            "parent": "kernel/instrument",
+            "generatedDefinition": "OS_DEBUG_KERNEL_INSTRUMENT_BINSEM",
+            "activeIf": [
+                "isEnabled('kernel/synch')"
+            ],
+            ...
+        }
+    }
+}
+```
+
+The `implements` property is related to the concept of xCDL interfaces. If an object is enabled and it implements a particular interface, it contributes 1 to that interface's value.
+
+
+```json {6}
+{
+    "cdlPackage": {
+        "name": "edb7xxx",
+        "parent": "net/drivers/eth",
+        "display": "Cirrus Logic ethernet driver",
+        "implements": "net/drivers/if",
+        ...
+    }
+}
+```
+
+The `requires` property is used to impose constraints on the user's choices. For example, it is unreasonable to expect the C library to provide thread-safe implementations of certain functions if the underlying kernel support has been disabled, or if the kernel is not being used at all.
+
+```json {7-9}
+{
+    "cdlOptions": {
+        "per-thread-errno": {
+            "parent": "libc",
+            "display": "Per-thread errno support",
+            "generatedDefinition": "OS_PACKAGE_LIBC_PER_THREAD_ERRNO",
+            "requires": [
+                "isEnabled('kernel/threadsData')"
+            ],
+            "defaultEnable": true,
+            ...
+        }
+    }
+}
+```
+
+The value of the `requires` property should be an array of xCDL goal expression.
+
+### Generating the configuration header files
+
+When creating or updating a build tree, the component framework will also generate configuration header files. By default, it will generate a `#define` for each object that is enabled and defines a `generatedDefinition` property. For objects with data, the `#define` will use the object's data part. Typical output would include:
+
+```c
+#define OS_PACKAGE_LIBC_TIME_POSIX (1)
+#define OS_INTEGER_LIBC_TIME_DST_DEFAULT_STATE (-1)
+```
+
+There are several properties that can be used to control the header file generation process: `generatedFile`, `generatedDefinition`, and `valueFormat`.
+
+The component framework will generate a configuration header file based on the `generatedFile` property. If this property is not defined for the current object, the parent property is used.
+
+```json {5}
+{
+    "cdlPackage": {
+        "name": "risc-v",
+        "display": "RISC-V architecture",
+        "parent": "hal",
+        "generatedFile": "hal-risc-v.h",
+        "generatedDefinition": "OS_PACKAGE_HAL_RISC_V",
+        ...
+    }
+}
+```
+
+The `valueFormat` property can be used to control how the value part of the `#define` is formatted.
+
+### Controlling what gets built
+
+There are several properties which affect the build process. One of them is `compilerSourceFiles`.
+
+Most of the source files that go into a package should simply be compiled with the appropriate compiler, selected by the target architecture, and with the appropriate flags, along with an additional set defined by the target hardware and possible modifications on a per-package basis. The `compilerSourceFiles` property is used to list these source files:
+
+```json {5-7}
+{
+    "cdlPackage": {
+        "name": "errors",
+        "display": "Common error code support",
+        "compilerSourceFile": [
+            "src/strerror.cpp"
+        ],
+        ...
+    }
+}
+```
+
+The value of the `compilerSourceFiles` property should be an array of strings with source file paths. Typically, most of the sources will be needed for the package as a whole and will be listed in several `compilerSourceFiles` properties in the object body. Some sources may be specific to particular configurations; in other words, there is no point in compiling them unless that object is enabled. In such cases, the sources should be listed in a compile property in the corresponding `cdlOptions` or `cdlComponents` objects.
+
+Some packages may have more complicated build requirements. For example, they may involve a special target such as a linker script that should not end up in the usual library, or they may involve special build steps for generating an object file.
+
+For full details of the build process, see [The xCDL Workflow](../workflow/).
+
+The `generatedFile` property relates to an object's generated header files. To avoid any mistakes, this property must be explicitly defined:
+
+```json {5}
+{
+    "cdlPackage": {
+        "name": "infra",
+        "display": "Infrastructure",
+        "generatedFile": "os/infra.h",
+        ...
+    }
+}
+```
+
+The various header definitions generated by the infrastructure will now end up in the `os/infra.h` file.
+
+### Miscellaneous properties
+
+TBD - `compilerIncludeFolders`, ...
+
+## Object naming convention
+
+xCDL objects have internal names, used to refer objects in the configuration hierarchy and to compose permalinks in documentation websites.
+
+Names are short strings and must follow these rules:
+
+- Be unique for a given parent.
+- Be accepted as POSIX file/folder names, which means they can include letters, digits, and a few special characters like [-_.].
+
+The recommended syntax is all lowercase, with words separated by dashes (`-`).
+
+Using the JSON syntax, nodes names are represented as JSON member names and node bodies as JSON objects.
+
+```json {3-6}
+{
+  "cdlComponents": {
+    "rcc": {
+      "display": "RCC",
+      ...
+    }
+  }
+}
+```
+
+When used in a configuration (graphical) tool, it's not the name, but the node `display` property that is preferred to be displayed to identify the node.
+
+## Values and expressions
+
+It is reasonable to expect that enabling or disabling an object, such as a `cdlOptions` object like `kernel/threads-data`, will affect its value. This will impact any expressions that reference this object, such as `"requires": "isEnabled('kernel/threads-data')"`. It will also influence the consequences of that object: how it affects the build process and any constraints that `kernel/threads-data` may impose (as opposed to constraints imposed on this object by others).
+
+In a language like C, handling variables is relatively straightforward. If a variable `x` is referenced in an expression such as if `(x != 0)`, and that variable is not defined anywhere, the code will fail to build, typically resulting in an unresolved error at link-time. Additionally, in C, a variable `x` does not exist within any hierarchy, so its value for expression evaluation is not affected by anything else. C variables also have a clear type, such as int or long double.
+In xCDL things are not so straightforward.
+
+### Object values
+
+There are four factors that determine a configuration object's value:
+
+1. An object is part of a package that may or may not be loaded.
+2. If the parent package is loaded, the object may or may not be active.
+3. Even if the object is active, it may or may not be enabled.
+4. If the object is in a loaded package, is active and enabled, and has some associated data, it will use that data as its value.
+
+### Is the object **loaded**?
+
+At any given time, a configuration will contain only a subset of all possible packages. In fact, it is impossible to combine certain packages in a single configuration. For example, architectural HAL packages should contain a set of configuration options defining endianness, the sizes of basic data types, and so on (many of which will, of course, be constant for any given architecture). Any attempt to load two architectural HAL packages into a configuration will fail due to the resulting name clash. Since xCDL expressions can reference objects in other packages, and often need to do so, it is essential to define the resulting behaviour.
+
+One complication is that the component framework does not know about every single object in every single package. Obviously, it cannot know about packages from arbitrary third parties that have not been installed. If an xCDL expression contains a reference to some `kernel/sched-timeslice`, the component framework will only know about this object if the kernel package is actually loaded into the current configuration.
+
+Any objects which are not in the current configuration are handled as follows:
+
+1. Any references to that object will evaluate to 0/`false`, so `valueOf('...') === 0`, `isLoaded('...') === false`, `isActive('...') === false`, `isEnabled('...') === false`.
+2. An object that is not loaded has no consequences on the build process. It cannot directly result in any `#define`s in a configuration header file, nor in any files being compiled. This is only reasonable: if the object is not loaded, the component framework has no way of knowing about any compile or similar properties. An object that is not loaded can have indirect consequences by being referenced in xCDL expressions.
+3. An object that is not loaded cannot impose any constraints on the rest of the configuration. Again, this is the only reasonable behaviour: if the object is not loaded, any associated `requires` or `legalValues` properties will not be known.
+
+### Is the object **active**?
+
+The next issue to consider is whether or not a particular object is active. Configuration objects are organized in a hierarchy of components and sub-components. For example, the C library package contains a `cdlComponents` object `libc/stdio` that includes all the configuration options related to standard I/O. If a user disables the component as a whole, then all the objects below it become inactive: it makes no sense to disable all stdio functionality and then manipulate the buffer sizes.
+
+Inactive is not quite the same as disabled, although the effects are similar. The value of an inactive object is preserved. If the user modifies a buffer size option and then disables the whole stdio component, the buffer size value remains in case the stdio component is re-enabled later on. Some tools, such as the graphical configuration tool, will treat inactive objects specially; for example, such objects may be greyed out.
+
+The active or inactive state of an object may affect other packages. For example, a package may use the `sprintf()` function and require support for floating point conversions, a constraint that is not satisfied if the relevant object is inactive. It is necessary to define exactly what it means for an object to be inactive:
+
+1. An object is inactive if its parent is either inactive or disabled. For example, if the `cdlComponents` object `libc/stdio` is disabled, then all the options and sub-components become inactive; since `libc/stdio/floating-point` is now inactive, `libc/stdio/floating-point/printf` is inactive as well.
+2. Objects may also be inactive as a result of an `activeIf` property. This is useful if a particular object is only relevant when two or more disjoint sets of conditions need to be satisfied, as the hierarchical structure can only cope with at most one such set.
+3. If an object is inactive, then any references to that object in xCDL expressions will evaluate to 0/`false`. So `valueOf('...') === 0`, `isActive('...') === false`, `isEnabled('...') === false`.
+4. An object that is inactive has no consequences on the build process. No #define will be generated. Any compile or similar properties will be ignored.
+5. An object that is inactive cannot impose any constraints on the rest of the configuration. For example, the `cdlOptions` object `libc/stdio/floating-point/printf` has a dependency `"requires": "isEnabled('libm')"`, but if all of the stdio functionality is disabled, then this constraint is ignored (although, of course, there may be other packages that have a dependency on `libm`).
+
+
+### Is the object **enabled**? What is the object value?
+
+The majority of configuration options are boolean in nature, allowing the user to either enable or disable certain functionality. However, some objects are different. For example, `valueOf('libc/stdio/bufsize')` is a number, and `valueOf('libc/stdio/default-console')` is a string corresponding to a device name. xCDL must accommodate this variety and define the exact behaviour of the system in terms of constraints and build-time consequences.
+
+In xCDL, the value of an object consists of two parts. There is a boolean part, which controls whether or not the object is enabled and can be accessed with `isEnabled('...')`. There is also a data part, which provides additional information and can be accessed with `valueOf('...')`. For most objects, one of these parts is fixed, as controlled by the object's `valueType` property:
+
+
+|valueType|isEnabled()|valueOf() when enabled|valueOf() when disabled|
+|---------|-----------|----------------------|-----------------------|
+|none|User-modifiable|isEnabled(), not modifiable|false|
+|bool|User-modifiable|User-modifiable|false|
+|int|User-modifiable|User-modifiable|0|
+|float|User-modifiable|User-modifiable|0.0|
+|string|User-modifiable|User-modifiable|"" (empty)|
+
+The effects of the boolean and data parts are as follows:
+
+1. If an object is inactive or disabled by the user (i.e., if the boolean part is false), then `isEnabled('...') === false` and `valueOf('...')` is `0`/`false`/`""` (the data part is not relevant).
+2. If an object is enabled, then any references to `valueOf('...')` in xCDL expressions will evaluate to the option's data part, whether user-modifiable or fixed. For type none, or when the type is not defined, `valueOf('...')` will return `isEnabled('...')`, modifiable by the user.
+3. If a component or package is disabled, then all objects immediately below it in the hierarchy are inactive. By a process of recursion, this will affect all the nodes in the subtree.
+4. If an object is disabled, it can impose no constraints on the rest of the configuration; in particular, `requires` and `legalValues` properties will be ignored. If an object is enabled, its constraints should be satisfied, or the component framework will report various conflicts. Note that the `legalValues` constraint only applies to the data part of the object's value, so it is only useful with the `int`, `float`, and `string` types.
+5. If an object is disabled, it has no direct consequences at build-time; in particular, `generatedDefinition` and `compilerSourceFiles` properties will be ignored: no `#define` will be generated, no files will get compiled, and so on. If an object is active and enabled, then all the consequences take effect. The object's `generatedDefinition` and data part are used to generate the `#define` in the appropriate configuration header file, subject to various properties such as `valueFormat`, but the data part has no other effects on the build system.
+
+Setting `"configurable": false` prevents the user from manually changing the enable/disable status of an object (the checkbox will be disabled in the interface) or the object value. Setting the `computed` property prevents the user from manually changing the value of an object (the text control will be disabled in the interface).
+
+By default, all options and components have the type `none`: most objects are simple selections, so making this the default allows for slightly more compact xCDL files.
+
+### Some examples
+
+The following definitions can be used to illustrate how values and types work in practice:
+
+```json
+{
+    "cdlPackage": {
+        "name": "libc",
+        "cdlComponents": {
+            "rand": {
+                "valueType": "none",
+                "defaultEnable": "false",
+                "sourceFile": "stdlib/rand.cpp",
+                "generatedDefinition": "OS_PACKAGE_LIBC_RAND",
+            },
+        },
+
+        "cdlOptions": {
+            "perThread": {
+                "generatedDefinition": "OS_PACKAGE_LIBC_PER_THREAD_RAND",
+                "requires": "isEnabled('kernel/perThreadData')",
+                "defaultEnable": "false",
+            },
+
+            "seed": {
+                "generatedDefinition": "OS_INTEGER_LIBC_RAND_SEED",
+                "valueType": "int",
+                "legalValues": "0 to 0x7FFFFFFF",
+                "defaultValue": "1",
+            }
+        }
+    }
+}
+```
+
+### Ordinary expressions
+
+xCDL expressions are used in several properties, like:
+
+- `defaultEnabled`, `configurable` -  boolean expressions
+- `defaultValue`, `computed` - value  expressions
+- `activeIf`, `requires` - goal expressions
+
+All expressions are evaluated by the JavaScript run-time, and must use valid JavaScript syntax.
+
+#### Objects state functions
+
+- `isLoaded('...')`/`isNotLoaded('...')`
+- `isActive('...')`/`isNotActive('...')`
+- `isEnabled('...')`/`isNotEnabled('...')`
+
+#### Object values functions
+
+- `valueOf('...')`
+
+### Goal expressions
+
+The values of certain properties, notably `requires` and `active_if`, constitute a goal expression. As with an ordinary expression, all of the expressions in the array are evaluated by the JavaScript.
+
+A goal expression is basically just a sequence of ordinary expressions.
+
+The result of evaluating a goal expression is a boolean. If any part of the goal expression evaluates to the integer `0` or an equivalent string then the result is `false`, otherwise it is `true`.
+
+For example a property with three separate expressions, all of which should evaluate to `true`.
+
+```json
+{
+    ...
+    "requires": [
+        "isEnabled(hal/debug/gdb/include-stubs)",
+        "isNotEnabled('hal/debug/gdb/break-support')",
+        "isNotEnabled('hal/debug/gdb/ctrlc-support')"
+    ]
+}
+```
+
+The term _"goal expression"_ relates to the component framework's inference engine: it describes a goal that should be satisfied for a conflict-free configuration. If a `requires` constraint is not satisfied, the inference engine will examine the goal expression. If there is a way to change the configuration that does not introduce new conflicts and causes the goal expression to evaluate to true, the conflict can be resolved.
+
+The inference engine works with one conflict and hence one goal expression at a time. This means there can be slightly different behaviour if a constraint is specified using a single `requires` property or several different ones. Given the above example, suppose that none of the three conditions are satisfied. If a single goal expression is used, the inference engine might be able to satisfy only two of the three parts, but since the conflict as a whole cannot be resolved, no part of the solution will be applied. Instead, the user will have to resolve the entire conflict. If three separate goal expressions are used, the inference engine might find solutions to two of them, leaving less work for the user. On the other hand, if a single goal expression is used, the inference engine has a bit more information to work with and might find a solution to the entire conflict where it would be unable to find separate solutions for the three parts. Things can get very complicated, and in general, component writers should not worry about the subtleties of the inference engine and how to manipulate its behaviour.
+
+### Legal values expressions
+
+The values of the `legalValues` property should be one string or one array of strings.
+
+One special syntax is a range of values `"<number> to <number>"`.
+
+Examples:
+
+```json
+{
+    ...
+    "legalValues": [ "red", "green", "blue" ],
+    "legalValues": [ "1", "2", "4 to 10", "20", "valueOf('...')" ],
+    ...
+}
+```
+
 
 ## Credits
 
-The initial content of this page was based on *Chapter 3. The CDL Language* of *The eCos Component Writer’s Guide*, by Bart Veer and John Dallaway, published in 2001.
+The initial content of this page was based on *Chapter 3. The CDL Language* of *The eCos Component Writer's Guide*, by Bart Veer and John Dallaway, published in 2001.
 
 Also:
 

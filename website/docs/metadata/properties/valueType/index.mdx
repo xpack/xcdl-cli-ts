@@ -79,7 +79,7 @@ For the purposes of expression evaluation, an object that is **not loaded** has:
 
 ### Active/inactive
 
-An object that is loaded may be either **active** or **inactive**. This state cannot be directly configured by the user, it is usually controlled by the object's location in the configuration hierarchy and by the state of other objects. If an object's parent is active and enabled, then the option will typically be active. Conversely, if the parent is either inactive or disabled, then the object will be inactive. The `activeIf` property can be used to specify additional constraints.
+An object that is loaded may be either **active** or **inactive**. This state cannot be directly configured by the user, it is usually controlled by the object's location in the configuration hierarchy and by the state of other objects. If an object's parent is enabled, then the option will typically be active. Conversely, if the parent is either inactive or disabled, then the object will be inactive. The `activeIf` property can be used to specify additional constraints.
 
 The intended use case for the inactive state is to disable code that clearly does not make sense for the current configuration, such as hardware capabilities that are not available on the platform. For example, if the MCU is Arm, options related to RISC-V make no sense and must have no effect.
 
@@ -123,7 +123,7 @@ The enabled state is controlled solely by the position in the object hierarchy a
 
 #### `none`
 
-The `none` type is intended primarily for placeholder components in the hierarchy, although it can be used for other purposes. Objects with this type do not have any additional data associated with them. If active and `configurable`, such objects can be manually enabled or disabled by the user (using graphical or command line tools). For the purposes of expression evaluation, an enabled object with type none has the value true. For enabled objects, normal `#define` processing will take place, so typically a single `#define` will be generated using the object's `generatedDefinition`, and no value will be added (a value like `1` can be added via the `valueFormat` property). Build-related properties such as `compilerSourceFiles` will take effect.
+The `none` type is intended primarily for placeholder components in the hierarchy, although it can be used for other purposes. Objects with this type do not have any additional data associated with them. If active and `configurable`, such objects can be manually enabled or disabled by the user (using graphical or command line tools). For the purposes of expression evaluation, an enabled object with type `none` has the value `true`. For enabled objects, normal `#define` processing will take place, so typically a single `#define` will be generated using the object's `generatedDefinition`, and no value will be added (a value like `1` can be added via the `valueFormat` property). Build-related properties such as `compilerSourceFiles` will take effect.
 
 :::tip
   Preprocessor definitions without values can be tested with `#if defined(XXX)`.

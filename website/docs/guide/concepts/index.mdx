@@ -100,9 +100,9 @@ In addition to the physical view represented by the file system folders and file
 
 In a GUI-based tool, this virtual hierarchy can be presented in a custom project explorer. There should be multiple views: at least one showing only the nodes participating in the build, and another showing all nodes, with inactive/disabled nodes displayed in grey.
 
-#### JavaScript mapping
+#### JSON mapping
 
-As a design decision, xCDL objects must map 1:1 to JavaScript objects. This means they should have properties whose names match the JavaScript naming convention and have values of type string, number, object, or array of objects (not necessarily of the same type).
+As a design decision, xCDL objects must map 1:1 to serializable JavaScript objects, more specifically the [JSON](https://www.json.org/json-en.html) specifications. This means they should have properties whose names match the JavaScript naming convention and have values of type string, number, object, or array of objects (not necessarily of the same type).
 
 The main advantage of defining xCDL objects using JavaScript syntax (compared to, for instance, XML definitions) is inherent simplicity and uniformity. Consequently, xCDL objects can be easily serialized into JSON files, the preferred exchange format.
 
@@ -114,71 +114,32 @@ Except for leaf nodes, all xCDL objects also have an ordered array of child node
 
 #### Node name
 
-Each node has an internal name used to refer to objects in the hierarchy. Names are short strings and must follow these rules:
+Each node has an internal name used to refer to objects in the configuration hierarchy.
 
-- Be unique for a given parent.
-- Be accepted as POSIX file/folder names, which means they can include letters, digits, and a few special characters like [-_.].
+Names are short strings. The recommended syntax is all lowercase, with words separated by dashes (`-`).
 
-The recommended syntax is all lowercase, with words separated by dashes (`-`).
-
-Using JSON syntax, nodes are represented as JSON member names with object values.
-
-```json
-{
-  "cdlComponents": {
-    "rcc": {
-      "display": "RCC",
-      ...
-    }
-  }
-}
-```
-
-Node names are used to refer to objects and to compose permalinks in documentation websites.
-
-When used in a GUI, the node `display` property is shown to identify the node.
-
-Internally, nodes must also have a property defining the node type, allowing a GUI to associate different icons with different nodes.
+More details in [Object naming convention](../language/#object-naming-convention).
 
 #### Node description
 
 Each node must have a string property called `description`. Descriptions should be reasonably long strings.
 
-```json
-{
-  "cdlComponents": {
-    "rcc": {
-      "display": "RCC",
-      "description": "Real-Time Clock Control",
-      ...
-    }
-  }
-}
-```
-
 When used in a GUI, the node `description` is generally displayed as a tooltip, activated when the mouse hovers over the node, or in additional views showing all node details.
 
 #### Node children
 
-If a node has children, they are grouped as one or more containers.
+If a node has children, they are grouped as one or more inner containers.
 
 ```json
 {
   "cdlComponents": {
     "hal": {
-      "display": "HAL",
       ...
       "cdlComponents": {
-        "rcc": {
-          "display": "RCC",
-          ...
-        }
+        ...
       },
       "cdlOptions": {
-        "xyz": {
-          "display": "XYZ",
-          ...
-        }
+        ...
       }
     }
   }
