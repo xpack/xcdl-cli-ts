@@ -1,0 +1,64 @@
+---
+
+title: The xCDL concepts (outdated)
+
+date: 2015-10-25 12:00:00 +0200
+
+---
+
+# Why configurability?
+
+As the complexity of embedded systems grows, it becomes increasingly challenging to integrate source code from multiple projects with numerous dependencies and configuration options.
+
+To address this issue, xCDL defines and implements a component framework, consisting of a set of metadata and a collection of tools specifically designed to support **multi-variant cross-building of embedded system images** based on reusable components. This component framework is extensible, allowing for the addition of new components to the build system at any time.
+
+Although designed to meet the requirements of building embedded applications, xCDL is generic enough to be used for building regular applications and libraries as well.
+
+## Configurability goals
+
+### Increase reusability
+
+The primary goal is to enable large portions of embedded applications to be built from generic, reusable software components. These components need to be adjusted to fit together and meet existing constraints.
+
+### Meet memory constraints
+
+Many embedded applications must operate with limited memory to reduce manufacturing costs. The component framework should allow users to configure components so that any unnecessary functionality is removed, minimizing RAM (and sometimes Flash) usage.
+
+### Improve testability
+
+Tightly coupled embedded systems are often difficult to test. A component framework promotes modularity, making it much easier to write comprehensive unit tests for decoupled components.
+
+### Assist with debugging
+
+Embedded systems can be challenging to debug. Reusable components can provide various forms of debugging assistance. Allowing users to control which debugging features are enabled for any given application build is highly desirable.
+
+## Approaches to configurability
+
+The purpose of configurability is to control the behaviour of components and the relationships between them. The component writer includes as many different behaviours as possible but cannot predict exactly how a particular component will be used. Therefore, when an application uses a component, there must be a way to specify the desired behaviour.
+
+### Run-time
+
+One way to control behaviour is at **run time**. However, this approach has a significant disadvantage in terms of the size of the final application image: the code linked with the application must support all possible behaviour cases, even if the application does not require them.
+
+### Link-time
+
+Another approach is to control behaviour at **link time**, typically by using inheritance in an object-oriented language and linking only one instance of the implementation.
+
+### Compile-time
+
+The xCDL component framework allows behaviour to be controlled at an even earlier stage: when the component source code is compiled.
+
+In theory, **compile-time** configurability should yield the best results in terms of code size, as it allows control at the individual statement level rather than at the function or object level. **The overall result is that the final application image contains only the code and data necessary for the application to function, and nothing more**.
+
+Compile-time configurability is not intended to replace the other approaches but rather to complement them.
+
+There will be times when run-time selection of behaviour is desirable. For example, an application may need to change the baud rate of a serial line, requiring a way to do this at run-time. Similarly, there will be times when link-time selection is preferable.
+
+## Credits
+
+The initial content of this page was based on *Chapter 1. Overview* of *The eCos Component Writer's Guide*, by Bart Veer and John Dallaway, published in 2001.
+
+Also:
+
+- [The eCos Component Writer's Guide - 1. Overview](https://ecos.sourceware.org/docs-latest/cdl-guide/overview.html)
+

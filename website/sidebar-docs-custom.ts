@@ -63,6 +63,11 @@ export const customDocsSidebar = [
       },
       {
         type: 'doc',
+        id: 'guide/rationals/index',
+        label: 'Rationals'
+      },
+      {
+        type: 'doc',
         id: 'guide/concepts/index',
         label: 'Concepts'
       },

@@ -14,7 +14,88 @@ Work in progress.
 
 :::
 
-TBD
+For a package to be usable in the xCDL component framework, it must conform to certain rules imposed by the framework. Packages must be distributed in a form that is understood by the component repository administration tool. Each package must include a top-level xCDL metadata file that describes the package to the component framework. There are specific portability requirements related to how a package is built, ensuring it can be used in various host environments.
+
+In addition to these rules, the component framework provides several guidelines. While it is not mandatory for packages to strictly adhere to all guidelines, following them can simplify certain operations.
+
+
+## Packages
+
+### What is a package?
+
+An xCDL package is basically an **xpm** package with xCDL metadata.
+
+In other words:
+
+1. a folder containing a valid `xcdl.json` file with a `cdlPackage` definition;
+2. a gzipped tarball containing 1);
+3. a URL that resolves to 2);
+4. a [@\<scope\>]\<name\>@\<version\> that is published on a registry
+5. a Git URL that, when cloned, results in 1)
+
+The definition is inspired from the
+[npm Developer's Guide](https://docs.npmjs.com/misc/developers#what-is-a-package)
+package definition, and is intentionally Git and JavaScript centric, as these technologies are considered mature and worth considering.
+
+Since the external representation of the xCDL metadata will probably remain based on JSON, the documentation will use this syntax.
+
+In addition to the `xcdl.json` metadata file, a typical package contains the following:
+
+- Several source files (`.c`/`.cpp`) and header files (`.h`). These files are used to create the project artifact (library or executable). Some source files may serve other purposes, such as providing a linker script.
+- Exported header files that define the interface provided by the package.
+- Online documentation, such as reference pages for each exported function.
+- A number of test cases, provided in source format, allowing users to verify that the package works as expected on their specific hardware and configuration.
+- Additional xCDL metadata files describing the package to the component framework.
+
+It is also conventional to have a per-package `CHANGELOG` file used to keep track of changes to that package. This is especially valuable to end users of the package who may not have convenient access to the source code control system used to manage the master copy of the package, making it difficult to determine what has changed. It can also be very useful to the main developers.
+
+Not all packages need to contain all of these elements.
+
+Some packages may not have any source code. It is possible to have a package that merely defines a common interface, which can then be implemented by several other packages, especially in the context of device drivers. Or to use header ony C++ templates. However, it is still common to include some code in such packages to avoid duplicating shareable code across all implementation packages. Similarly, a package might have no exported header files, containing only source code that implements an existing interface. For example, an Ethernet device driver might implement a standard interface without providing any additional functionality. Packages do not need to include online documentation, although this may affect their adoption. The same applies to per-package test cases.
+
+### Package layout
+
+The component framework recommends a per-package folder layout that organizes the package contents based on functionality:
+
+```console
+utils-lists-xpack.git
+├── CHANGELOG.md
+├── CMakeLists.txt
+├── LICENSE
+├── README.md
+├── include
+│   └── micro-os-plus
+├── meson.build
+├── package.json
+├── src
+│   └── lists.cpp
+├── tests
+├── website
+└── xcdl.json
+```
+
+The names should be self-explanatory. The `include` sub-folder is used for the **exported header files**, the `src` sub-folder holds the **source files**, the **tests** contains the unit tests and other test related files, and the `website` sub-folder is used to build the project website, where the reference documentation is also expected to be.
+
+Except for the name and location of the `xcdl.json` file, this folder layout is just a guideline and is not enforced by the component framework.
+
+:::tip
+
+Strictly speaking, the xCDL framework does not mandate for the content be an **xpm** package, and component writers can choose other strategies for dependency management.
+
+However the xCDL workflow benefits from **xpm** handling dependencies and build configurations. Therefore, it is highly recommended for xCDL packages to also be **xpm** packages.
+
+:::
+
+## Making a package distribution
+
+Developers of xCDL packages are advised to distribute their packages as **xpm** packages. Packages in this format can be robustly added to existing xCDL component repositories using the package administration tools.
+
+To achieve this, packages must include a valid `package.json` file with the `xpack` property, as required by **xpm**.
+
+The easiest way to consume **xpm** packages is to published them on the `npmjs.com` public repository.
+
+For details, please see the [xpm documentation](https://xpack.github.io/xpm/).
+
 
 ## Credits
 
