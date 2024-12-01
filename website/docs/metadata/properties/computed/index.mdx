@@ -35,7 +35,7 @@ Specify that the current object's value is not user-modifiable but is computed u
 ```json {5}
 {
     "cdlOptions": {
-        "<key>": {
+        "<name>": {
             ...
             "computed": "<expression>",
             ...
@@ -44,7 +44,7 @@ Specify that the current object's value is not user-modifiable but is computed u
 }
 ```
 
-The `computed` property is a string containing an expression that is evaluated each time the object is referenced. The content is formatted according to the `valueType`.
+The value of the `computed` property is a string containing an expression that is evaluated each time the object is referenced. The content is formatted according to the `valueType`.
 
 ## Default value
 

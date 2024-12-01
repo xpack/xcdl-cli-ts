@@ -50,7 +50,7 @@ Define a map of interface objects (generic functionalities that can be provided 
 ```json
 {
     "cdlInterfaces": {
-        "<key>": {
+        "<name>": {
             "display": "<short name>",
             "description": "<long text>",
 
@@ -80,7 +80,7 @@ The interface `kernel/scheduler` is implemented by both the mlqueue and bitmap s
 
 Some component writers may prefer to use the first `requires` constraint, believing that the code has only been tested with the mlqueue and bitmap schedulers and cannot be guaranteed to work with any new schedulers. Other component writers may take a more optimistic view, assuming that their code will work with any scheduler until proven otherwise.
 
-Each `cdlInterfaces` object is defined as a JSON object that has an key and a body. Keys must be unique within a parent.
+Each `cdlInterfaces` object is defined as a JSON object that has an name and a body. Names are map keys and must be unique within a parent.
 
 A commonly used constraint on interface values takes the form:
 

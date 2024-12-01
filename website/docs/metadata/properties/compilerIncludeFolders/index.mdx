@@ -35,7 +35,7 @@ Specify the folders containing public header files that should be included in th
 ```json {5}
 {
     "cdlOptions": {
-        "<key>": {
+        "<name>": {
             ...
             "compilerIncludeFolders": [ "<relative folder path>",... ],
             ...
@@ -44,7 +44,7 @@ Specify the folders containing public header files that should be included in th
 }
 ```
 
-The `compilerIncludeFolders` property is an array of strings that specify folder paths relative to the current xCDL file. These folders contain header files to be utilized during the build process.
+The value of the `compilerIncludeFolders` property is an array of strings that specify folder paths relative to the current xCDL file. These folders contain header files to be utilized during the build process.
 
 ## Default value
 

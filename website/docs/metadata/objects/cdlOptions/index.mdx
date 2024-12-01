@@ -53,7 +53,7 @@ Define a map of option objects (basic units of configurability).
 ```json
 {
     "cdlOptions": {
-        "<key>": {
+        "<name>": {
             "display": "<short name>",
             "description": "<long text>",
 
@@ -67,14 +67,13 @@ Define a map of option objects (basic units of configurability).
 
 `cdlOptions` objects are the basic units of configurability. Generally, each `cdlOptions` object corresponds to a single user choice. Typically, there is a certain amount of information associated with an option to assist the user in manipulating it, such as a **displayed name** and a textual **description**. There are also limits on the possible values that the user can choose, so an option may be a simple yes-or-no choice or something more complex, like a stack size or a device name. Options may have associated constraints, so if an option is enabled, certain conditions must be satisfied elsewhere in the configuration. Options usually have direct consequences, such as preprocessor `#define` symbols in a configuration header file.
 
-Each `cdlOptions` object is defined as a JSON object that has an key and a body. Keys must be unique within a parent.
+Each `cdlOptions` object is defined as a JSON object that has an name and a body. Names are map keys and must be unique within a parent.
 
 The user choice is expressed during the configuration process and is reflected in the enabled/disabled status of the option. For options with associated values, it is also possible for the user to define a value. If a value is missing, a default value, either implicit or defined as the `defaultValue` property, is applied. For these options, it is also possible to define limits on the possible values that the user can choose.
 
 A separate class of options are the `computed` options, whose values cannot be set by the user but are computed according to a given expression.
 
 Options may have associated constraints, so if an option is enabled, certain conditions must be satisfied elsewhere in the configuration for it to be active (the `activeIf` property), or it may mandate that some objects be enabled or disabled (the `requires` property).
-
 
 If active and enabled, a `cdlOptions` object can generate preprocessor `#define` lines in a configuration header file (if the `generatedDefinition` property is also defined) and decide if a set of source files are included in the build process (if the `sourceFile` property is also defined).
 

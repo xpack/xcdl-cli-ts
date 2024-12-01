@@ -35,7 +35,7 @@ Include additional configuration information from another xCDL definition file.
 ```json {5}
 {
     "cdlOptions": {
-        "<key>": {
+        "<name>": {
             ...
             "includeCDLs": [ "<relative path>",... ],
             ...
@@ -44,7 +44,7 @@ Include additional configuration information from another xCDL definition file.
 }
 ```
 
-The `includeCDLs` property is an array of strings containing relative file paths to other xCDL definitions.
+The value of the `includeCDLs` property is an array of strings containing relative file paths to other xCDL definitions.
 
 ## Default value
 

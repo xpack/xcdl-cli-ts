@@ -35,7 +35,7 @@ Provide additional control over the active state of an xCDL object.
 ```json {5}
 {
     "cdlOptions": {
-        "<key>": {
+        "<name>": {
             ...
             "activeIf": [ "<expression>",... ],
             ...
@@ -44,7 +44,7 @@ Provide additional control over the active state of an xCDL object.
 }
 ```
 
-The `activeIf` property is an array of strings that contain boolean expressions, typically used to verify hardware properties. If all these expressions evaluate to true, the object is considered active.
+The value of the `activeIf` property is an array of strings that contain boolean expressions, typically used to verify hardware properties. If all these expressions evaluate to true, the object is considered active.
 
 ## Default value
 

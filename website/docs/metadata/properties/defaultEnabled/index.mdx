@@ -35,7 +35,7 @@ Specify whether the current object is initially enabled.
 ```json {5}
 {
     "cdlOptions": {
-        "<key>": {
+        "<name>": {
             ...
             "defaultEnable": true | false | "<expression>",
             ...
@@ -44,7 +44,7 @@ Specify whether the current object is initially enabled.
 }
 ```
 
-The `defaultEnable` property can be set to either the `true` or `false` constant or a string that evaluates to a boolean value.
+The value of the `defaultEnable` property is either the `true` or `false` constant or a string that evaluates to a boolean value.
 
 If the value is a constant, it is evaluated when parsing the file. If the value is a string, it is evaluated in a separate step that processes the entire configuration hierarchy before processing the requirements.
 

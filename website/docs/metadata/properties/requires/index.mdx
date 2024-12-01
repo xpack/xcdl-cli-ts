@@ -35,7 +35,7 @@ List the constraints that the configuration should enforce or satisfy when a giv
 ```json {5}
 {
     "cdlOptions": {
-        "<key>": {
+        "<name>": {
             ...
             "requires": [ "<expression>",... ],
             ...
@@ -44,7 +44,7 @@ List the constraints that the configuration should enforce or satisfy when a giv
 }
 ```
 
-The `requires` property is an array of strings containing expressions to be evaluated as boolean.
+The value of the `requires` property is an array of strings containing expressions to be evaluated as boolean.
 
 ## Default value
 
@@ -54,7 +54,7 @@ If missing, no additional requirements will be enforced/checked.
 
 Configuration objects are not independent. For example, the C library can provide thread-safe implementations of certain functions, but only if the kernel is present, the kernel provides multi-threading, and the kernel options related to per-thread data are enabled. Such constraints can be expressed using `requires` properties.
 
-The arguments to a `requires` property should be a list of goal expressions, as described in the section called List Expressions in [xCDL packages](/docs/guide/packages/). Most goal expressions are relatively simple because the constraints being described are simple, but complex expressions can be used when necessary. If the object is active and enabled, all these constraints should be satisfied, and any goal expressions that evaluate to false will result in conflicts. Users can ignore such conflicts and attempt to build the current configuration anyway, but there is no guarantee that anything will work. If an object is inactive or disabled, its `requires` constraints will be ignored.
+The value of the `requires` property is an array of strings with list of goal expressions, as described in the section called List Expressions in [xCDL packages](/docs/guide/packages/). Most goal expressions are relatively simple because the constraints being described are simple, but complex expressions can be used when necessary. If the object is active and enabled, all these constraints should be satisfied, and any goal expressions that evaluate to false will result in conflicts. Users can ignore such conflicts and attempt to build the current configuration anyway, but there is no guarantee that anything will work. If an object is inactive or disabled, its `requires` constraints will be ignored.
 
 The configuration system contains an inference engine that can resolve many types of conflicts automatically. For example, if option A is enabled and requires an option B that is currently disabled, the inference engine may attempt to resolve the conflict by enabling B. However, this is not always possible; for example, there may be other constraints in the configuration that force B to be disabled, in which case user intervention is required.
 

@@ -35,7 +35,7 @@ Specify the source files that should be compiled when this object is active and 
 ```json {5}
 {
     "cdlOptions": {
-        "<key>": {
+        "<name>": {
             ...
             "compilerSourceFiles": [ "<relative file path>",... ],
             ...
@@ -44,7 +44,7 @@ Specify the source files that should be compiled when this object is active and 
 }
 ```
 
-The `compilerSourceFiles` property is an array of strings containing file paths, relative to the current xCDL file's folder, that include source code to be compiled as part of the build..
+The value of the `compilerSourceFiles` property is an array of strings containing file paths, relative to the current xCDL file's folder, that include source code to be compiled as part of the build..
 
 ## Default value
 

@@ -57,7 +57,7 @@ Define a map of component objects (generic units of functionality).
 ```json
 {
     "cdlComponents": {
-        "<key>": {
+        "<name>": {
             "display": "<short name>",
             "description": "<long text>",
 
@@ -71,7 +71,7 @@ Define a map of component objects (generic units of functionality).
 
 `cdlComponents` objects are configuration objects that can contain additional options and subcomponents. A `cdlComponents` object can have the same properties as an `cdlOptions` object. Additionally, the `includeCDLs` property enables the configuration definitions to be distributed across multiple files, to be included below the current object in the configuration hierarchy.
 
-Each `cdlComponents` object is defined as a JSON object that has an key and a body. Keys must be unique within a parent.
+Each `cdlComponents` object is defined as a JSON object that has an name and a body. Names are map keys and must be unique within a parent.
 
 Similarly to `cdlOptions` objects, if active and enabled, `cdlComponents` objects can generate preprocessor `#define` lines in a configuration header file and decide if a set of source files are included in the build process.
 

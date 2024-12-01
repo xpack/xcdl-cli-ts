@@ -35,7 +35,7 @@ Specify a node name for the configuration object when it is rendered in the conf
 ```json {4}
 {
     "cdlOptions": {
-        "<key>": {
+        "<name>": {
             "display": "<string>",
             ...
         }
@@ -43,11 +43,11 @@ Specify a node name for the configuration object when it is rendered in the conf
 }
 ```
 
-The display property is a relatively short string that starts with an uppercase letter and does not end with a period.
+The value of the `display` property is a relatively short string that starts with an uppercase letter and does not end with a period.
 
 ## Default value
 
-If missing, the value will be replaced by the key, but it is highly recommended to explicitly define it.
+If missing, the value will be replaced by the name, but it is highly recommended to explicitly define it.
 
 ## Description
 
@@ -55,7 +55,7 @@ When presented with a (graphical) user interface, users can only be expected to 
 
 In the context of a graphical tool, the `display` string will be the primary way for users to identify configuration objects; the `description` paragraph will be visible whenever the object is selected; the on-line documentation will only be accessed when the user explicitly requests it.
 
-As implementation, the short `<key>` string is used internally to identify nodes in the configuration hierarchy, while the `display` string is the external representation of hierarchy nodes.
+As implementation, the short `<name>` string is used internally to identify nodes in the configuration hierarchy, while the `display` string is the external representation of hierarchy nodes.
 
 ## Example
 

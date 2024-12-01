@@ -35,7 +35,7 @@ Specify a default value for this option using an xCDL expression.
 ```json {5}
 {
     "cdlOptions": {
-        "<key>": {
+        "<name>": {
             ...
             "defaultValue": true | false | "<expression>",
             ...
@@ -44,7 +44,7 @@ Specify a default value for this option using an xCDL expression.
 }
 ```
 
-The `defaultValue` property is a boolean constant or a string containing an expression that is evaluated each time `valueOf(`object`)` is called.
+The value of the `defaultValue` property is a boolean constant or a string containing an expression that is evaluated each time `valueOf(`object`)` is called.
 
 ## Default value
 
@@ -60,7 +60,7 @@ If missing, the object default value depends on the object type and state:
 
 The `defaultValue` property usually defines the default value for the object with data, in case no other value is set during configuration.
 
-The data of the `defaultValue` property should be an xCDL expression; see the Section called Ordinary Expressions in [xCDL packages](/docs/guide/packages) for the syntactic details. In many cases a simple constant value will suffice.
+The data of the `defaultValue` property is an xCDL expression; see the Section called Ordinary Expressions in [xCDL packages](/docs/guide/packages) for the syntactic details. In many cases a simple constant value will suffice.
 
 However it is also possible for an object's default value to depend on other objects. For example the common HAL package provides some support functions needed by the kernel, but are unlikely to be useful if the kernel is not being used.
 

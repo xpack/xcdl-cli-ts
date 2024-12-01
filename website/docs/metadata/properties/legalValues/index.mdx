@@ -35,7 +35,7 @@ Impose constraints on the possible values for an object.
 ```json {5}
 {
     "cdlOptions": {
-        "<key>": {
+        "<name>": {
             ...
             "legalValues": "expression" | [ "<expression>",... ],
             ...
@@ -44,7 +44,7 @@ Impose constraints on the possible values for an object.
 }
 ```
 
-The `legalValues` property is a string or an array of strings containing the restrictions.
+The value of the `legalValues` property is a string or an array of strings containing the restrictions.
 
 ## Default value
 
@@ -52,7 +52,7 @@ If missing, no value based constraints are imposed.
 
 ## Description
 
-Objects with a `valueType` of `int` or `string` can have any values as their data. In nearly all cases, some restrictions have to be imposed. For example, the data should correspond to a number within a certain range or be one of a small number of constants. The `legalValues` property can be used to impose such constraints.  The arguments to the property should be an xCDL list expression, see the Section called List Expressions in [xCDL packages](/docs/guide/packages) for the syntactic details. Common examples include:
+Objects with a `valueType` of `int` or `string` can have any values as their data. In nearly all cases, some restrictions have to be imposed. For example, the data should correspond to a number within a certain range or be one of a small number of constants. The `legalValues` property can be used to impose such constraints.  The value of the property is an array of string with xCDL list expression, see the Section called List Expressions in [xCDL packages](/docs/guide/packages) for the syntactic details. Common examples include:
 
 ```json
 "legalValues": "0 to 0x7fff"
