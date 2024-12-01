@@ -14,7 +14,7 @@ Work in progress.
 
 :::
 
-TThe xCDL definitions are integral to the xCDL component framework. Each package must include at least one xCDL file to describe the package to the framework. This file contains details about the configuration options and instructions on how to build the package. Creating a new component or converting existing code into an xCDL component always requires writing the corresponding xCDL. This chapter provides an overview of the xCDL language. Detailed information on specific aspects of the language can be found in the [Metadata](../../metadata/) pages.
+The xCDL definitions are integral to the xCDL component framework. Each package must include at least one xCDL file to describe the package to the framework. This file contains details about the configuration options and instructions on how to build the package. Creating a new component or converting existing code into an xCDL component always requires writing the corresponding xCDL. This chapter provides an overview of the xCDL language. Detailed information on specific aspects of the language can be found in the [Metadata](../../metadata/) pages.
 
 ## Language overview
 
@@ -44,7 +44,7 @@ This describes a single package, the error code package, which does not have any
 
 In addition to the package name, this file provides several properties for the package as a whole. The `display` property offers a short description, while the `description` property provides a more detailed one for users needing additional information. The `compilerSourceFiles` and `generated*` properties list the build-time consequences of this package. Notably, the package appears to lack any online documentation.
 
-Packages can be even simpler than this. If a package only provides an interface and has no files to be compiled, there is no need for a `compilerSourceFiles` property. Similarly, if there are no exported header files, or if the exported header files should be placed in the top-level of the install/include directory, there is no need for a `generatedFile` property. Strictly speaking, the description and display properties are also optional, although application developers would likely not appreciate the resulting lack of information about the package's purpose.
+Packages can be even simpler than this. If a package only provides an interface and has no files to be compiled, there is no need for a `compilerSourceFiles` property. Similarly, if there are no exported header files, or if the exported header files should be placed in the top-level of the install folder, there is no need for a `generatedFile` property. Strictly speaking, the description and display properties are also optional, although application developers would likely not appreciate the resulting lack of information about the package's purpose.
 
 However, many packages tend to be more complex than the error package, containing various subcomponents and configuration options. These are also defined in the xCDL files in much the same way as the package. For example, the following excerpt comes from the infrastructure package:
 
@@ -177,7 +177,7 @@ BBecause different properties serve various purposes, their syntax may vary slig
 
 Many of the properties can be used in any of the `cdlPackage`, `cdlComponents`, `cdlOptions` or `cdlInterfaces` objects. However, some properties are more specific. The `includeCDLs` property is only relevant to `cdlPackage` and `cdlComponents` objects. The `generatedFile` property usually applies to a package as a whole. The `computed`, `defaultValue`, `legalValues` and `valueType` properties are not relevant to packages, as will be explained later. Additionally, the `computed` and `defaultValue` properties are not relevant to interfaces.
 
-The next sections list the various properties, grouped by purpose. Each property also has a full reference page in [The xCDL Metadata](../../metadata/) section. Properties related to values and expressions are described in more detail in the [Values and expressions](#values-and-expressions) section. Properties related to header file generation and to the build process are described in [The xCDL Workflow](../workflow/) page.
+The next sections list the various properties, grouped by purpose. Each property also has a full reference page in [The xCDL Metadata](../../metadata/) section. Properties related to values and expressions are described in more detail in the [Values and expressions](#values-and-expressions) section. Properties related to header file generation and to the build process are described in [The xCDL Build Process](../build-process/) page.
 
 ### Information-providing properties
 
@@ -422,7 +422,7 @@ The value of the `compilerSourceFiles` property should be an array of strings wi
 
 Some packages may have more complicated build requirements. For example, they may involve a special target such as a linker script that should not end up in the usual library, or they may involve special build steps for generating an object file.
 
-For full details of the build process, see [The xCDL Workflow](../workflow/).
+For full details of the build process, see [The xCDL Build Process](../build-process/).
 
 The `generatedFile` property relates to an object's generated header files. To avoid any mistakes, this property must be explicitly defined:
 

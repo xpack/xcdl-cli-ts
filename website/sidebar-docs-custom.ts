@@ -83,8 +83,8 @@ export const customDocsSidebar = [
       },
       {
         type: 'doc',
-        id: 'guide/workflow/index',
-        label: 'Workflow'
+        id: 'guide/build-process/index',
+        label: 'Build Process'
       },
       {
         type: 'category',

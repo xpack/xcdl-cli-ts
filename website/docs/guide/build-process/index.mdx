@@ -1,0 +1,100 @@
+---
+
+title: The xCDL Build Process
+
+date: 2024-11-26 01:49:00 +0200
+
+---
+
+# The xCDL Build Process
+
+:::note
+
+Work in progress.
+
+:::
+
+Some xCDL properties describe the consequences of manipulating configuration options. There are two main types of consequences.
+
+- Typically enabling a configuration option results in one or more `#define` lines in a configuration header file, and properties that affect this include `generatedFile`, `generatedDefinition`, `valueFormat` and `childrenGeneratedFile`.
+- Enabling a configuration option can also affect the build process, primarily determining which files are used in the built. Properties related to the build process include `compilerSourceFiles`.
+
+This chapter describes the whole build process.
+
+Part of the overall design of the xCDL component framework is that it can interact with different build systems and also might run the build internally. The most obvious of these is **GNU make**: the component framework can generate one or more makefiles, and the user can then build the various packages simply by invoking `make`. Another choice is to interact with **CMake** and **meson**.
+
+However it should also be possible to use xCDL components in other environments too: the component framework can be queried about what is involved in building a given configuration, and this information can then be fed into the desired build system. Component writers should be aware of this possibility. Most packages will not be affected because the `compilerSourceFiles` property can be used to provide the list of source files in a portable manner. However, some build systems might need further specific details, which will probably require further properties be added.
+
+## Build tree generation
+
+Before anything can be built, it is necessary to create an xCDL configuration. This is expected to be done via a configuration (graphical) tool and the result is a `cdlConfigurations` object in the `xcdl-config.json` file. This object remembers all user choices entered during configuration, like manually enabling/disabling objects and entering values for data objects. Each build configuration has its own `cdlConfigurations` object.
+
+An xCDL build actually involves several separate folders.
+
+- The source for the build is the component repository, and for application developers this should be considered a read-only resource.
+- The build tree is where all intermediate files, especially object files, and the final artefacts are created.
+
+:::info
+
+The primary goal of the xCDL framework is to generate binary executable files for various target platforms.
+
+Future version may be enhanced to also generate libraries; in this case the build will create an install folder where all public header files and configuration files are located.
+
+:::
+
+Following a successful build it is possible to take just the output artefact and use it: none of the files in the component repository or the build tree are needed for that. The build tree will be needed again only if the user changes the source code or the configuration.
+
+By default the configuration file and the build tree reside in the project folder. However this is not a requirement, all folders can be anywhere in the file system.
+
+In the build folder there will be at least one generated file with the project specific `#define` lines.
+Details of header file generation are given below.
+
+The component framework does not define the structure of the build tree, and this may vary between build systems. It can be assumed that each package in the configuration will have its own folder in the build tree, and that this folder will be used for storing the package's object files and as the current folder for any build steps for that package. This avoids problems when custom build steps from different packages generate intermediate files which happen to have the same name.
+
+The build tree is created and the headers are generated in a single separate workflow step (via `xcdl prepare`); after this multiple build steps can be performed in the build tree; between them the application source code can be changed, but not the configuration.
+
+If the confiration needs updates (like enabling/disabling or changing configuration options values), the build tree must be regenerated from scratch.
+
+## Configuration Header File Generation
+
+Configuration options can affect a build in two main ways. First, enabling an xCDL object can result in various files being built and added to a library, thus providing functionality to the application code. However this mechanism can only operate at a rather coarse grain, at the level of entire source files. Hence the component framework also generates configuration header files containing mainly C preprocessor `#define` directives. Package source code can then `#include` the appropriate header files and use `#if`, `#ifdef` and `#ifndef` directives to adapt accordingly. In this way configuration options can be used to enable or disable entire functions within a source file or just a single line, whichever is appropriate.
+
+The configuration header files end up in a folder in the build tree, usually `install`. It is up to the component writers how many files are generated, and how definition are split between components.
+
+The header files are generated when creating the build tree, which needs to happen after every change to the configuration.
+
+The component framework processes each package in the configuration one at a time. The exact order in which the packages are processed is not defined, so the order in which `#define`'s will end up in the headers may vary. However for any given configuration the order should remain consistent until packages are added to or removed from the system. This avoids unnecessary changes to the global header file and hence unnecessary rebuilds of the packages and of application code because of header file dependency handling.
+
+Within a given package the various components, options and interfaces will be processed in the order in which they were defined in the corresponding xCDL files. Typically the data in the configuration headers consists only of a sequence of `#define`'s so the order in which these are generated is irrelevant. It should be noted that re-parenting an object below some other package has no effect on which header file will contain the corresponding `#define`: the preprocessor directives will always end up in the header file for the package that defines the object.
+
+There are several properties which affect the process of generating header files:
+`generatedFile`, `generatedDefinition`, `valueFormat` and `childrenGeneratedFile`.
+
+The `generatedFile` property can only occur in the body of a `cdlPackage` or `cdlComponents` object and specifies the path of the header file where the configuration data is written, for example:
+
+```json
+{
+    "cdlPackage": {
+        "name": "arm",
+        "display": "Arm architecture",
+        "parent": "hal",
+        "generatedFile": "include/os/hal/hal-arm-generated.h"
+    }
+}
+```
+
+Given such a `generatedFile` property, the component framework will use the file `include/os/hal/hal-arm-generated.h` for the package's configuration data.
+
+## Building Test Cases
+
+TBD
+
+
+## Credits
+
+The initial content of this page was based on *Chapter 4. The Build Process* of *The eCos Component Writer's Guide*, by Bart Veer and John Dallaway, published in 2001.
+
+Also:
+
+- [The eCos Component Writer's Guide - 4. The Build Process](https://ecos.sourceware.org/docs-latest/cdl-guide/build.html)
+

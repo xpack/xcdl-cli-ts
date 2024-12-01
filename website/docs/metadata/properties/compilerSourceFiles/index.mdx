@@ -54,7 +54,7 @@ If missing, the current object will not contribute any source files to the build
 
 The `compilerSourceFiles` property allows component developers to specify source files which should be compiled.
 
-Details of the build process, including such issues as compiler flags and the order in which things happen, can be found in [The xCDL workflow](/docs/guide/workflow/).
+Details of the build process, including such issues as compiler flags and the order in which things happen, can be found in [The xCDL Build Process](/docs/guide/build-process/).
 
 The `compilerSourceFiles` properties can occur in any of `cdlOptions`, `cdlComponents`, `cdlPackage` or `cdlInterfaces` objects. A `compilerSourceFiles` property has effect if and only if the object that contains it is active and enabled. Typically, the body of a package will define any source files that need to be built irrespective of individual options, and each component, option, and interface will define source files that are more specific. The `compilerSourceFiles` property can list any number of source files. It is possible for a given source file to be specified in `compilerSourceFiles` properties for several different objects, in which case the source file will get built if any of these objects are active and enabled.
 
