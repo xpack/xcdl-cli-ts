@@ -1,0 +1,44 @@
+---
+
+title: xcdl configure
+
+date: 2024-12-02 21:29:00 +0300
+
+---
+
+# xcdl configure
+
+:::note
+
+Work in progress.
+
+:::
+
+## Synopsis
+
+```sh
+xcdl configure [options...] --config <name>
+```
+
+Aliases:
+
+- none
+
+## Description
+
+Add/edit a configuration in `xcdl-config.json`.
+
+If a `cdtConfigurations` object with that name does not exist, it is created.
+
+The configuration process writes the full configuration, with all objects, to the JSON, such that `xcdl prepare` will have all data to create the build tree.
+
+---
+
+Inspiration:
+
+```
+ecosconfig ...
+```
+
+- https://ecos.sourceware.org/docs-latest/user-guide/manual-configuration.html
+
