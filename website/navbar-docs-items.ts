@@ -28,7 +28,7 @@ export const customDocsNavbarItem = {
             to: '/docs/user'
           },
           {
-            label: 'Component Writer\'s Guide',
+            label: 'Component Author\'s Guide',
             to: '/docs/guide'
           },
           {

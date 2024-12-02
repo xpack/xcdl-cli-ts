@@ -49,7 +49,7 @@ export const customDocsSidebar = [
   },
   {
     type: 'category',
-    label: 'Component Writer\'s Guide',
+    label: 'Component Author\'s Guide',
     link: {
       type: 'doc',
       id: 'guide/index',

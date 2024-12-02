@@ -87,7 +87,7 @@ Except for the name and location of the `xcdl.json` file, this folder layout is 
 
 :::tip
 
-Strictly speaking, the xCDL framework does not mandate that the content be an **xpm** package, and component writers can choose other strategies for dependency management.
+Strictly speaking, the xCDL framework does not mandate that the content be an **xpm** package, and component authors can choose other strategies for dependency management.
 
 However, the xCDL workflow benefits from **xpm** handling dependencies and build configurations. Therefore, it is highly recommended for xCDL packages to also be **xpm** packages, i.e., to have a `package.json` file in the top folder.
 
@@ -99,7 +99,7 @@ When the package is a source code library designed to be an xpm dependency of an
 
 The full build process is described in [The xCDL Build Process](../build-process/) page, but a summary is appropriate here. A build involves several folders:
 
-1.  Component repository: This is where all dependent package source code is held, along with xCDL metadata. For build purposes, a component repository is read-only. Application developers will only modify the component repository when installing or removing packages via the administration tool. When using **xpm** to manage dependencies, the component repository is located in the `xpacks` folder. Component writers will typically work with Git/local component repositories, which are read/write (via `xpm link`).
+1.  Component repository: This is where all dependent package source code is held, along with xCDL metadata. For build purposes, a component repository is read-only. Application developers will only modify the component repository when installing or removing packages via the administration tool. When using **xpm** to manage dependencies, the component repository is located in the `xpacks` folder. Component authors will typically work with Git/local component repositories, which are read/write (via `xpm link`).
 2.  Local source tree: This is where artifact-specific files are located. The artifacts are built using the source files in this tree and selected source files from the component repository. Several artifacts can be constructed from one local source tree. In the simple case, these are the usual build configurations, like Debug/Release. In a more elaborate use case, it might be possible to build artifacts for different platforms (targets/boards) from the same source tree. For a given local source tree, there is a single `xcdl-config.json` file, containing the `cdlConfigurations` for each artifact to be built.
 3.  Build tree: Each configuration has its own build tree. The build tree contains the generated headers, intermediate files, object files, the final artifact, list files, map files, etc. Once a build is complete, the build tree contains no information that is useful for application development and can be wiped, although this would slow down any rebuilds following changes in the source tree.
 
@@ -118,13 +118,13 @@ The xCDL component framework has important implications for the source code, inc
 
 #### Compiler flag dependencies
 
-Wherever possible, component writers should avoid dependencies on specific compiler flags, as these dependencies can impact portability. For example, if one package needs to be built in big-endian mode and another in little-endian mode, it will usually be impossible for application developers to use both packages simultaneously. Additionally, this removes the application developer's choice in the matter. It is far better for the package source code to adapt the endianness at compile-time, or possibly at run-time, although the latter will involve code-size overheads.
+Wherever possible, component authors should avoid dependencies on specific compiler flags, as these dependencies can impact portability. For example, if one package needs to be built in big-endian mode and another in little-endian mode, it will usually be impossible for application developers to use both packages simultaneously. Additionally, this removes the application developer's choice in the matter. It is far better for the package source code to adapt the endianness at compile-time, or possibly at run-time, although the latter will involve code-size overheads.
 
 #### Package interfaces and implementations
 
 The component framework provides encapsulation at the package level. Package A cannot access the implementation details of package B at compile-time. Specifically, if there is a private header file in a package's src sub-folder, this header file is completely invisible to other packages. Any attempts to bypass this by using relative pathnames beginning with ../.. are generally doomed to failure and should not be attempted. There are two ways in which one package can affect another: through the exported header files, which define a public interface, or via the xCDL configurations.
 
-This encapsulation is a deliberate aspect of the overall xCDL component framework design. In most cases, it does not cause any problems for component writers. In some cases, enforcing a clean separation between interface and implementation details can improve the code. It also reduces problems when a package gets upgraded: component writers are free to make significant changes on the implementation side, including renaming every single source file. Care must be taken only with the exported header files and the xCDL data, as these have the potential to impact other packages. Similarly, application code cannot access package implementation details, only the exported interface.
+This encapsulation is a deliberate aspect of the overall xCDL component framework design. In most cases, it does not cause any problems for component authors. In some cases, enforcing a clean separation between interface and implementation details can improve the code. It also reduces problems when a package gets upgraded: component authors are free to make significant changes on the implementation side, including renaming every single source file. Care must be taken only with the exported header files and the xCDL data, as these have the potential to impact other packages. Similarly, application code cannot access package implementation details, only the exported interface.
 
 Occasionally, the inability of one package to see the implementation details of another can cause problems. One example occurs in HAL packages, where it may be desirable for the architectural, variant, and platform HALs to share some information that should not be visible to other packages or application code. This may be addressed in the future by introducing the concept of friend packages, similar to how a C++ class can have friend functions and classes that are allowed special access to a class's internals. It is not yet clear whether such cases are sufficiently frequent to warrant introducing such a facility.
 
@@ -136,7 +136,7 @@ Configurability typically involves source code that needs to implement different
 
     This approach has two main advantages. First, it is independent of the programming language used to code the components, provided reasonable precautions are taken to avoid syntax clashes between preprocessor statements and actual code. This would make it easier in future to support languages other than C and C++. Second, configurable code can make use of advanced preprocessing facilities such as loops and recursion.
 
-    The disadvantage is that component writers would have to learn about a new preprocessor and embed appropriate directives in the code. This makes it much more difficult to turn existing code into components and involves extra training costs for the component writers. The extra definitions might also confuse document-generating utilities like Doxygen.
+    The disadvantage is that component authors would have to learn about a new preprocessor and embed appropriate directives in the code. This makes it much more difficult to turn existing code into components and involves extra training costs for the component authors. The extra definitions might also confuse document-generating utilities like Doxygen.
 
 2.  Compiler optimizations can be used to elide code that should not be present, for example:
 
@@ -173,7 +173,7 @@ Configurability typically involves source code that needs to implement different
 
 #### Preprocessor definitions
 
-The current component framework generates configuration header files with C preprocessor `#define`s for each option (typically, there are various properties which can be used to control this). It is up to component writers to decide whether to use preprocessor `#ifdef` statements or language constructs such as if. At present there is no support for languages which do not involve the C preprocessor.
+The current component framework generates configuration header files with C preprocessor `#define`s for each option (typically, there are various properties which can be used to control this). It is up to component authors to decide whether to use preprocessor `#ifdef` statements or language constructs such as if. At present there is no support for languages which do not involve the C preprocessor.
 
 #### C++11 **constexpr**
 
@@ -234,7 +234,7 @@ Effectively, the header file is now misrepresenting the functionality provided b
 
 Theoretically, it would be possible for a tool to analyse linker errors and suggest possible configuration changes that would resolve the problem, thereby reducing the burden on the application developer. No such tool is planned in the short term.
 
-It is up to component writers to decide which of these two approaches should be preferred. Note that it is not always possible to avoid `#include`-ing a configuration header file in an exported one. For example, an option may affect a data structure rather than just the presence or absence of a function. Issues like this will vary from package to package.
+It is up to component authors to decide which of these two approaches should be preferred. Note that it is not always possible to avoid `#include`-ing a configuration header file in an exported one. For example, an option may affect a data structure rather than just the presence or absence of a function. Issues like this will vary from package to package.
 
 #### Nested `#include`'s
 
@@ -248,7 +248,7 @@ There are a couple of ways to address the issue of unnecessary rebuilding. The f
 
 ### Package documentation
 
-On-line package documentation should be published in a project web. The component framework imposes no special limitations: component writers can decide which version of the HTML specification should be followed; they can also decide on how best to cope with the limitations of different browsers. In general it is a good idea to keep things simple.
+On-line package documentation should be published in a project web. The component framework imposes no special limitations: component authors can decide which version of the HTML specification should be followed; they can also decide on how best to cope with the limitations of different browsers. In general it is a good idea to keep things simple.
 
 [Docusaurus](https://docusaurus.io) is a modern solution for creating documentation websites.
 

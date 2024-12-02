@@ -23,7 +23,7 @@ This chapter describes the whole build process.
 
 Part of the overall design of the xCDL component framework is that it can interact with different build systems and also might run the build internally. The most obvious of these is **GNU make**: the component framework can generate one or more makefiles, and the user can then build the various packages simply by invoking `make`. Another choice is to interact with **CMake** and **meson**.
 
-However it should also be possible to use xCDL components in other environments too: the component framework can be queried about what is involved in building a given configuration, and this information can then be fed into the desired build system. Component writers should be aware of this possibility. Most packages will not be affected because the `compilerSourceFiles` property can be used to provide the list of source files in a portable manner. However, some build systems might need further specific details, which will probably require further properties be added.
+However it should also be possible to use xCDL components in other environments too: the component framework can be queried about what is involved in building a given configuration, and this information can then be fed into the desired build system. Component authors should be aware of this possibility. Most packages will not be affected because the `compilerSourceFiles` property can be used to provide the list of source files in a portable manner. However, some build systems might need further specific details, which will probably require further properties be added.
 
 ## Build tree generation
 
@@ -59,7 +59,7 @@ If the confiration needs updates (like enabling/disabling or changing configurat
 
 Configuration options can affect a build in two main ways. First, enabling an xCDL object can result in various files being built and added to a library, thus providing functionality to the application code. However this mechanism can only operate at a rather coarse grain, at the level of entire source files. Hence the component framework also generates configuration header files containing mainly C preprocessor `#define` directives. Package source code can then `#include` the appropriate header files and use `#if`, `#ifdef` and `#ifndef` directives to adapt accordingly. In this way configuration options can be used to enable or disable entire functions within a source file or just a single line, whichever is appropriate.
 
-The configuration header files end up in a folder in the build tree, usually `install`. It is up to the component writers how many files are generated, and how definition are split between components.
+The configuration header files end up in a folder in the build tree, usually `install`. It is up to the component authors how many files are generated, and how definition are split between components.
 
 The header files are generated when creating the build tree, which needs to happen after every change to the configuration.
 

@@ -78,7 +78,7 @@ This constraint is limited and may need to be changed if a new scheduler is adde
 
 The interface `kernel/scheduler` is implemented by both the mlqueue and bitmap schedulers, and may be implemented by future schedulers as well. The value returned by `implementationsOf()` on an interface is the number of implementers that are active and enabled, so in a typical configuration only one scheduler will be in use and the value of `implementationsOf()` will be 1. If all schedulers are disabled then the value of `implementationsOf()` will be 0 and the `requires` constraint will not be satisfied.
 
-Some component writers may prefer to use the first `requires` constraint, believing that the code has only been tested with the mlqueue and bitmap schedulers and cannot be guaranteed to work with any new schedulers. Other component writers may take a more optimistic view, assuming that their code will work with any scheduler until proven otherwise.
+Some component authors may prefer to use the first `requires` constraint, believing that the code has only been tested with the `mlqueue` and `bitmap` schedulers and cannot be guaranteed to work with any new schedulers. Other component authors may take a more optimistic view, assuming that their code will work with any scheduler until proven otherwise.
 
 Each `cdlInterfaces` object is defined as a JSON object that has an name and a body. Names are map keys and must be unique within a parent.
 
