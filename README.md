@@ -4,7 +4,7 @@
 
 # The xPack Component Manager
 
-A tool to manage component configurations, inspired by eCos (work in progress).
+A tool to manage component configurations & builds, inspired by eCos CDL (work in progress).
 
 ## Project documentation
 

@@ -12,6 +12,10 @@ date: 2024-11-21 11:58:00 +0300
 
 ---
 
+import Objects from './_components/_objects.mdx';
+
+{/* ------------------------------------------------------------------------ */}
+
 # The xCDL Metadata
 
 :::note
@@ -23,15 +27,22 @@ Work in progress.
 The xCDL metadata is a set of definitions used by `xcdl` to drive the
 configuration process.
 
-These definitions are stored in `package.json`, in the `xpack` object.
+These definitions are stored in the `xcdl.json` file located in the project
+top's folder, as well as in other possible JSON files located in subfolders.
 
-## `minimumXcdlRequired`
+The top folder's `xcdl.json` file must define a `cdlPackage` object.
+
+## Global properties
+
+### `minimumXcdlRequired`
 
 A string with a SemVer.
 
 Defines the minimum version of `xcdl` that can process the xCDL definitions.
 
-TODO
+## Objects
+
+<Objects />
 
 ## Credits
 

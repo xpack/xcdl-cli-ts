@@ -63,7 +63,7 @@ logger.info(customFields);
 const config: Config = {
   title: 'xcdl - The xPack Component Manager' +
     ((process.env.DOCUSAURUS_IS_PREVIEW === 'true') ? ' (preview)' : ''),
-  tagline: 'A tool to manage component configurations, inspired by eCos (work in progress)',
+  tagline: 'A tool to manage component configurations & builds, inspired by eCos CDL (work in progress)',
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here

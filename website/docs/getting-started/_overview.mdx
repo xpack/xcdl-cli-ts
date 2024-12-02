@@ -13,21 +13,42 @@ Work in progress.
 
 By design, the xPack framework aims to automate:
 
-- dependencies management
-- build configurations
-- component configurations
+- managing **dependencies**
+- managing **build configurations**
+- **component** configurations
+- the **build** process
 
-The first two are handled by **xpm**. The third will be covered by **xcdl**.
+While the management of dependencies & build configurations is handled by **xpm**,
+the configuration & build processes are covered by **xcdl**.
 
-The details are still to be worked on, but the general idea is to stay
-as close to eCos CDL as possible.
+[CDL - Component Definition Language](https://ecos.sourceware.org/ecos/docs-latest/cdl-guide/cdl-guide.html)
+is an advanced technology for configuring and building projects,
+introduced by the [eCos](https://ecos.sourceware.org)
+free open-source real-time operating system, which is intended for embedded applications.
 
-Another distant possible source of inspiration might be the Linux
-[Kconfig Language](https://docs.kernel.org/kbuild/kconfig-language.html#),
-but the concepts might be different.
+xCDL is inspired by CDL, but utilises a new TypeScript implementation and is part
+of the Node.js ecosystem.
 
-As a first definition, in xCDL a **component** is a generic unit
-of functionality, that
-includes one or more related source files. These files share common
-configuration data (like preprocessor definitions) and are
-compiled using the same compilation options.
+<details>
+<summary>Why not `kconfig`?</summary>
+
+Another configuration mechanism is implemented by
+[Kconfig](https://docs.kernel.org/kbuild/kconfig-language.html#),
+a tool part of the Linux ecosystem and used to configure the
+Linux kernel.
+
+Although the goals are somehow similar, the concepts differ.
+The language employs a custom syntax, and generally,
+using it for typical embedded projects can be a challenge.
+</details>
+
+As a brief definition, an xCDL **component** is a generic unit of
+functionality that includes one or more related source files.
+These files share common configuration data (such as preprocessor
+definitions) and are compiled using the same compilation options.
+
+Using `xcdl` with existing components is relatively straightforward.
+That said, creating new components or adding the xCDL metadata to
+an existing project requires an understanding of the xCDL concepts
+and metadata, which are documented in the
+[Components Writer's Guide](/docs/guide/).

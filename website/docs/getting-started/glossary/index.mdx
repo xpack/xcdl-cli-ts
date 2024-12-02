@@ -5,10 +5,16 @@ title: Glossary
 
 # Terms used across the **xcdl** project
 
+The definitions used in the xCDL project are listed below.
+
+More elaborate definitions are available in the
+[Concepts](/docs/guide/concepts/) page.
+
 ### CDL
 
 **CDL** stands for **Component Definition Language**. It was introduced
-by eCos and is documented in [The eCos Component Writer's Guide](http://ecos.sourceware.org/docs-3.0/cdl-guide/cdl-guide.html).
+by eCos and is documented in
+[The eCos Component Writer's Guide](http://ecos.sourceware.org/docs-3.0/cdl-guide/cdl-guide.html).
 
 ### xCDL
 
@@ -17,22 +23,24 @@ inspired by eCos CDL.
 
 xCDL uses several concepts inherited from eCos CDL:
 
-- xCDL **software component**: a set of source files that perform a given
+- **software component**: a set of source files that perform a given
 function, standalone or depending on other components, together with
 some metadata
-- xCDL **component metadata**: additional informations added to
+- **component metadata**: additional informations added to
 software components to describe dependencies, requirements and constraints
-- xCDL **configuration tools**: tools running on development machines
+- **configuration tools**: tools running on development machines
 to create and manage xCDL configurations and component metadata
-- xCDL **configurations**: specific metadata definitions, that describe
-the requirements of an application, like which components are used, the values for preprocessor definitions, toolchain selection, build details, etc
-- xCDL **build configurations**: the result of processing an xCDL
+- **configurations**: specific metadata definitions, that describe
+the requirements of an application, like which components are used,
+the values for preprocessor definitions, toolchain selection, build
+details, etc
+- **build configurations**: the result of processing an xCDL
 configuration, usually a build folder with associated build related
-files (like CMake/meson/GNU Make files); when IDEs (like VS Code or Eclipse) are used, it translates to an IDE build configuration
-- xCDL **requirements**: direct requirements, generally components
-that are mandatory for the build to succeed, like base classes
-- xCDL **constraints**: in general hardware dependencies, like the
-presence of a certain peripheral, but dependencies to software
+files (like CMake/meson/GNU Make files)
+- **requirements**: direct requirements, generally components
+that are needed by other components in order for the build to succeed
+- **constraints**: in general hardware dependencies, like the
+presence of a certain peripheral; dependencies to software
 options can also be used
 
 The xPack build configurations and xCDL build configurations
