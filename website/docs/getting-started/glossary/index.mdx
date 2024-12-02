@@ -1,5 +1,13 @@
 ---
+
 title: Glossary
+# description: ...
+keywords:
+  - xpack
+  - xcdl
+  - glossary
+
+date: 2024-11-24 18:58:00 +0300
 
 ---
 
@@ -36,12 +44,14 @@ the values for preprocessor definitions, toolchain selection, build
 details, etc
 - **build configurations**: the result of processing an xCDL
 configuration, usually a build folder with associated build related
-files (like CMake/meson/GNU Make files)
+files (like CMake/meson/GNU Make files); when used together
+with **xpm**, it is recommended that
+xCDL build configurations share the same names; this can
+be easily achieved by invoking **xcdl** via **xpm** actions and
+passing `{{configuration.name}}`
 - **requirements**: direct requirements, generally components
 that are needed by other components in order for the build to succeed
 - **constraints**: in general hardware dependencies, like the
 presence of a certain peripheral; dependencies to software
 options can also be used
 
-The xPack build configurations and xCDL build configurations
-should be more or less the same, but details should be worked out.

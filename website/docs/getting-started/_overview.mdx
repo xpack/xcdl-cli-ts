@@ -15,7 +15,7 @@ By design, the xPack framework aims to automate:
 
 - managing **dependencies**
 - managing **build configurations**
-- **component** configurations
+- the **component configurations** process
 - the **build** process
 
 While the management of dependencies & build configurations is handled by **xpm**,
@@ -32,10 +32,9 @@ of the Node.js ecosystem.
 <details>
 <summary>Why not `kconfig`?</summary>
 
-Another configuration mechanism is implemented by
 [Kconfig](https://docs.kernel.org/kbuild/kconfig-language.html#),
-a tool part of the Linux ecosystem and used to configure the
-Linux kernel.
+is the configuration mechanism originally used by the
+Linux kernel and later adopted by other projects too.
 
 Although the goals are somehow similar, the concepts differ.
 The language employs a custom syntax, and generally,
@@ -52,3 +51,4 @@ That said, creating new components or adding the xCDL metadata to
 an existing project requires an understanding of the xCDL concepts
 and metadata, which are documented in the
 [Components Author's Guide](/docs/guide/).
+

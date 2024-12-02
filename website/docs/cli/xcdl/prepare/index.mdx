@@ -1,4 +1,5 @@
 ---
+
 title: xcdl prepare
 
 date: 2024-11-20 23:47:00 +0300
@@ -16,7 +17,7 @@ Work in progress.
 ## Synopsis
 
 ```sh
-xcdl prepare [options...] ...TBD
+xcdl prepare [options...] --config <name> --build <folder> --builder <name>
 ```
 
 Aliases:
@@ -25,7 +26,15 @@ Aliases:
 
 ## Description
 
-TBD
+The command reads the named configuration from `xcdl-config.json` (in the current folder) and creates the build tree in the given build folder.
+
+The builder can be:
+
+- `xcdl-make`: generate a GNU make tree, similar to that generated for Eclipse CDT managed builds projects
+- `xcdl-ninja`: generate a tree to be built with **ninja**
+- `xcdl-internal`: generate a tree to be built with the **xcdl** internal builder
+
+CMake and meson builders will also be considered.
 
 ---
 
