@@ -35,8 +35,8 @@ const cliSidebar = [
           },
           {
             type: 'doc',
-            id: 'cli/xcdl/prepare/index',
-            label: 'xcdl prepare'
+            id: 'cli/xcdl/setup/index',
+            label: 'xcdl setup'
           },
           {
             type: 'doc',

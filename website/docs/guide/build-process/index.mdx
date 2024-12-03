@@ -56,7 +56,7 @@ Details of header file generation are given below.
 
 The component framework does not define the structure of the build tree, and this may vary between build systems. It can be assumed that each package in the configuration will have its own folder in the build tree, and that this folder will be used for storing the package's object files and as the current folder for any build steps for that package. This avoids problems when custom build steps from different packages generate intermediate files which happen to have the same name.
 
-The build tree is created and the headers are generated in a single separate workflow step (via `xcdl prepare`); after this multiple build steps can be performed in the build tree; between them the application source code can be changed, but not the configuration.
+The build tree is created and the headers are generated in a single separate workflow step (via `xcdl setup`); after this multiple build steps can be performed in the build tree; between them the application source code can be changed, but not the configuration.
 
 If the confiration needs updates (like enabling/disabling or changing configuration options values), the build tree must be regenerated from scratch.
 
