@@ -2,6 +2,8 @@
 import CommonJsCompatibility from './_common/_commonjs-compatibility.mdx'
 import GithubAndNpmjs from './_common/_github-and-npmjs.mdx'
 
+import WhyNotKconfig from '../_common/_why-not-kconfig.mdx';
+
 {/* ------------------------------------------------------------------------ */}
 
 :::note
@@ -10,6 +12,42 @@ Work in progress.
 
 :::
 
+## What is xcdl?
+
+**xcdl**, short for **x**Pack **CDL**, is a
+[Node.js](https://nodejs.org/en/) CommonJS  module and a CLI
+application designed to **automate component** and **builds**
+for C/C++ projects. It draws inspiration from eCos CDL.
+
+[CDL - Component Definition Language](https://ecos.sourceware.org/ecos/docs-latest/cdl-guide/cdl-guide.html)
+is an advanced technology for configuring and building projects,
+introduced by the [eCos](https://ecos.sourceware.org)
+free open-source real-time operating system, which is intended for embedded applications.
+
+xCDL was inspired by CDL but, as part
+of the Node.js ecosystem, it migrated the original Tcl configuration
+scripts to JSON files and reimplemented the logic in TypeScript.
+
+<WhyNotKconfig />
+
+### What is a component?
+
+As a brief definition, an xCDL **component** is a generic unit of
+functionality that includes one or more related source files.
+These files share common configuration data (such as preprocessor
+definitions) and are compiled together, using the same compilation
+options.
+
+### Components Author's Guide
+
+Using `xcdl` with existing components is relatively straightforward.
+Creating new components or adding the xCDL metadata to
+an existing project is a bit more difficult and
+requires an understanding of the xCDL **concepts**
+and **metadata**, which are documented in the
+[Components Author's Guide](/docs/guide/).
+
+## Features
 
 By design, the xPack framework aims to automate:
 
@@ -21,34 +59,22 @@ By design, the xPack framework aims to automate:
 While the management of dependencies & build configurations is handled by **xpm**,
 the configuration & build processes are covered by **xcdl**.
 
-[CDL - Component Definition Language](https://ecos.sourceware.org/ecos/docs-latest/cdl-guide/cdl-guide.html)
-is an advanced technology for configuring and building projects,
-introduced by the [eCos](https://ecos.sourceware.org)
-free open-source real-time operating system, which is intended for embedded applications.
+**xcdl** enhances cross-platform builds and tests with its distinctive features:
 
-xCDL is inspired by CDL, but utilises a new TypeScript implementation and is part
-of the Node.js ecosystem.
+- **Cross-Platform Support**: Operates seamlessly on **Windows**, **macOS**, and **GNU/Linux**.
+- **Compile-time configurability**: Allows behaviour to be controlled during compilation.
+- **Per-component source files**: Divides the project into components, each with its own set of source files.
+- **Per-option preprocessor definitions**: When components and options are individually enabled or disabled, this determines which lines are generated in a configuration header file. Specifically, each enabled component or option triggers the generation of corresponding `#define` statements in the header file.
+- **Enforce constraints**: Components and options can define ranges of values and/or interdependencies with other objects.
+- **Build Configurations**: Manages multiple build configurations, such as debug/release builds or platform-specific tests.
 
-<details>
-<summary>Why not `kconfig`?</summary>
+## Benefits
 
-[Kconfig](https://docs.kernel.org/kbuild/kconfig-language.html#),
-is the configuration mechanism originally used by the
-Linux kernel and later adopted by other projects too.
-
-Although the goals are somehow similar, the concepts differ.
-The language employs a custom syntax, and generally,
-using it for typical embedded projects can be a challenge.
-</details>
-
-As a brief definition, an xCDL **component** is a generic unit of
-functionality that includes one or more related source files.
-These files share common configuration data (such as preprocessor
-definitions) and are compiled using the same compilation options.
-
-Using `xcdl` with existing components is relatively straightforward.
-That said, creating new components or adding the xCDL metadata to
-an existing project requires an understanding of the xCDL concepts
-and metadata, which are documented in the
-[Components Author's Guide](/docs/guide/).
-
+- Being able to develop exactly the same project on Windows, macOS and GNU/Linux provides team members with the flexibility to use their preferred platform.
+- Disabled components automatically have their source files excluded from the build process, allowing for coarse granularity in excluding unused code.
+- Automatically generated preprocessor definitions allow for precise control over the inclusion of code and data, ensuring that only the necessary elements are compiled.
+- Compile-time control at the individual statement level optimises the build process by excluding unnecessary code, leading to more efficient and manageable projects.
+- Enforcing constraints enables to:
+  - generate a consistent set of preprocessor definitions
+  - validate the configuration even before the compilation step
+- Managing separate configurations for multiple build setups facilitates convenient testing across different platforms, such as native and/or embedded.

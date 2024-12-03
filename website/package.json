@@ -69,6 +69,7 @@
     "hasCustomSidebar": "true",
     "hasCustomUserInformation": "true",
     "hasCustomDocsNavbarItem": "true",
+    "hasWebpreview": "true",
     "nodeVersion": "18.20.4"
   },
   "engines": {

@@ -28,7 +28,7 @@ This document refers to:
 
 - the xCDL Configuration Definition Language, used to define the xCDL metadata
 - the `xcdl` CLI tool
-- the associated configuration and build process.
+- the associated configuration process and build process.
 
 **The main focus of xCDL is to support the configuration of multi-variant
 projects, with an emphasis on bare metal C/C++ embedded projects.**
@@ -46,7 +46,7 @@ manufacturer families (like STM32F1, STM32F4), multiple sub-families
 - possibly more...
 
 For testability reasons, as an extension to physical architectures,
-synthetic architectures, like POSIX, should be supported; therefore
+**synthetic architectures**, like POSIX, should be supported; therefore
 multiple synthetic run platforms (like macOS, GNU/Linux) will be also considered.
 
 The inputs of the xCDL configuration step are one or more JSON files with the
@@ -57,7 +57,7 @@ The outputs of the xCDL configuration step are:
 - source artefacts, like C/C++ header files
 - system builder artefacts, like CMake/meson/ninja configuration files
 
-The xCDL framework will include one or more tools to:
+The xCDL framework should include one or more tools to:
 
 - generate the artefacts needed by various build configurations (like C/C++ header files)
 - manage (view/edit) the specific xCDL metadata, including in a GUI environment
@@ -255,7 +255,7 @@ that can be used for debug or for multi-platform applications.
 If the application includes tests (for example unit-tests for libraries),
 they can also be implemented with **xpm** build configurations.
 
-#### Interactions with the application project manager
+#### Interactions with the application project manager (component authors)
 
 The next interaction with people is the creation of the xCDL configurations.
 
@@ -303,9 +303,9 @@ or with the xCDL configuration tools.
 
 <small>Q: What is the software supposed to do?</small>
 
-The next version of the Eclipse plug-in should add a wizard,
+The next version of the VS COde xPack extension should add a wizard,
 to allow the creation of new C/C++ projects based on the definitions
-found in CMSIS packages and an editor page to change various
+found in the µOS++ packages and an editor page to change various
 settings related to components.
 
 The software should be able to parse **xcdl** command options, the JSON files

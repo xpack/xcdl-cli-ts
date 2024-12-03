@@ -34,7 +34,8 @@ import TestResults from './_test-results.mdx';
 
 # How to build xcdl
 
-This page is designed for developers of the
+This page is designed for developers who plan to contribute new features
+or fix bugs in the
 **xPack Component Manager**
 project and provides documentation on how to build and test the package.
 
@@ -42,10 +43,19 @@ project and provides documentation on how to build and test the package.
 
 <GetProjectSources />
 
+:::tip
+
+To contribute Pull Requests, fork the project and be sure the **Copy the master branch only** is **disabled**.
+
+Use the `xpack-development` branch and be sure you contribute the
+Pull Requests back to the `xpack-development` branch.
+
+:::
+
 ## Satisfy dependencies
 
 ```sh
-npm --prefix ~/Work/npm-packages/xcdl-cli-ts.git install
+npm install
 ```
 
 ## Add links for development
@@ -54,7 +64,7 @@ To facilitate the use of this module in other packages, add a link
 from the central npm storage to this local development folder:
 
 ```sh
-npm --prefix ~/Work/npm-packages/xcdl-cli-ts.git link
+npm link
 ```
 
 And in the projects referring it:
@@ -69,7 +79,7 @@ The TypeScript compiler can automatically recompile modified files. For
 this, start it in `watch` mode.
 
 ```sh
-npm --prefix ~/Work/npm-packages/xcdl-cli-ts.git run compile-watch
+npm run compile-watch
 ```
 
 
@@ -153,8 +163,8 @@ As for any `npm` package, the standard way to run the project tests is via
 `npm run test`:
 
 ```sh
-npm --prefix ~/Work/npm-packages/xcdl-cli-ts.git install
-npm --prefix ~/Work/npm-packages/xcdl-cli-ts.git run test
+npm install
+npm run test
 ```
 
 <TestResults />
