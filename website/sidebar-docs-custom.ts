@@ -128,111 +128,111 @@ export const customDocsSidebar = [
           },
           {
             type: 'category',
-            label: 'Properties',
+            label: 'Object Properties',
             link: {
               type: 'doc',
-              id: 'metadata/properties/index',
+              id: 'metadata/object-properties/index',
             },
             collapsed: true,
             "items": [
               {
                 type: 'doc',
-                id: 'metadata/properties/activeIf/index',
+                id: 'metadata/object-properties/activeIf/index',
                 label: 'activeIf'
               },
               {
                 type: 'doc',
-                id: 'metadata/properties/childrenGeneratedFile/index',
+                id: 'metadata/object-properties/childrenGeneratedFile/index',
                 label: 'childrenGeneratedFile'
               },
               {
                 type: 'doc',
-                id: 'metadata/properties/compilerIncludeFolders/index',
+                id: 'metadata/object-properties/compilerIncludeFolders/index',
                 label: 'compilerIncludeFolders'
               },
               {
                 type: 'doc',
-                id: 'metadata/properties/compilerSourceFiles/index',
+                id: 'metadata/object-properties/compilerSourceFiles/index',
                 label: 'compilerSourceFiles'
               },
               {
                 type: 'doc',
-                id: 'metadata/properties/computed/index',
+                id: 'metadata/object-properties/computed/index',
                 label: 'computed'
               },
               {
                 type: 'doc',
-                id: 'metadata/properties/configurable/index',
+                id: 'metadata/object-properties/configurable/index',
                 label: 'configurable'
               },
               {
                 type: 'doc',
-                id: 'metadata/properties/defaultEnabled/index',
+                id: 'metadata/object-properties/defaultEnabled/index',
                 label: 'defaultEnabled'
               },
               {
                 type: 'doc',
-                id: 'metadata/properties/defaultValue/index',
+                id: 'metadata/object-properties/defaultValue/index',
                 label: 'defaultValue'
               },
               {
                 type: 'doc',
-                id: 'metadata/properties/description/index',
+                id: 'metadata/object-properties/description/index',
                 label: 'description'
               },
               {
                 type: 'doc',
-                id: 'metadata/properties/display/index',
+                id: 'metadata/object-properties/display/index',
                 label: 'display'
               },
               {
                 type: 'doc',
-                id: 'metadata/properties/docsUrl/index',
+                id: 'metadata/object-properties/docsUrl/index',
                 label: 'docsUrl'
               },
               {
                 type: 'doc',
-                id: 'metadata/properties/generatedDefinition/index',
+                id: 'metadata/object-properties/generatedDefinition/index',
                 label: 'generatedDefinition'
               },
               {
                 type: 'doc',
-                id: 'metadata/properties/generatedFile/index',
+                id: 'metadata/object-properties/generatedFile/index',
                 label: 'generatedFile'
               },
               {
                 type: 'doc',
-                id: 'metadata/properties/implements/index',
+                id: 'metadata/object-properties/implements/index',
                 label: 'implements'
               },
               {
                 type: 'doc',
-                id: 'metadata/properties/includeCDLs/index',
+                id: 'metadata/object-properties/includeCDLs/index',
                 label: 'includeCDLs'
               },
               {
                 type: 'doc',
-                id: 'metadata/properties/legalValues/index',
+                id: 'metadata/object-properties/legalValues/index',
                 label: 'legalValues'
               },
               {
                 type: 'doc',
-                id: 'metadata/properties/parent/index',
+                id: 'metadata/object-properties/parent/index',
                 label: 'parent'
               },
               {
                 type: 'doc',
-                id: 'metadata/properties/requires/index',
+                id: 'metadata/object-properties/requires/index',
                 label: 'requires'
               },
               {
                 type: 'doc',
-                id: 'metadata/properties/valueFormat/index',
+                id: 'metadata/object-properties/valueFormat/index',
                 label: 'valueFormat'
               },
               {
                 type: 'doc',
-                id: 'metadata/properties/valueType/index',
+                id: 'metadata/object-properties/valueType/index',
                 label: 'valueType'
               },
             ]

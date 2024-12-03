@@ -16,6 +16,6 @@
 import Link from '@docusaurus/Link';
 
 export default function MetadataPropertyLink({name}): JSX.Element {
-    const url=`/docs/metadata/properties/${name}`;
+    const url=`/docs/metadata/object-properties/${name}`;
     return ( <><Link to={url}><code>{name}</code></Link></> )
 }
