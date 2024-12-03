@@ -33,7 +33,7 @@ export const customDocsSidebar = [
   },
   {
     type: 'category',
-    label: 'User Information',
+    label: 'User\'s Guide',
     link: {
       type: 'doc',
       id: 'user/index',
@@ -242,6 +242,27 @@ export const customDocsSidebar = [
     ]
   },
   {
+    type: 'category',
+    label: 'Contributor\'s Guide',
+    link: {
+      type: 'doc',
+      id: 'developer/index',
+    },
+    collapsed: true,
+    items: [
+      {
+        type: 'doc',
+        id: 'developer/srs/index',
+        label: 'SRS'
+      },
+    ]
+  },
+  {
+    type: 'doc',
+    id: 'maintainer/index',
+    label: 'Maintainer\'s Guide'
+  },
+  {
     type: 'doc',
     id: 'faq/index',
     label: 'FAQ'
@@ -263,7 +284,7 @@ export const customDocsSidebar = [
       type: 'doc',
       id: 'project/about/index',
     },
-    collapsed: true,
+    collapsed: false,
     items: [
       {
         type: 'doc',
@@ -281,26 +302,5 @@ export const customDocsSidebar = [
         href: 'https://opensource.org/license/MIT',
       },
     ]
-  },
-  {
-    type: 'category',
-    label: 'Developer Information',
-    link: {
-      type: 'doc',
-      id: 'developer/index',
-    },
-    collapsed: true,
-    items: [
-      {
-        type: 'doc',
-        id: 'developer/srs/index',
-        label: 'SRS'
-      },
-    ]
-  },
-  {
-    type: 'doc',
-    id: 'maintainer/index',
-    label: 'Maintainer Information'
   }
 ]

@@ -78,7 +78,7 @@ Like a `cdlPackage`, a `cdlComponents` object has a name and a body. The body co
 
 ## xCDL objects
 
-Several xCDL-related objects can occur at the top level of a xCDL file: `cdlPackage`, `cdlComponents`, `cdlOptions` and `cdlInterfaces`. These objects correspond to the basic building blocks of the language. All of them follow the same basic form:
+Several xCDL-related objects can occur at the top level of a xCDL file: `cdlPackage`, `cdlComponents`, `cdlOptions` and `cdlInterfaces`. These objects correspond to the basic building blocks of the language. All of them follow more or less the same basic form.
 
 `cdlPackage` defines a single object.
 
@@ -91,7 +91,7 @@ Several xCDL-related objects can occur at the top level of a xCDL file: `cdlPack
 }
 ```
 
-`cdlComponents`, `cdlOptions` and `cdlInterfaces` define maps of objects:
+`cdlComponents`, `cdlOptions` and `cdlInterfaces` define maps of named objects:
 
 ```json
 {
@@ -113,7 +113,7 @@ Several xCDL-related objects can occur at the top level of a xCDL file: `cdlPack
 }
 ```
 
-All objects have a mandatory name and, within their body, a list of properties and an optional list of child objects. All child names must be unique within a given parent. Addressing objects is similar to addressing files in a file system, using forward slash-separated paths. Paths can be absolute or relative. Additionally, relative paths may be incomplete, such as `isEnabled('traceBuffer/size')`, as long as the uniqueness of the sub-path is ensured.
+All objects have a mandatory **name** and, within their body, a list of **properties** and an optional list of **child objects**. All child names must be unique within a given parent. Addressing objects is similar to addressing files in a file system, using forward slash-separated paths. Paths can be absolute or relative. Additionally, relative paths may be incomplete, such as `isEnabled('traceBuffer/size')`, as long as the uniqueness of the sub-path is ensured.
 
 The various xCDL objects exist in a hierarchy. There is no upper limit on how deeply components can be nested, but it is rarely necessary to go more than three or four levels beyond the package level. The naming convention used for referring to objects incorporates elements of the hierarchy, which helps keep the names more manageable in size.
 

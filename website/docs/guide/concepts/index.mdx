@@ -102,7 +102,7 @@ In a GUI-based tool, this virtual hierarchy can be presented in a custom project
 
 #### JSON mapping
 
-As a design decision, xCDL objects must map 1:1 to serializable JavaScript objects, more specifically the [JSON](https://www.json.org/json-en.html) specifications. This means they should have properties whose names match the JavaScript naming convention and have values of type string, number, object, or array of objects (not necessarily of the same type).
+As a design decision, xCDL objects must map 1:1 to serializable JavaScript objects, more specifically the [JSON](https://www.json.org/json-en.html) specifications. This means they should have properties whose names match the JavaScript naming convention and have values of type string, number, object, or array of objects.
 
 The main advantage of defining xCDL objects using JavaScript syntax (compared to, for instance, XML definitions) is inherent simplicity and uniformity. Consequently, xCDL objects can be easily serialized into JSON files, the preferred exchange format.
 
@@ -186,7 +186,7 @@ The component framework allows for options that are not directly user-modifiable
 
 #### Hierarchy
 
-Options are leaves in the object hierarchy, with components or packages as parents. Options cannot include other child objects.
+Options are leaves in the configuration hierarchy, with components or packages as parents. Options cannot include other child objects.
 
 #### Active/inactive
 
