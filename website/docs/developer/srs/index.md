@@ -1,6 +1,11 @@
 ---
 
-title: The xCDL Software Requirement Specifications (outdated)
+title: The xCDL SRS
+description: The project Software Requirement Specifications.
+keywords:
+  - xpack
+  - xcdl
+  - srs
 
 date: 2015-10-25 12:00:00 +0200
 
