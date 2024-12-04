@@ -9,12 +9,12 @@
  * be obtained from https://opensource.org/licenses/MIT/.
  */
 
-import MetadataPropertyLink from '@site/src/components/MetadataPropertyLink';
+import MetadataObjectPropertyLink from '@site/src/components/MetadataObjectPropertyLink';
 
 export default function func({objectType = 'TYPE'}) {
   return (
     <>
-      <MetadataPropertyLink name='generatedFile' /> - the full file path of the header where the {objectType} will generate a definition (if missing, inherited from the parent node)
+      <MetadataObjectPropertyLink name='generatedFile' /> - the full file path of the header where the {objectType} will generate a definition (if missing, inherited from the parent node)
     </>
   )
 }

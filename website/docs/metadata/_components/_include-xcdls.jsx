@@ -9,12 +9,12 @@
  * be obtained from https://opensource.org/licenses/MIT/.
  */
 
-import MetadataPropertyLink from '@site/src/components/MetadataPropertyLink';
+import MetadataObjectPropertyLink from '@site/src/components/MetadataObjectPropertyLink';
 
 export default function func({objectType = 'TYPE'}) {
   return (
     <>
-      <MetadataPropertyLink name='includeCDLs' /> - an array of paths to xCDL metadata files to be parsed, with their objects to included as children of the current node
+      <MetadataObjectPropertyLink name='includeCDLs' /> - an array of paths to xCDL metadata files to be parsed, with their objects to included as children of the current node
     </>
   )
 }

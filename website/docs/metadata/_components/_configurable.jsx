@@ -9,12 +9,12 @@
  * be obtained from https://opensource.org/licenses/MIT/.
  */
 
-import MetadataPropertyLink from '@site/src/components/MetadataPropertyLink';
+import MetadataObjectPropertyLink from '@site/src/components/MetadataObjectPropertyLink';
 
 export default function func({objectType = 'TYPE'}) {
   return (
     <>
-      <MetadataPropertyLink name='configurable' /> - a boolean expression that provides additional information to a configuration tool, controlling whether this {objectType} can be enabled/disabled by the user during the configuration process
+      <MetadataObjectPropertyLink name='configurable' /> - a boolean expression that provides additional information to a configuration tool, controlling whether this {objectType} can be enabled/disabled by the user during the configuration process
     </>
   )
 }

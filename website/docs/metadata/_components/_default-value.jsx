@@ -9,12 +9,12 @@
  * be obtained from https://opensource.org/licenses/MIT/.
  */
 
-import MetadataPropertyLink from '@site/src/components/MetadataPropertyLink';
+import MetadataObjectPropertyLink from '@site/src/components/MetadataObjectPropertyLink';
 
 export default function func({objectType = 'TYPE'}) {
   return (
     <>
-      <MetadataPropertyLink name='defaultValue' /> - an expression to be used as a default value for this {objectType} when the user does not define it explicitly during the configuration process
+      <MetadataObjectPropertyLink name='defaultValue' /> - an expression to be used as a default value for this {objectType} when the user does not define it explicitly during the configuration process
     </>
   )
 }

@@ -9,12 +9,12 @@
  * be obtained from https://opensource.org/licenses/MIT/.
  */
 
-import MetadataPropertyLink from '@site/src/components/MetadataPropertyLink';
+import MetadataObjectPropertyLink from '@site/src/components/MetadataObjectPropertyLink';
 
 export default function func({objectType = 'TYPE'}) {
   return (
     <>
-      <MetadataPropertyLink name='parent' /> - provides a method to break the default hierarchy and directly specify the xCDL path of the parent of this {objectType}
+      <MetadataObjectPropertyLink name='parent' /> - provides a method to break the default hierarchy and directly specify the xCDL path of the parent of this {objectType}
     </>
   )
 }

@@ -15,7 +15,7 @@
 // import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 
-export default function MetadataPropertyLink({name}): JSX.Element {
-    const url=`/docs/metadata/object-properties/${name}`;
+export default function MetadataGlobalPropertyLink({name}): JSX.Element {
+    const url=`/docs/metadata/global-properties/${name}`;
     return ( <><Link to={url}><code>{name}</code></Link></> )
 }

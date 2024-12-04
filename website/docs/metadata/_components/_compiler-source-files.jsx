@@ -9,12 +9,12 @@
  * be obtained from https://opensource.org/licenses/MIT/.
  */
 
-import MetadataPropertyLink from '@site/src/components/MetadataPropertyLink';
+import MetadataObjectPropertyLink from '@site/src/components/MetadataObjectPropertyLink';
 
 export default function func({objectType = 'TYPE'}) {
   return (
     <>
-      <MetadataPropertyLink name='compilerSourceFiles' /> - an array of source file paths that should be built if this {objectType} is active and enabled
+      <MetadataObjectPropertyLink name='compilerSourceFiles' /> - an array of source file paths that should be built if this {objectType} is active and enabled
     </>
   )
 }

@@ -1,0 +1,58 @@
+---
+
+title: minimumXcdlRequired
+description: The definition of the xCDL minimumXcdlRequired property.
+keywords:
+  - xpack
+  - xcdl
+  - cdl
+  - property
+  - minimumXcdlRequired
+
+date: 2015-11-25 19:32:00 +0200
+
+---
+
+import MetadataObjectLink from '@site/src/components/MetadataObjectLink';
+import MetadataObjectPropertyLink from '@site/src/components/MetadataObjectPropertyLink';
+
+{/* ------------------------------------------------------------------------ */}
+
+# The `minimumXcdlRequired` definition
+
+:::note
+
+Work in progress.
+
+:::
+
+## Purpose
+
+Provide additional control over the active state of an xCDL object.
+
+## Syntax
+
+```json {2}
+{
+    "minimumXcdlRequired": "<semver>",
+}
+```
+
+The value of the `minimumXcdlRequired` property is a string with a version in [SemVer](https://semver.org) format.
+
+## Default value
+
+If missing, no checks are performed on the **xcdl** version.
+
+## Description
+
+TODO
+
+## Example
+
+```json {2}
+{
+    "minimumXcdlRequired": "2.0.0",
+    ...
+}
+```

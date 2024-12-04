@@ -33,25 +33,26 @@ xCDL uses several concepts inherited from eCos CDL:
 
 - **software component**: a set of source files that perform a given
 function, standalone or depending on other components, together with
-some metadata
+some metadata.
 - **component metadata**: additional informations added to
-software components to describe dependencies, requirements and constraints
+software components to describe dependencies, requirements and constraints.
 - **configuration tools**: tools running on development machines
-to create and manage xCDL configurations and component metadata
+to create and manage xCDL configurations and component metadata.
 - **configurations**: specific metadata definitions, that describe
 the requirements of an application, like which components are used,
 the values for preprocessor definitions, toolchain selection, build
-details, etc
-- **build configurations**: the result of processing an xCDL
-configuration, usually a build folder with associated build related
-files (like CMake/meson/GNU Make files); when used together
-with **xpm**, it is recommended that
-xCDL build configurations share the same names; this can
-be easily achieved by invoking **xcdl** via **xpm** actions and
-passing `{{configuration.name}}`
+details, etc.
+- **build configurations**: the outcome of processing an xCDL
+configuration, typically resulting in a build folder containing
+associated build-related files (such as CMake, Meson, or GNU Make
+files). When utilised in conjunction with **xpm**, the xCDL
+configuration serves as a parameter for the xpm build configuration.
+Multiple build configurations can be derived from the same
+xCDL configuration, for instance, when building the same
+unit test with various versions of a toolchain.
 - **requirements**: direct requirements, generally components
-that are needed by other components in order for the build to succeed
+that are needed by other components in order for the build to succeed.
 - **constraints**: in general hardware dependencies, like the
 presence of a certain peripheral; dependencies to software
-options can also be used
+options can also be used.
 

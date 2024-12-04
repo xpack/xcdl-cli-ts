@@ -9,12 +9,12 @@
  * be obtained from https://opensource.org/licenses/MIT/.
  */
 
-import MetadataPropertyLink from '@site/src/components/MetadataPropertyLink';
+import MetadataObjectPropertyLink from '@site/src/components/MetadataObjectPropertyLink';
 
 export default function func({objectType = 'TYPE'}) {
   return (
     <>
-      <MetadataPropertyLink name='display' /> - provides a node name for the {objectType} when rendered in the configuration hierarchy
+      <MetadataObjectPropertyLink name='display' /> - provides a node name for the {objectType} when rendered in the configuration hierarchy
     </>
   )
 }

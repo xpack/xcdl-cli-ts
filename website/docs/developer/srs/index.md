@@ -85,18 +85,29 @@ software components to describe dependencies, requirements and constraints
 - xCDL configuration tools - tools running on development machines
 to create and manage xCDL configurations and component metadata
 - xCDL configurations - specific metadata definitions, that describe
-the requirements of an application, like which components are used, the values for preprocessor definitions, toolchain selection, build details, etc
+the requirements of an application, like which components are used,
+the values for preprocessor definitions, toolchain selection, build
+details, etc
 - xCDL build configurations - the result of processing an xCDL
 configuration, usually a build folder with associated build related
-files (like CMake/meson/GNU Make files); when IDEs (like VS Code or Eclipse) are used, it translates to an IDE build configuration
+files (like CMake/meson/GNU Make files); when IDEs (like VS Code or
+Eclipse) are used, it translates to an IDE build configuration
 - xCDL requirements - direct requirements, generally components
 that are mandatory for the build to succeed, like base classes
 - xCDL constraints - in general hardware dependencies, like the
 presence of a certain peripheral, but dependencies to software
 options can also be used
 
-The xPack build configurations and xCDL build configurations
-should be more or less the same, but details should be worked out.
+The xCDL configurations and xCDL build configurations are related,
+but are not the same.
+
+For simple projects, there is a single xPack build configuration
+for each xCDL configuration, but for tests with extensive testing,
+the same xCDL configuration can be compiled with multiple versions
+of a toolchain, so in multiple xCDL build configurations.
+
+Therefore, it is better to consider the xCDL configurations a
+parameter of the build configuration.
 
 ### References
 

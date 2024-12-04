@@ -14,7 +14,7 @@ date: 2015-11-15 12:00:00 +0200
 ---
 
 import MetadataObjectLink from '@site/src/components/MetadataObjectLink';
-import MetadataPropertyLink from '@site/src/components/MetadataPropertyLink';
+import MetadataObjectPropertyLink from '@site/src/components/MetadataObjectPropertyLink';
 
 {/* ------------------------------------------------------------------------ */}
 
@@ -45,7 +45,9 @@ Define a map of configuration objects (persistent storages for user choices).
 
 The `cdlConfigurations` objects store all definitions required to generate the build tree and to conduct the build process. These definitions include all user choices during the configuration process, and other settings, like toolchain details.
 
-There is one such configuration object for each build configuration.
+The same `cdlConfigurations` object can be used for multiple build
+configurations, for example when building the same unit-test with multiple
+toolchains or toolchain versions.
 
 The `cdlConfigurations` definitions are stored persistently in a JSON file in the project, that must be committed to the versioning system.
 

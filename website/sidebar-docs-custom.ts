@@ -92,6 +92,22 @@ export const customDocsSidebar = [
         "items": [
           {
             type: 'category',
+            label: 'Global Properties',
+            link: {
+              type: 'doc',
+              id: 'metadata/global-properties/index',
+            },
+            collapsed: true,
+            "items": [
+              {
+                type: 'doc',
+                id: 'metadata/global-properties/minimumXcdlRequired/index',
+                label: 'minimumXcdlRequired'
+              },
+            ]
+          },
+          {
+            type: 'category',
             label: 'Objects',
             link: {
               type: 'doc',
@@ -236,6 +252,27 @@ export const customDocsSidebar = [
                 label: 'valueType'
               },
             ]
+          },
+        ]
+      },
+      {
+        type: 'category',
+        label: 'Files',
+        link: {
+          type: 'doc',
+          id: 'guide/files/index',
+        },
+        collapsed: true,
+        "items": [
+          {
+            type: 'doc',
+            id: 'guide/files/xcdl.json/index',
+            label: 'xcdl.json'
+          },
+          {
+            type: 'doc',
+            id: 'guide/files/xcdl-config.json/index',
+            label: 'xcdl-config.json'
           },
         ]
       },

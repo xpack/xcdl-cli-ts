@@ -1,4 +1,7 @@
 /*
+ * DO NOT EDIT!
+ * Automatically generated from docusaurus-template-liquid/templates/docusaurus.
+ *
  * This file is part of the xPack project (http://xpack.github.io).
  * Copyright (c) 2024 Liviu Ionescu. All rights reserved.
  *
@@ -9,12 +12,10 @@
  * be obtained from https://opensource.org/licenses/MIT/.
  */
 
-import MetadataObjectPropertyLink from '@site/src/components/MetadataObjectPropertyLink';
+// import clsx from 'clsx';
+import Link from '@docusaurus/Link';
 
-export default function func({objectType = 'TYPE'}) {
-  return (
-    <>
-      <MetadataObjectPropertyLink name='category' /> - provides additional grouping information, to allow a configuration tool to provide appropriate selections (board | synthetic | root | architecture | family)
-    </>
-  )
+export default function MetadataObjectPropertyLink({name}): JSX.Element {
+    const url=`/docs/metadata/object-properties/${name}`;
+    return ( <><Link to={url}><code>{name}</code></Link></> )
 }

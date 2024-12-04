@@ -9,12 +9,12 @@
  * be obtained from https://opensource.org/licenses/MIT/.
  */
 
-import MetadataPropertyLink from '@site/src/components/MetadataPropertyLink';
+import MetadataObjectPropertyLink from '@site/src/components/MetadataObjectPropertyLink';
 
 export default function func({objectType = 'TYPE'}) {
   return (
     <>
-      <MetadataPropertyLink name='valueType' /> - specify the type of the variable associated with this {objectType} (none | bool | int | float | string)
+      <MetadataObjectPropertyLink name='valueType' /> - specify the type of the variable associated with this {objectType} (none | bool | int | float | string)
     </>
   )
 }

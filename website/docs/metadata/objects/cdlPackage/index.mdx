@@ -13,7 +13,7 @@ date: 2015-11-15 12:00:00 +0200
 ---
 
 import MetadataObjectLink from '@site/src/components/MetadataObjectLink';
-import MetadataPropertyLink from '@site/src/components/MetadataPropertyLink';
+import MetadataObjectPropertyLink from '@site/src/components/MetadataObjectPropertyLink';
 
 import PropertyActiveIf from '../../_components/_active-if';
 import PropertyCategory from '../../_components/_category';
@@ -93,11 +93,11 @@ The `cdlPackage` is inherently a container, so it may include `cdlComponents`, `
 
 ## Unavailable properties
 
-- <MetadataPropertyLink name="computed" /> - always false; the package's value cannot be computed
-- <MetadataPropertyLink name="configurable" /> - always true; packages can always be enabled/disabled by the user during the configuration process
-- <MetadataPropertyLink name="valueType" /> - always `bool`; packages do not have an associated value, they return 1 if enabled
-- <MetadataPropertyLink name="valueFormat" /> - if the header definition is generated, the value will always be `(1)` [TODO: perhaps booleans can be formatted as true/false]
-- <MetadataPropertyLink name="legalValues" /> - no restrictions can apply to package values
+- <MetadataObjectPropertyLink name="computed" /> - always false; the package's value cannot be computed
+- <MetadataObjectPropertyLink name="configurable" /> - always true; packages can always be enabled/disabled by the user during the configuration process
+- <MetadataObjectPropertyLink name="valueType" /> - always `bool`; packages do not have an associated value, they return 1 if enabled
+- <MetadataObjectPropertyLink name="valueFormat" /> - if the header definition is generated, the value will always be `(1)` [TODO: perhaps booleans can be formatted as true/false]
+- <MetadataObjectPropertyLink name="legalValues" /> - no restrictions can apply to package values
 
 ## Example
 
