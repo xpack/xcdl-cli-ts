@@ -45,6 +45,11 @@ export const customDocsSidebar = [
         id: 'user/index',
         label: 'How to use'
       },
+      {
+        type: 'doc',
+        id: 'user/policies/index',
+        label: 'Policies'
+      },
     ]
   },
   {
