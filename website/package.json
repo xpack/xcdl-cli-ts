@@ -56,6 +56,7 @@
   },
   "websiteConfig": {
     "shortName": "xcdl",
+    "programName": "xcdl",
     "longName": "xPack Component Manager",
     "title": "xcdl - The xPack Component Manager",
     "tagline": "A tool to manage component configurations & builds, inspired by eCos CDL (work in progress)",
