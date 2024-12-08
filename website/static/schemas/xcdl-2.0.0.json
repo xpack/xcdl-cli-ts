@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://xpack.github.io/xcdl/schemas/xcdl-2.0.0.json",
+  "title": "xCDL JSON schema",
+  "description": "The JSON schema definitions for xCDL files.",
+  "type": "object",
+  "properties": {
+    "minimumXcdlRequired": {},
+    "cdlComponents": {},
+    "cdlConfigurations": {},
+    "cdlInterfaces": {},
+    "cdlOptions": {},
+    "cdlPackage": {}
+  },
+  "required": [
+  ]
+}
