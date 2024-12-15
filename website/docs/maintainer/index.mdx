@@ -299,13 +299,20 @@ In https://github.com/xpack/xcdl-cli-ts/milestones:
 
 - close the current milestone.
 
+### Check npm package tags
+
+```sh
+npm dist-tag ls xcdl
+```
+
 ### Tag the npm package as `latest`
 
 When the release is considered stable, promote it as `latest`:
 
-- `npm dist-tag ls xcdl`
-- <code>npm dist-tag add xcdl@{customField('releaseVersion')} latest</code>
-- `npm dist-tag ls xcdl`
+<CodeBlock language="sh"> {
+`npm dist-tag add xcdl@${customField('releaseVersion')} latest
+npm dist-tag ls xcdl
+`} </CodeBlock>
 
 
 ## Share on X/Twitter

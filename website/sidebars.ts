@@ -21,6 +21,7 @@ const sidebars: SidebarsConfig = {
   
   docsSidebar: customDocsSidebar,
   
+  
   typedocSidebar: [
     {
       type: 'category',
@@ -33,6 +34,7 @@ const sidebars: SidebarsConfig = {
       items: typedocSidebarItems,
     },
   ],
+  
   cliSidebar
   
 };
