@@ -1,0 +1,25 @@
+{
+  "minimumXpmakeRequired": "0.1.0",
+  "license": "MIT",
+  "copyright": "Copyright (c) 2022 Liviu Ionescu",
+  "description": "platform-qemu-cortex-a15 global definitions",
+  "globalOptions": {
+    "addCompilerDefinitions": [
+      "_POSIX_C_SOURCE=200809L"
+    ],
+    "addCompilerOptions": [
+      "-mcpu=cortex-a15",
+      "-fno-move-loop-invariants",
+      "$<$<CONFIG:Debug>:-fno-omit-frame-pointer>",
+      "$<$<COMPILE_LANGUAGE:CXX>:-fno-use-cxa-atexit>",
+      "$<$<COMPILE_LANGUAGE:CXX>:-fno-threadsafe-statics>"
+    ],
+    "addLinkerOptions": [
+      "-mcpu=cortex-a15",
+      "-fno-move-loop-invariants",
+      "$<$<CONFIG:Debug>:-fno-omit-frame-pointer>",
+      "$<$<COMPILE_LANGUAGE:CXX>:-fno-use-cxa-atexit>",
+      "$<$<COMPILE_LANGUAGE:CXX>:-fno-threadsafe-statics>"
+    ]
+  }
+}

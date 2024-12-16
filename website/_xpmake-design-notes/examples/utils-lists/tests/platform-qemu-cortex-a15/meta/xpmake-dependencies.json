@@ -1,0 +1,13 @@
+{
+  "minimumXpmakeRequired": "0.1.0",
+  "license": "MIT",
+  "copyright": "Copyright (c) 2022 Liviu Ionescu",
+  "description": "platform-qemu-cortex-a15 dependencies",
+  "includeMetadata": [
+    "../../xpacks/micro-os-plus-architecture-aarch32/meta/xpmake-components.json",
+    "../../xpacks/micro-os-plus-devices-qemu-aarch32/meta/xpmake-components.json",
+    "../../xpacks/micro-os-plus-diag-trace/meta/xpmake-components.json",
+    "../../xpacks/micro-os-plus-micro-test-plus/meta/xpmake-components.json",
+    "../../xpacks/micro-os-plus-semihosting/meta/xpmake-components.json"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "minimumXpmakeRequired": "0.1.0",
+  "license": "MIT",
+  "copyright": "Copyright (c) 2022 Liviu Ionescu",
+  "description": "Top configuration for tests",
+  "includeMetadata": [
+    "../xpacks/micro-os-plus-build-helper/xpmake/micro-os-plus-build-helper.json",
+    "xpmake-globals.json",
+    "platform-{{ platformName }}/meta/xpmake-globals.json",
+    "platform-{{ platformName }}/meta/xpmake-dependencies.json",
+    "../meta/xpmake-components.json",
+    "platform-{{ platformName }}/meta/xpmake-platform.json"
+  ]
+}

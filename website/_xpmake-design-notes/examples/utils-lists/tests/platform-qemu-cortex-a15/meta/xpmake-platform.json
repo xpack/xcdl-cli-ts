@@ -1,0 +1,107 @@
+{
+  "minimumXpmakeRequired": "0.1.0",
+  "license": "MIT",
+  "copyright": "Copyright (c) 2022 Liviu Ionescu",
+  "description": "platform-qemu-cortex-a15 executables & tests",
+  "configurationOptions": {
+    "do-create-hex": {
+      "defaultEnable": false
+    },
+    "do-create-listing": {
+      "defaultEnable": false
+    }
+  },
+  "components": {
+    "platform-qemu-cortex-a15": {
+      "compilerIncludeFolders": [
+        "include-platform"
+      ],
+      "compilerSourceFiles": [],
+      "compilerDefinitions": [
+        "PLATFORM_QEMU_CORTEX_A15"
+      ],
+      "compilerOptions": [],
+      "dependencies": [
+        "micro-os-plus/devices-qemu-aarch32"
+      ],
+      "aliases": [
+        "micro-os-plus/platform"
+      ]
+    }
+  },
+  "executables": {
+    "template": {
+      "hidden": true,
+      "output": "{{ node.name }}.elf",
+      "compilerIncludeFolders": [
+        "../include"
+      ],
+      "compilerSourceFiles": [
+        "../src/{{ node.name }}.cpp"
+      ],
+      "compilerDefinitions": [
+      ],
+      "compilerOptions": [],
+      "linkerOptions": [
+        "--specs=rdimon.specs", "-Wl,--start-group", "-lgcc", "-lc", "-lc", "-lm", "-lrdimon", "-Wl,--end-group",
+        "-Wl,--gc-sections",
+        "-Wl,-Map,platform-bin/{{ node.name }}-map.txt",
+        "-T../../xpacks/micro-os-plus-devices-qemu-aarch32/linker-scripts/mem-cortex-a15.ld",
+        "-T../../xpacks/micro-os-plus-architecture-aarch32/linker-scripts/sections-ram.ld"
+      ],
+      "dependencies": [
+        "micro-os-plus/utils-lists",
+        "micro-os-plus/diag-trace",
+        "micro-os-plus/platform",
+        "micro-os-plus/semihosting"
+      ],
+      "customTargets": {
+        "size": {
+          "command": "arm-none-eabi-size --format=berkeley {{ node.parent.name }}.elf"
+        },
+        "hex": {
+          "activeIf": "do-create-hex",
+          "command": "arm-none-eabi-objcopy -O ihex {{ node.parent.name }}.elf {{ node.parent.name }}.hex"
+        },
+        "listing":{
+          "activeIf": "do-create-listing",
+          "command": "arm-none-eabi-objdump --source --all-headers --demangle --line-numbers --wide {{ node.parent.name }}.elf > {{ node.parent.name }}-list.txt"
+        }
+      }
+    },
+    "sample-test": {
+      "inherit": "template",
+      "tests": {
+        "qemu": {
+          "command":[
+            "qemu-system-arm",
+            "-machine", "virt",
+            "--cpu", "cortex-a15",
+            "--kernel", "{{ node.parent.output }}",
+            "--nographic",
+            "-smp", "1",
+            "-d", "unimp,guest_errors",
+            "--semihosting-config", "enable=on,target=native,arg={{ node.parent.name }},arg=one,arg=two"
+          ]
+        }
+      }
+    },
+    "unit-test": {
+      "inherit": "template",
+      "tests": {
+        "qemu": {
+          "command":[
+            "qemu-system-arm",
+            "-machine", "virt",
+            "--cpu", "cortex-a15",
+            "--kernel", "{{ node.parent.output }}",
+            "--nographic",
+            "-smp", "1",
+            "-d", "unimp,guest_errors",
+            "--semihosting-config", "enable=on,target=native,arg={{ node.parent.name }}"
+          ]
+        }
+      }
+    }
+  }
+}

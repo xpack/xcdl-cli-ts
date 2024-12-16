@@ -1,0 +1,44 @@
+{
+  "minimumXpmakeRequired": "0.1.0",
+  "license": "MIT",
+  "copyright": "Copyright (c) 2022 Liviu Ionescu",
+  "description": "Global definitions for all platforms",
+  "properties": {
+    "c": {
+      "standard": "11",
+      "standard-required": true,
+      "extensions": false
+    },
+    "cpp": {
+      "standard": "20",
+      "standard-required": true,
+      "extensions": false
+    },
+    "export-compile-commands": true
+  },
+  "globalOptions": {
+    "addCompilerIncludeFolders": [
+      "platform-{{ platformName }}/include-config"
+    ],
+    "addCompilerDefinitions": [
+      "MICRO_OS_PLUS_INCLUDE_CONFIG_H",
+      "{% if config == \"debug\" %}MICRO_OS_PLUS_DEBUG{% endif %}",
+      "{% if config == \"debug\" %}MICRO_OS_PLUS_TRACE{% endif %}"
+    ],
+    "addCompilerOptions": [
+      "-fmessage-length=0",
+      "-fsigned-char",
+      "-ffunction-sections",
+      "-fdata-sections",
+      "-fdiagnostics-color=always",
+      "??? Warnings"
+    ],
+    "addLinkerOptions": [
+      "-fmessage-length=0",
+      "-fsigned-char",
+      "-ffunction-sections",
+      "-fdata-sections",
+      "-fdiagnostics-color=always"
+    ]
+  }
+}

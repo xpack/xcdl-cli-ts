@@ -1,0 +1,21 @@
+{
+  "minimumXpmakeRequired": "0.1.0",
+  "license": "MIT",
+  "copyright": "Copyright (c) 2022 Liviu Ionescu",
+  "description": "Top components",
+  "components": {
+    "utils-lists": {
+      "description": "Utility lists, like intrusive double linked lists.",
+      "parent": "micro-os-plus",
+      "compilerIncludeFolders": [
+        "include"
+      ],
+      "compilerSourceFiles": [
+        "src/lists.cpp"
+      ],
+      "compilerDefinitions": [],
+      "compilerOptions": [],
+      "dependencies": []
+    }
+  }
+}
