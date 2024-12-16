@@ -69,10 +69,10 @@ TODO
             ...
             "compilerOptions": {
                 ".*gcc": {
-                    "c|cpp": [ "-Wno-pointer-arith" ]
+                    "(c|cpp)-compiler": [ "-Wno-pointer-arith" ]
                 },
                 ".*clang": {
-                    "c|cpp": [ "-fapinotes" ]
+                    "(c|cpp)-compiler": [ "-fapinotes" ]
                 }
             },
             ...
