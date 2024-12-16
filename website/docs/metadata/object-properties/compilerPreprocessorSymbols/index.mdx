@@ -22,7 +22,7 @@ import MetadataObjectPropertyLink from '@site/src/components/MetadataObjectPrope
 
 :::note
 
-Work in progress.
+Work in progress. It is not yet clear where these definitions should be located.
 
 :::
 
@@ -32,30 +32,19 @@ Specify compiler specific preprocessor symbols that should be included in the bu
 
 ## Syntax
 
-```json {5}
+```json {2}
 {
-    "cdlOptions": {
-        "<name>": {
-            ...
-            "compilerPreprocessorSymbols": {
-                "*gcc": {
-                    "cpp": [ "<symbol>",... ],
-                    "c": [ "<symbol>",... ],
-                    "as": [ "<symbol>",... ]
-                },
-                "*clang": {
-                    "cpp": [ "<symbol>",... ],
-                    "c": [ "<symbol>",... ],
-                    "as": [ "<symbol>",... ]
-                }
-            },
+    "compilerPreprocessorSymbols": {
+        "<toolchain-regexp>": {
+            "<tool-name-regexp": [ "<name>",... ],
             ...
         }
-    }
+    },
+    ...
 }
 ```
 
-The value of the `compilerPreprocessorSymbols` property is a map of toolchain specific objects.
+The value of the `compilerPreprocessorSymbols` property is a map of toolchain specific objects, matched by a regular expression.
 
 ## Default value
 
@@ -70,6 +59,27 @@ In some cases it might be necessary to define preprocessor symbols for each
 component.
 
 TODO
+
+## Examples
+
+```json {5}
+{
+    "cdlComponent": {
+        "lists": {
+            ...
+            "compilerPreprocessorSymbols": {
+                ".*": {
+                    "c|cpp": [
+                        "MY_SYMBOL",
+                        "MY_VALUED_SYMBOL=42"
+                    ]
+                }
+            },
+            ...
+        }
+    }
+}
+```
 
 ## See also
 

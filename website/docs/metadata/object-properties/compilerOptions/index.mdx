@@ -22,7 +22,7 @@ import MetadataObjectPropertyLink from '@site/src/components/MetadataObjectPrope
 
 :::note
 
-Work in progress.
+Work in progress. It is not yet clear where these definitions should be located.
 
 :::
 
@@ -32,30 +32,19 @@ Specify compiler specific options that should be included in the build process w
 
 ## Syntax
 
-```json {5}
+```json {2}
 {
-    "cdlOptions": {
-        "<name>": {
-            ...
-            "compilerOptions": {
-                "*gcc": {
-                    "cpp": [ "<options>",... ],
-                    "c": [ "<options>",... ],
-                    "as": [ "<options>",... ]
-                },
-                "*clang": {
-                    "cpp": [ "<options>",... ],
-                    "c": [ "<options>",... ],
-                    "as": [ "<options>",... ]
-                }
-            },
+    "compilerOptions": {
+        "<toolchain-regexp>": {
+            "<tool-name-regexp": [ "<options>",... ],
             ...
         }
-    }
+    },
+    ...
 }
 ```
 
-The value of the `compilerOptions` property is a map of toolchain specific objects.
+The value of the `compilerOptions` property is a map of toolchain specific objects, matched by a regular expression.
 
 ## Default value
 
@@ -70,6 +59,27 @@ In some cases it might be necessary to define compiler options for each
 component.
 
 TODO
+
+## Example
+
+```json {5}
+{
+    "cdlComponent": {
+        "lists": {
+            ...
+            "compilerOptions": {
+                ".*gcc": {
+                    "c|cpp": [ "-Wno-pointer-arith" ]
+                },
+                ".*clang": {
+                    "c|cpp": [ "-fapinotes" ]
+                }
+            },
+            ...
+        }
+    }
+}
+```
 
 ## See also
 
