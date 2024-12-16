@@ -1,0 +1,80 @@
+---
+
+title: compilerOptions
+description: The definition of the xCDL compilerOptions property.
+keywords:
+  - xpack
+  - xcdl
+  - cdl
+  - property
+  - compilerOptions
+
+date: 2024-11-27 00:28:00 +0200
+
+---
+
+import MetadataObjectLink from '@site/src/components/MetadataObjectLink';
+import MetadataObjectPropertyLink from '@site/src/components/MetadataObjectPropertyLink';
+
+{/* ------------------------------------------------------------------------ */}
+
+# The `compilerOptions` definition
+
+:::note
+
+Work in progress.
+
+:::
+
+## Purpose
+
+Specify compiler specific options that should be included in the build process when this object is active and enabled.
+
+## Syntax
+
+```json {5}
+{
+    "cdlOptions": {
+        "<name>": {
+            ...
+            "compilerOptions": {
+                "*gcc": {
+                    "cpp": [ "<options>",... ],
+                    "c": [ "<options>",... ],
+                    "as": [ "<options>",... ]
+                },
+                "*clang": {
+                    "cpp": [ "<options>",... ],
+                    "c": [ "<options>",... ],
+                    "as": [ "<options>",... ]
+                }
+            },
+            ...
+        }
+    }
+}
+```
+
+The value of the `compilerOptions` property is a map of toolchain specific objects.
+
+## Default value
+
+If missing, the current object will not contribute any compiler options to the build.
+
+## Description
+
+Generally compiler options are defined at the top level and apply to all
+sources that enter the build.
+
+In some cases it might be necessary to define compiler options for each
+component.
+
+TODO
+
+## See also
+
+- ...
+
+## eCos reference
+
+- ...

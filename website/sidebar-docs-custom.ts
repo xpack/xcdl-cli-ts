@@ -173,6 +173,16 @@ export const customDocsSidebar = [
               },
               {
                 type: 'doc',
+                id: 'metadata/object-properties/compilerOptions/index',
+                label: 'compilerOptions'
+              },
+              {
+                type: 'doc',
+                id: 'metadata/object-properties/compilerPreprocessorSymbols/index',
+                label: 'compilerPreprocessorSymbols'
+              },
+              {
+                type: 'doc',
                 id: 'metadata/object-properties/compilerSourceFiles/index',
                 label: 'compilerSourceFiles'
               },
