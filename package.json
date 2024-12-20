@@ -69,7 +69,7 @@
   "bugs": {
     "url": "https://github.com/xpack/xcdl-cli-ts/issues"
   },
-  "homepage": "https://xpack.github.io/xcdl-preview/",
+  "homepage": "https://xpack.github.io/xcdl/",
   "homepagePreview": "https://xpack.github.io/xcdl-cli-ts/",
   "dependencies": {
     "@ilg/cli-start-options": "^0.8.2"
