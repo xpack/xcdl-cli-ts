@@ -79,8 +79,11 @@ const config: Config = {
   organizationName: 'xpack', // Usually your GitHub org/user name.
   projectName: 'xcdl-cli-ts', // Usually your repo name.
 
+  onBrokenAnchors: 'throw',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'throw',
+
+  onDuplicateRoutes: 'throw',
 
   // Useful for the sitemap.xml, to avoid redirects, since
   // GitHub redirects all to trailing slash.
@@ -212,7 +215,7 @@ const config: Config = {
       attributes: {
         rel: 'icon',
         type: 'image/png',
-        href: '/xcdl-preview/favicons/favicon-48x48.png',
+        href: '/xcdl/favicons/favicon-48x48.png',
         sizes: '48x48'
       }
     },
@@ -221,14 +224,14 @@ const config: Config = {
       attributes: {
         rel: 'icon',
         type: 'image/svg+xml',
-        href: '/xcdl-preview/favicons/favicon.svg'
+        href: '/xcdl/favicons/favicon.svg'
       }
     },
     {
       tagName: 'link',
       attributes: {
         rel: 'shortcut icon',
-        href: '/xcdl-preview/favicons/favicon.ico'
+        href: '/xcdl/favicons/favicon.ico'
       }
     },
     {
@@ -243,7 +246,7 @@ const config: Config = {
       tagName: 'link',
       attributes: {
         rel: 'manifest',
-        href: '/xcdl-preview/favicons/site.webmanifest'
+        href: '/xcdl/favicons/site.webmanifest'
       }
     }
   ],

@@ -10,7 +10,7 @@ A tool to manage component configurations & builds, inspired by eCos CDL (work i
 
 For information on how to install and use this project,
 please refer to the
-[project web site](https://xpack.github.io/xcdl-preview/).
+[project web site](https://xpack.github.io/xcdl/).
 
 ## Project source
 

@@ -1,0 +1,7 @@
+Sitemap: https://xpack.github.io/xcdl/sitemap.xml
+
+User-agent: *
+Disallow: /xcdl/blog/archive/
+Disallow: /xcdl/blog/authors/
+Disallow: /xcdl/blog/page/
+Disallow: /xcdl/blog/tags/
