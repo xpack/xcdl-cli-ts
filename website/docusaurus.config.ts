@@ -315,19 +315,29 @@ const config: Config = {
           'aria-label': 'GitHub repository',
         },
         {
-          label: `v${customFields.releaseVersion}`,
+          type: 'dropdown',
+          href: 'https://github.com/xpack/xcdl-cli-ts/',
+          position: 'right',
+          label: 'GitHub',
+          items: [
+            {
+              label: `xcdl-cli-ts`,
+              href: `https://github.com/xpack/xcdl-cli-ts/`,
+            },
+            {
+              label: 'xpack',
+              href: 'https://github.com/xpack/',
+            },
+            {
+              label: 'xpack-dev-tools',
+              href: 'https://github.com/xpack-dev-tools/',
+            },
+          ]
+        },
+        {
+          label: `${customFields.releaseVersion}`,
           position: 'right',
           href: `https://www.npmjs.com/package/xcdl/v/${customFields.releaseVersion}`,
-        },
-        {
-          href: 'https://github.com/xpack/',
-          label: 'xpack',
-          position: 'right',
-        },
-        {
-          href: 'https://github.com/xpack-dev-tools/',
-          label: 'xpack-dev-tools',
-          position: 'right',
         },
       ],
     },
