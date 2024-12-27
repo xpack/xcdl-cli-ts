@@ -1,6 +1,6 @@
 # utils-lists
 
-This example follows the CMake/meson layout, with multiple files,
+This example follows the CMake/Meson layout, with multiple files,
 which make editing by hand more convenient.
 
 However, for GUI usage, one file per location would be more appropriate.

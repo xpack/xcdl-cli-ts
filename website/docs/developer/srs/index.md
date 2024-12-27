@@ -60,7 +60,7 @@ xCDL metadata.
 The outputs of the xCDL configuration step are:
 
 - source artefacts, like C/C++ header files
-- system builder artefacts, like CMake/meson/ninja configuration files
+- system builder artefacts, like CMake/Meson/ninja configuration files
 
 The xCDL framework should include one or more tools to:
 
@@ -90,7 +90,7 @@ the values for preprocessor definitions, toolchain selection, build
 details, etc
 - xCDL build configurations - the result of processing an xCDL
 configuration, usually a build folder with associated build related
-files (like CMake/meson/GNU Make files); when IDEs (like VS Code or
+files (like CMake/Meson/GNU Make files); when IDEs (like VS Code or
 Eclipse) are used, it translates to an IDE build configuration
 - xCDL requirements - direct requirements, generally components
 that are mandatory for the build to succeed, like base classes
@@ -162,13 +162,13 @@ The packages and build configurations functionality is
 already implemented by **xpm**.
 
 The first preliminary step is to generate the current CMake
-and meson configuration automatically from the xCDL metadata
+and Meson configuration automatically from the xCDL metadata
 (the `xcdl export` command).
 
 The next steps are:
 
 - implement the configuration logic that allows to generate
-the C/C++ header files, and run the builds/tests via **CMake** and **meson**
+the C/C++ header files, and run the builds/tests via **CMake** and **Meson**
 - extend the logic to generate **ninja** configurations,
 possibly **GNU make** configurations similar to those used by Eclipse
 - run the build internally from **xcdl**
@@ -187,7 +187,7 @@ between various software components in order to:
 - minimize the number of source files processed during the build
 - generate a consistent set of preprocessor definitions
 - assist xCDL tools in creating and managing configurations
-- run the builds and the tests, first via CMake or meson, later directly
+- run the builds and the tests, first via CMake or Meson, later directly
 
 ### User characteristics
 
@@ -250,7 +250,7 @@ via a plain JSON editor, later via a graphical UI, or via the
 command line interface.
 
 It also interacts with development tools, i.e. generates files
-to be used by CMake, meson, GNU Make, ninja.
+to be used by CMake, Meson, GNU Make, ninja.
 
 #### Interactions with the application developer(s)
 

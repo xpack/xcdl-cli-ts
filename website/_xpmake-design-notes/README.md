@@ -3,7 +3,7 @@
 This is an ambitious project, aiming to find a structured way to store
 the build configurations such that it can be edited via a GUI tool.
 
-The general features are inspired by CMake & meson, and the
+The general features are inspired by CMake & Meson, and the
 configurability is inspired by eCos CDL.
 
 ## Links
