@@ -45,7 +45,7 @@
     "deep-clean": "npm run clean && rm -rf node_modules package-lock.json",
     "show-versions": "echo $(which node) $(node --version) && echo $(which npm) $(npm --version)",
     "dumpconf": "env | sort | uniq",
-    "generate-top-commons": "bash node_modules/@xpack/npm-packages-helper/maintenance-scripts/generate-top-commons.sh"
+    "generate-top-commons": "bash node_modules/@xpack/npm-packages-helper/maintenance-scripts/generate-top-commons.sh --xpack"
   },
   "repository": {
     "type": "git",
