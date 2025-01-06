@@ -116,6 +116,9 @@
     "greeting": "The xPack components manager command line tool",
     "isTypeScript": "true"
   },
+  "config": {
+    "hasTriggerPublish": "true"
+  },
   "engines": {
     "node": " >=18.0.0"
   }
