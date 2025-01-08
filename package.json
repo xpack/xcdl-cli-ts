@@ -116,7 +116,7 @@
     "greeting": "The xPack components manager command line tool",
     "isTypeScript": "true"
   },
-  "config": {
+  "xConfig": {
     "hasTriggerPublish": "true",
     "isWebPreview": "true"
   },
