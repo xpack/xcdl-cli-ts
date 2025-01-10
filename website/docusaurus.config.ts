@@ -299,7 +299,7 @@ const config: Config = {
       items: [
         {
           to: '/',
-          // label: 'Home',
+          label: 'xcdl',
           className: 'header-home-link',
           position: 'left'
         },
@@ -308,7 +308,7 @@ const config: Config = {
         cliNavbar,
         {
           to: '/docs/api',
-          label: 'API Reference',
+          label: 'API',
           position: 'left',
         },
         {

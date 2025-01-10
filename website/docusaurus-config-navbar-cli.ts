@@ -11,7 +11,7 @@
 
 const navbarCli = {
   type: 'dropdown',
-  label: 'CLI Reference',
+  label: 'CLI',
   to: '/docs/cli/xcdl',
   position: 'left',
   items: [
