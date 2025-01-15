@@ -117,6 +117,7 @@
     "isTypeScript": "true"
   },
   "topConfig": {
+    "longName": "xPack Component Manager",
     "hasTriggerPublish": "true",
     "isWebPreview": "true"
   },
