@@ -118,6 +118,7 @@
   },
   "topConfig": {
     "longName": "xPack Component Manager",
+    "shortName": "xcdl",
     "hasTriggerPublish": "true",
     "isWebPreview": "true"
   },
