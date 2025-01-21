@@ -309,7 +309,7 @@ const config: Config = {
           label: 'GitHub',
           items: [
             {
-              label: `xcdl-cli-ts`,
+              label: `xcdl-cli-ts project`,
               href: `https://github.com/xpack/xcdl-cli-ts/`,
             },
             {
@@ -382,7 +382,7 @@ const config: Config = {
               href: 'https://www.paypal.com/donate/?hosted_button_id=5MFRG9ZRBETQ8',
             },
             {
-              label: 'GitHub xcdl-cli-ts',
+              label: 'GitHub xcdl-cli-ts project',
               href: 'https://github.com/xpack/xcdl-cli-ts/',
             },
             {
