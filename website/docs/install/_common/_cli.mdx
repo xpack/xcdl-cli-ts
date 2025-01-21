@@ -124,7 +124,7 @@ npm install --location=global xcdl@latest
 To install a **specific version**, specify it explicitly:
 
 <CodeBlock language="sh"> {
-`npm install --location=global xcdl@${customField('releaseVersion')}
+`npm install --location=global xcdl@2.0.0
 `} </CodeBlock>
 
 <Tabs groupId="operating-systems">
@@ -158,7 +158,7 @@ already have this path configured and the program should start normally:
 
 <CodeBlock language="console"> {
 `C:\>xcdl --version
-${customField('releaseVersion')}
+2.0.0
 `} </CodeBlock>
 
 <TroubleshootingWindows />
@@ -180,7 +180,7 @@ To test if **xcdl** starts:
 
 <CodeBlock language="console"> {
 `% xcdl --version
-${customField('releaseVersion')}
+2.0.0
 `} </CodeBlock>
 
 <Heading as="h3">Show macOS hidden files</Heading>
@@ -236,7 +236,7 @@ To test if xcdl starts:
 `$ which xcdl
 /home/ilg/.nvm/versions/node/${props.nodeVersion}/bin/xcdl
 $ xcdl --version
-${customField('releaseVersion')}
+2.0.0
 `} </CodeBlock>
 
 </TabItem>
@@ -260,7 +260,7 @@ benefit from it by using the `npx` command, as a trampoline to start **xcdl**:
 
 <CodeBlock language="console"> {
 `$ npx xcdl --version
-${customField('releaseVersion')}
+2.0.0
 `} </CodeBlock>
 
 However, for regular usage, this method is not efficient, since
