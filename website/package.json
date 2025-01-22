@@ -58,6 +58,12 @@
     "typedoc": "^0.27.6",
     "typescript": "~5.6.3"
   },
+  "$devDependenciesUrls": [
+    "https://www.npmjs.com/package/docusaurus-plugin-typedoc",
+    "https://www.npmjs.com/package/liquidjs",
+    "https://www.npmjs.com/package/typedoc",
+    "https://www.npmjs.com/package/typescript"
+  ],
   "browserslist": {
     "production": [
       ">0.5%",
@@ -71,12 +77,12 @@
     ]
   },
   "websiteConfig": {
-    "shortName": "xcdl",
     "programName": "xcdl",
     "title": "xcdl - The xPack Component Manager",
     "tagline": "A tool to manage component configurations & builds, inspired by eCos CDL (work in progress)",
     "metadataDescription": "The xPack Component Manager command line tool",
     "metadataKeywords": "xcdl, xpack, components, manager, cli, cdl, ecos",
+    "preferShortName": "true",
     "hasCli": "true",
     "hasApi": "true",
     "isInstallGlobally": "true",
@@ -92,11 +98,5 @@
   },
   "engines": {
     "node": ">=18.0"
-  },
-  "$dependenciesUrls": [
-    "https://www.npmjs.com/package/docusaurus-plugin-typedoc",
-    "https://www.npmjs.com/package/liquidjs",
-    "https://www.npmjs.com/package/typedoc",
-    "https://www.npmjs.com/package/typescript"
-  ]
+  }
 }
