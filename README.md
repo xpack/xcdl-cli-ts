@@ -1,15 +1,15 @@
 [![GitHub package.json version](https://img.shields.io/github/package-json/v/xpack/xcdl-cli-ts)](https://github.com/xpack/xcdl-cli-ts/blob/master/package.json)
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/xpack/xcdl-cli-ts)](https://github.com/xpack/xcdl-cli-ts/releases)
 [![npm (scoped)](https://img.shields.io/npm/v/xcdl.svg?color=blue)](https://www.npmjs.com/package/xcdl/)
 [![license](https://img.shields.io/github/license/xpack/xcdl-cli-ts)](https://github.com/xpack/xcdl-cli-ts/blob/master/LICENSE)
 
 # The xPack Component Manager
 
-A tool to manage component configurations & builds, inspired by eCos CDL (work in progress)
+A tool to manage component configurations & builds, inspired by eCos CDL (work in progress).
 
 ## Project documentation
 
-For information on how to install and use this project,
-please refer to the
+For information on how to install and use this project, please refer to the
 [project web site](https://xpack.github.io/xcdl/).
 
 ## Project source
