@@ -82,6 +82,7 @@
     "tagline": "A tool to manage component configurations & builds, inspired by eCos CDL (work in progress)",
     "metadataDescription": "The xPack Component Manager command line tool",
     "metadataKeywords": "xcdl, xpack, components, manager, cli, cdl, ecos",
+    "userGuideDescription": "User information, including how to use existing xcdl-enabled projects.",
     "preferShortName": "true",
     "hasCli": "true",
     "hasApi": "true",
