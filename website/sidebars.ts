@@ -2,8 +2,8 @@
 // Automatically generated from docusaurus-template-liquid/templates/docusaurus.
 
 import type {SidebarsConfig} from '@docusaurus/plugin-content-docs';
-import typedocSidebarItems from "./docs/api/typedoc-sidebar.cjs";
 import cliSidebar from "./sidebar-cli";
+import typedocSidebarItems from "./docs/api/typedoc-sidebar.cjs";
 import {customDocsSidebar} from "./sidebar-docs-custom";
 
 /**
@@ -18,10 +18,8 @@ import {customDocsSidebar} from "./sidebar-docs-custom";
  */
 const sidebars: SidebarsConfig = {
 
-  
   docsSidebar: customDocsSidebar,
-  
-  
+
   typedocSidebar: [
     {
       type: 'category',
@@ -34,9 +32,8 @@ const sidebars: SidebarsConfig = {
       items: typedocSidebarItems,
     },
   ],
-  
-  cliSidebar
-  
+
+  cliSidebar,
 };
 
 export default sidebars;
