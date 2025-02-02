@@ -1,6 +1,6 @@
 [![GitHub package.json version](https://img.shields.io/github/package-json/v/xpack/xcdl-cli-ts)](https://github.com/xpack/xcdl-cli-ts/blob/master/package.json)
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/xpack/xcdl-cli-ts)](https://github.com/xpack/xcdl-cli-ts/releases)
-[![npm (scoped)](https://img.shields.io/npm/v/xcdl?color=blue)](https://www.npmjs.com/package/xcdl/)
+[![NPM Version](https://img.shields.io/npm/v/xcdl?color=green)](https://www.npmjs.com/package/xcdl/)
 [![license](https://img.shields.io/github/license/xpack/xcdl-cli-ts)](https://github.com/xpack/xcdl-cli-ts/blob/master/LICENSE)
 
 # The xPack Component Manager
