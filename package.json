@@ -117,8 +117,8 @@
     "isTypeScript": "true"
   },
   "topConfig": {
-    "longName": "xPack Component Manager",
-    "shortName": "xcdl",
+    "descriptiveName": "xPack Component Manager",
+    "permalinkName": "xcdl",
     "hasTriggerPublish": "true",
     "isWebPreview": "true"
   },
