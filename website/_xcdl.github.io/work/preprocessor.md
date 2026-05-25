@@ -357,7 +357,7 @@ A more complex example would generate the `main.c`/`main.cpp` files in the STM32
 ```.cpp
 //
 // This file is part of the GNU ARM Eclipse distribution.
-// Copyright (c) 2016 Liviu Ionescu.
+// Copyright (c) 2016-2026 Liviu Ionescu.
 //
 // ----------------------------------------------------------------------------
 #include <stdio.h>
