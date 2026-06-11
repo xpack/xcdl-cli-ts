@@ -1,0 +1,75 @@
+---
+title: publicIncludeFolders
+description: The definition of the xCDL publicIncludeFolders property.
+keywords:
+  - xpack
+  - xcdl
+  - cdl
+  - property
+  - publicIncludeFolders
+
+date: 2024-11-27 00:28:00 +0200
+---
+
+import MetadataObjectLink from "@site/src/components/MetadataObjectLink";
+import MetadataObjectPropertyLink from "@site/src/components/MetadataObjectPropertyLink";
+
+{/* ------------------------------------------------------------------------ */}
+
+# `publicIncludeFolders` property
+
+:::note
+
+Work in progress.
+
+:::
+
+## Purpose
+
+Specify the folders containing public header files used during the 
+build and propagated up to the artefact.
+
+## Syntax
+
+```json {5}
+{
+  "cdlOptions | cdlComponents": [
+    {
+      "name": "...",
+      ...
+      "publicIncludeFolders": [ "<relative folder path>",... ],
+      ...
+    }
+  ]
+}
+```
+
+The value of the `publicIncludeFolders` property is an array of strings that
+specify folder paths relative to the location of the current xCDL file. These folders contain
+header files used during the build of the current component. 
+
+## Default value
+
+If missing, the current object will not contribute any header folders to the
+build.
+
+## Description
+
+Most packages export one or more folders with header files defining their public
+interface. 
+
+If the package follows the folders layout conventions then the
+exported header files will normally be found in the package's `include`
+sub-folder.
+
+
+## See also
+
+- <MetadataObjectLink name="cdlPackage" /> object
+
+## eCos reference
+
+- [`include-dir`](https://ecos.sourceware.org/docs-latest/cdl-guide/ref.include-dir.html)
+  property
+- [`include-files`](https://ecos.sourceware.org/docs-latest/cdl-guide/ref.include-files.html)
+  property

@@ -23,8 +23,15 @@ Work in progress.
 ## Synopsis
 
 ```sh
-xcdl setup [options...] --config <name> --build <folder> --builder <name>
+xcdl setup [options...] \
+  --configuration-file <JSON file> \
+  --cdl-configuration <name> \
+  --build-folder <folder> 
+  [--builder <name>] \
+  [--toolchain-file <JSON file>]
+  [--refresh]
 ```
+
 
 Aliases:
 
@@ -32,15 +39,63 @@ Aliases:
 
 ## Description
 
-The command reads the named configuration from `xcdl-config.json` (in the current folder) and creates the build tree in the given build folder.
+The command creates or updates the build tree for the given xCDL configuration.
 
-The builder can be:
+It expects to find the source files in the current folder (which can be 
+changed with `-C`).
 
-- `xcdl-make`: generate a GNU make tree, similar to that generated for Eclipse CDT managed builds projects
-- `xcdl-ninja`: generate a tree to be built with **ninja**
-- `xcdl-internal`: generate a tree to be built with the **xcdl** internal builder
+The first step is to read in all `xcdl*.json` fragments, and construct the
+configuration hierarchy.
 
-CMake and Meson builders will also be considered.
+The next step is to create the dinamically generated files.
+
+Then, depending on the actual builder, various folders, usually
+replicating the nodes in the configuration hierarchy, are created, with
+possible builder specific files (like make fragments).
+
+If successful, all the configuration details are left in an `xcdl-cache.json` 
+in the top of the build folder, to avoid recreati.
+
+## Options
+
+### Configuration file (`--configuration-file`)
+
+The path to the xCDL configuration file, usually an `xcdl-project.json` in the
+top project folder.
+
+### xCDL Configuration Name (`--cdl-configuration`)
+
+The name of the xCDL configuration.
+
+### Build Folder (`--build-folder`)
+
+The path to the build folder. Created if non existent.
+
+### Builder Name (`--builder`)
+
+The name of the build system used.
+
+- `make`: generate a GNU make tree, similar to that generated
+  for Eclipse CDT managed build projects
+- `ninja`: generate a tree to be built with **ninja**
+- `internal`: generate a tree to be built with the **xcdl**
+  internal builder (default)
+
+If the builder name is not specified, after the step of generating the
+header files, no other content will be added to the build tree,
+defering its generating to an external tool,
+like CMake.
+
+### Toolchain (`--toolchain-file`)
+
+The path to the file with the names of the executables for each platform.
+Used only when using the internal builder.
+
+### Refresh (`--refresh`)
+
+Assume an existing build folder and update it after any changes in the configuration;
+in this case, except the `--build-folder`, all other arguments are optional, 
+with defaults the values already stored in the `xcdl-cache.json` file.
 
 ---
 

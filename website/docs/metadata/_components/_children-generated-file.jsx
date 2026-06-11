@@ -14,7 +14,7 @@ import MetadataObjectPropertyLink from '@site/src/components/MetadataObjectPrope
 export default function func({objectType = 'TYPE'}) {
   return (
     <>
-      <MetadataObjectPropertyLink name='childrenGeneratedFile' /> - the file path of the header, relative to the build folder, where the child nodes will generate a definition (if missing, this is inherited from the parent node)
+      <MetadataObjectPropertyLink name='childrenGeneratedFile' /> - the file path of the header, relative to the build folder, where the children nodes will generate a definition (if missing, this is inherited from the parent node)
     </>
   )
 }

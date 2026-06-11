@@ -1,0 +1,35 @@
+---
+
+title: xcdl-package.json
+description: The main project file storing the xCDL metadata.
+
+date: 2024-12-04 22:59:00 +0200
+
+---
+
+# xcdl-package.json
+
+## Overview
+
+Projects with source code or definitions that are designed to be 
+included as dependencies
+in other projects need a way to define the xCDL package metadata.
+
+Component authors can use any name, place the file in any location
+and pass the file path via `--configuration-file`.
+
+The
+default is to use `xcdl-package.json` and place it into the top project folder.
+
+## Example
+
+```json
+{
+  "minimumXcdlRequired": "2.0.0",
+  "license": "MIT",
+  "copyright": "Copyright (c) 2022-2026 Liviu Ionescu. All rights reserved.",
+  "cdlPackage": {
+    ...
+  }
+}
+```

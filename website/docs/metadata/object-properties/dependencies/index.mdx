@@ -1,0 +1,97 @@
+---
+title: dependencies
+description: The definition of the xCDL dependencies property.
+keywords:
+  - xpack
+  - xcdl
+  - cdl
+  - property
+  - dependencies
+
+date: 2015-11-25 19:32:00 +0200
+---
+
+import MetadataObjectLink from "@site/src/components/MetadataObjectLink";
+import MetadataObjectPropertyLink from "@site/src/components/MetadataObjectPropertyLink";
+
+{/* ------------------------------------------------------------------------ */}
+
+# `dependencies` property
+
+:::note
+
+Work in progress. 
+
+:::
+
+## Purpose
+
+Specify the dependencies of the current object on other objects. This allows a configuration tool to ensure that all required dependencies are satisfied before enabling or configuring the current object.
+
+## Syntax
+
+```json {5}
+{
+  "cdlOptions | cdlComponents": [
+    {
+      "name": "...",
+      ...
+      "dependencies": [ "<dependency>", ... ],
+      ...
+    }
+  ]
+}
+```
+
+The value of the `dependencies` property is an array of strings, 
+each representing the name of a dependency.
+
+## Default value
+
+If missing, the current object has no dependencies.
+
+## Description
+
+By the nature of the configuration hierarchy, components and options 
+naturaly depend on their parents. However, some may also depend on other 
+components and options located on other branches of the hierarchy.
+
+The `dependencies` property allows to specify these dependencies 
+in a structured way.
+
+This ensures that the components have access at the dependencies public 
+definitions (headers, preprocessor definitions, etc.) and that the 
+build steps are performed in the correct order.
+
+## Example
+
+```json
+{
+  ...
+  "cdlComponents": [
+    {
+      "name": "micro-os-plus.core.utils-lists",
+      "display": "Intrusive Lists",
+      "description": "µOS++ C++ Intrusive Lists",
+      "publicIncludeFolders": [
+        "include"
+      ],
+      "sourceFiles": [
+        "src/doubly-list-links.cpp"
+      ],
+      "dependencies": [
+        "micro-os-plus.diag.trace"
+      ],
+      ...
+    }
+  ]
+}
+```
+
+## See also
+
+- TODO
+
+## eCos reference
+
+- none

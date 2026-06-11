@@ -1,5 +1,4 @@
 ---
-
 title: legalValues
 description: The definition of the xCDL legalValues property.
 keywords:
@@ -10,15 +9,14 @@ keywords:
   - legalValues
 
 date: 2015-11-25 19:32:00 +0200
-
 ---
 
-import MetadataObjectLink from '@site/src/components/MetadataObjectLink';
-import MetadataObjectPropertyLink from '@site/src/components/MetadataObjectPropertyLink';
+import MetadataObjectLink from "@site/src/components/MetadataObjectLink";
+import MetadataObjectPropertyLink from "@site/src/components/MetadataObjectPropertyLink";
 
 {/* ------------------------------------------------------------------------ */}
 
-# The `legalValues` definition
+# `legalValues` property
 
 :::note
 
@@ -34,17 +32,19 @@ Impose constraints on the possible values for an object.
 
 ```json {5}
 {
-    "cdlOptions": {
-        "<name>": {
-            ...
-            "legalValues": "expression" | [ "<expression>",... ],
-            ...
-        }
+  "cdlOptions | cdlComponents": [
+    {
+      "name": "...",
+      ...
+      "legalValues": "expression" | [ "<expression>",... ],
+      ...
     }
+  ]
 }
 ```
 
-The value of the `legalValues` property is a string or an array of strings containing the restrictions.
+The value of the `legalValues` property is a string or an array of strings
+containing the restrictions.
 
 ## Default value
 
@@ -52,7 +52,14 @@ If missing, no value based constraints are imposed.
 
 ## Description
 
-Objects with a `valueType` of `int` or `string` can have any values as their data. In nearly all cases, some restrictions have to be imposed. For example, the data should correspond to a number within a certain range or be one of a small number of constants. The `legalValues` property can be used to impose such constraints.  The value of the property is an array of string with xCDL list expression, see the Section called List Expressions in [xCDL packages](/docs/guide/packages) for the syntactic details. Common examples include:
+Objects with a `valueType` of `int` or `string` can have any values as their
+data. In nearly all cases, some restrictions have to be imposed. For example,
+the data should correspond to a number within a certain range or be one of a
+small number of constants. The `legalValues` property can be used to impose such
+constraints. The value of the property is an array of strings with xCDL list
+expressions, see the section called List Expressions in
+[xCDL packages](/docs/guide/packages) for the syntactic details. Common examples
+include:
 
 ```json
 "legalValues": "0 to 0x7fff"
@@ -60,23 +67,24 @@ Objects with a `valueType` of `int` or `string` can have any values as their dat
 "legalValues": [ "RAM", "ROM" ]
 ```
 
-The `legalValues` property can only be used for objects with the `int` or `string` types, as it makes little sense to further constrain a boolean object.
+The `legalValues` property can only be used for objects with the `int` or
+`string` types, as it makes little sense to further constrain a boolean object.
 
 ## Example
 
 ```json
 {
-    "cdlOptions": {
-        "std-default-offset": {
-            "parent": "libc/time",
-            "display": "Default Standard Time offset",
-            "description": "This option controls the offset from UTC in seconds when in local Standard Time. This value can be positive or negative. It can also be set at run time using the os_libc_time_setzoneoffsets() function.",
-            "generatedDefinition": "OS_INTEGER_LIBC_TIME_STD_DEFAULT_OFFSET",
-            "valueType": "int",
-            "legalValues": "-90000 to 90000",
-            "defaultValue": "0"
-        }
+  "cdlOptions": [
+    {
+      "name": "libc.time.std-default-offset",
+      "display": "Default Standard Time offset",
+      "description": "This option controls the offset from UTC in seconds when in local Standard Time. This value can be positive or negative. It can also be set at run time using the os_libc_time_setzoneoffsets() function.",
+      "customDefine": "OS_INTEGER_LIBC_TIME_STD_DEFAULT_OFFSET",
+      "valueType": "int",
+      "legalValues": "-90000 to 90000",
+      "defaultValue": "0"
     }
+  ]
 }
 ```
 
@@ -88,4 +96,5 @@ The `legalValues` property can only be used for objects with the `int` or `strin
 
 ## eCos reference
 
-- [`legal-values`](https://ecos.sourceware.org/docs-latest/cdl-guide/ref.legal-values.html) property
+- [`legal-values`](https://ecos.sourceware.org/docs-latest/cdl-guide/ref.legal-values.html)
+  property

@@ -1,5 +1,4 @@
 ---
-
 title: includeCDLs
 description: The definition of the xCDL includeCDLs property.
 keywords:
@@ -10,15 +9,14 @@ keywords:
   - includeCDLs
 
 date: 2015-11-25 19:32:00 +0200
-
 ---
 
-import MetadataObjectLink from '@site/src/components/MetadataObjectLink';
-import MetadataObjectPropertyLink from '@site/src/components/MetadataObjectPropertyLink';
+import MetadataObjectLink from "@site/src/components/MetadataObjectLink";
+import MetadataObjectPropertyLink from "@site/src/components/MetadataObjectPropertyLink";
 
 {/* ------------------------------------------------------------------------ */}
 
-# The `includeCDLs` definition
+# `includeCDLs` property
 
 :::note
 
@@ -34,40 +32,52 @@ Include additional configuration information from another xCDL definition file.
 
 ```json {5}
 {
-    "cdlOptions": {
-        "<name>": {
-            ...
-            "includeCDLs": [ "<relative path>",... ],
-            ...
-        }
+  "cdlOptions": [
+    {
+      "name": "...",
+      ...
+      "includeCDLs": [ "<relative path>",... ],
+      ...
     }
+  ]
 }
 ```
 
-The value of the `includeCDLs` property is an array of strings containing relative file paths to other xCDL definitions.
+The value of the `includeCDLs` property is an array of strings containing
+relative file paths to other xCDL definitions.
 
 ## Default value
 
-If missing, no additional xCDL files are parsed as children of the current object.
+If missing, no additional xCDL files are parsed as children of the current
+object.
 
 ## Description
 
-It is possible to define all the configuration options and sub-components for a given package in a single xCDL file, either by nesting them in the appropriate command bodies, by extensive use of the `parent` property, or by some combination of these two. However, for large packages, this is inconvenient, and it is better to split the raw configuration data over several different files. The `includeCDLs` property can be used to achieve this. It defines an array of relative file paths. The configuration tools will look for the specified file paths in the folder where the current xCDL file is located.
+It is possible to define all the configuration options and sub-components for a
+given package in a single xCDL file, either by nesting them in the appropriate
+command bodies, by extensive use of the `parent` property, or by some
+combination of these two. However, for large packages, this is inconvenient, and
+it is better to split the raw configuration data over several different files.
+The `includeCDLs` property can be used to achieve this. It defines an array of
+relative file paths. The configuration tools will look for the specified file
+paths in the folder where the current xCDL file is located.
 
-The `includeCDLs` property can only occur in the body of `cdlComponents` or `cdlPackage` objects.
+The `includeCDLs` property can only occur in the body of `cdlComponents` or
+`cdlPackage` objects.
 
 ## Example
 
 ```json
 {
-    "cdlComponents": {
-        "uitron-tasks": {
-            "display": "uITRON Tasks",
-            "description": "uITRON Tasks are the basic blocks of multi-tasking in the uITRON world; they are threads or lightweight processes, sharing the address space and the CPU. They communicate using the primitives outlined above. Each has a stack, an entry point (a C or C++ function), and (where appropriate) a scheduling priority.",
-            "valueType": "none",
-            "includeCDLs": [ "tasks/xcdl.json" ]
-        }
+  "cdlComponents": [
+    {
+      "name": "uitron-tasks",
+      "display": "uITRON Tasks",
+      "description": "uITRON Tasks are the basic blocks of multi-tasking in the uITRON world; they are threads or lightweight processes, sharing the address space and the CPU. They communicate using the primitives outlined above. Each has a stack, an entry point (a C or C++ function), and (where appropriate) a scheduling priority.",
+      "valueType": "none",
+      "includeCDLs": ["tasks/xcdl.json"]
     }
+  ]
 }
 ```
 

@@ -6,11 +6,12 @@
   "type": "object",
   "properties": {
     "minimumXcdlRequired": {},
-    "cdlComponents": {},
+    "cdlComponents": [],
     "cdlConfigurations": {},
-    "cdlInterfaces": {},
-    "cdlOptions": {},
-    "cdlPackage": {}
+    "cdlInterfaces": [],
+    "cdlOptions": [],
+    "cdlPackage": {},
+    "cdlProject": {}
   },
   "required": [
   ]

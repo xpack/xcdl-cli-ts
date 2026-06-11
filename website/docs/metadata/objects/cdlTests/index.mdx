@@ -1,0 +1,103 @@
+---
+title: cdlTests
+description: The definition of the xCDL cdlTests objects.
+keywords:
+  - xpack
+  - xcdl
+  - cdl
+  - package
+
+date: 2015-11-15 12:00:00 +0200
+---
+
+import MetadataObjectLink from "@site/src/components/MetadataObjectLink";
+import MetadataObjectPropertyLink from "@site/src/components/MetadataObjectPropertyLink";
+
+import PropertyDescription from "../../_components/_description";
+import PropertyDisplay from "../../_components/_display";
+
+{/* ------------------------------------------------------------------------ */}
+
+# `cdlTests` object
+
+:::note
+
+Work in progress.
+
+:::
+
+## Purpose
+
+Define an array of test objects.
+
+## Syntax
+
+```json
+{
+  "cdlTests": [
+    {
+      "name": "<artefact name>",
+      "display": "<short name>",
+      "description": "<long text>",
+
+      ... test members ...
+    },
+    ...
+  ]
+}
+```
+
+## Description
+
+TODO
+
+## Containers
+
+TODO
+
+## Properties
+
+- TODO
+
+## Example
+
+```json
+{
+  "cdlTests": [
+    {
+      "name": "sample.runner",
+      "display": "Sample Test Runner",
+      "description": "A simple test to exercise an object linked into multiple lists",
+      "dependencies": [
+        "tests.sample.binary"
+      ]
+    },
+    {
+      "name": "unit.runner",
+      "display": "Unit Test Runner",
+      "description": "A comprehensive test for all lists",
+      "dependencies": [
+        "tests.unit.binary"
+      ]
+    },
+    {
+      "name": "unit.runnerCoverage",
+      "display": "Unit Test Runner with Coverage",
+      "description": "A comprehensive test for all lists with coverage",
+      "dependencies": [
+        "tests.unit.runner"
+      ]
+    }
+  ]
+}
+```
+
+## See also
+
+- <MetadataObjectLink name="cdlComponents" />
+- <MetadataObjectLink name="cdlInterfaces" />
+- <MetadataObjectLink name="cdlOptions" />
+
+## eCos reference
+
+- none

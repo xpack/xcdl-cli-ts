@@ -1,5 +1,4 @@
 ---
-
 title: defaultEnabled
 description: The definition of the xCDL defaultEnabled property.
 keywords:
@@ -10,15 +9,14 @@ keywords:
   - defaultEnabled
 
 date: 2015-11-25 19:32:00 +0200
-
 ---
 
-import MetadataObjectLink from '@site/src/components/MetadataObjectLink';
-import MetadataObjectPropertyLink from '@site/src/components/MetadataObjectPropertyLink';
+import MetadataObjectLink from "@site/src/components/MetadataObjectLink";
+import MetadataObjectPropertyLink from "@site/src/components/MetadataObjectPropertyLink";
 
 {/* ------------------------------------------------------------------------ */}
 
-# The `defaultEnabled` definition
+# `defaultEnabled` property
 
 :::note
 
@@ -34,31 +32,39 @@ Specify whether the current object is initially enabled.
 
 ```json {5}
 {
-    "cdlOptions": {
-        "<name>": {
-            ...
-            "defaultEnable": true | false | "<expression>",
-            ...
-        }
+  "cdlOptions | cdlComponents": [
+    {
+      "name": "...",
+      ...
+      "defaultEnabled": true | false | "<expression>",
+      ...
     }
+  ]
 }
 ```
 
-The value of the `defaultEnable` property is either the `true` or `false` constant or a string that evaluates to a boolean value.
+The value of the `defaultEnabled` property is either the `true` or `false`
+constant or a string that evaluates to a boolean value.
 
-If the value is a constant, it is evaluated when parsing the file. If the value is a string, it is evaluated in a separate step that processes the entire configuration hierarchy before processing the requirements.
+If the value is a constant, it is evaluated when parsing the file. If the value
+is a string, it is evaluated in a separate step that processes the entire
+configuration hierarchy before processing the requirements.
 
 ## Default value
 
-If missing, the default is `true`, all objects are enabled.
+If missing, the default is `true`, the object is **enabled**.
 
 ## Description
 
-The configuration hierarchies are usually large, and not all objects are required in a specific configuration, so the need to individually enable/disable them.
+The configuration hierarchies are usually large, and not all objects are
+required in a specific configuration, so there is a need to individually enable
+or disable them.
 
-This property controls the initial state of the object, as goal expressions can enable individual objects to satisfy requirements. Objects marked as enabled can still be active or inactive.
+This property controls the initial state of the object, as goal expressions can
+enable individual objects to satisfy requirements. Objects marked as enabled can
+still be active or inactive.
 
-Disabling a component or package automatically disables all child objects.
+Disabling a component or package automatically disables all children objects.
 
 ## Example
 
@@ -66,13 +72,14 @@ An object can replicate the enabled state of another object:
 
 ```json {5}
 {
-    "cdlOptions": {
-        "one": {
-            ...
-            "defaultEnable": "isEnabled('two')",
-            ...
-        }
+  "cdlOptions": [
+    {
+      "name": "one",
+      ...
+      "defaultEnabled": "isEnabled('two')",
+      ...
     }
+  ]
 }
 ```
 

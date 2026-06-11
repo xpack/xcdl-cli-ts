@@ -1,4 +1,3 @@
-
 {/* ------------------------------------------------------------------------ */}
 
 :::note
@@ -7,12 +6,11 @@ Work in progress.
 
 :::
 
-The first step in understanding **xcdl** is learning how to
-use it in existing xcdl-enabled projects.
+The first step in understanding **xcdl** is learning how to use it in existing
+xcdl-enabled projects.
 
-The subsequent steps,
-which involve adding xCDL metadata to existing projects, are presented
-in the [Components Author's Guide](/docs/guide/) page.
+The subsequent steps, which involve adding xCDL metadata to existing projects,
+are presented in the [Components Author's Guide](/docs/guide/) page.
 
 ## Use existing xcdl-enabled projects
 
@@ -22,14 +20,14 @@ consists of these primary tasks:
 - create the xCDL configuration
 - generate the build tree
 - run the build
-- eventually run/debug the resulting artefact
+- eventually run or debug the resulting artefact
 
-The simplest way to experiment with this workflow is by using an
-existing project. For example, you can start with a basic C project
-that prints the traditional _"Hello, World!"_ message.
+The simplest way to experiment with this workflow is by using an existing
+project. For example, you can start with a basic C project that prints the
+traditional _"Hello, World!"_ message.
 
-The first step is to clone the demo project into a temporary folder
-of your choice:
+The first step is to clone the demo project into a temporary folder of your
+choice:
 
 ```sh
 git clone https://github.com/xpack/xcdl-demo-hello1.git
@@ -43,9 +41,9 @@ The demo project is not yet available.
 
 ### Install dependencies
 
-A preliminary step in the workflow is to satisfy the project dependencies.
-In this example, **xpm** will install **clang**
-(since it is more portable than gcc).
+A preliminary step in the workflow is to satisfy the project dependencies. In
+this example, **xpm** will install **clang** (since it is more portable than
+GCC).
 
 ```sh
 cd xcdl-demo-hello1
@@ -59,7 +57,7 @@ The demo project already has the xCDL configuration.
 You can inspect it with:
 
 ```console
-% xcdl config list --config demo
+% xcdl config list --configuration-file xcdl-project.json --configuration-name demo
 ...
 ```
 
@@ -72,7 +70,7 @@ xpm run prepare
 The above **xpm** action will run the `xcdl setup` command:
 
 ```sh
-xcdl setup --configuration-name demo --build-folder build/demo --builder 'xcdl-make' --toolchain-file=clang.json
+xcdl setup --configuration-file xcdl-project.json --configuration-name demo --build-folder build/demo --builder make --toolchain-file clang.json
 ```
 
 This will create the build tree in the `build/demo` folder.
@@ -104,7 +102,8 @@ Hello World!
 ---
 
 TODO:
+
 - use a toolchain file to pass the clang definitions
-- add a more elaborate demo, with several components and options to
-be configured, and show how the configuration process looks like,
-both in VS Code and in a terminal.
+- add a more elaborate demo, with several components and options to be
+  configured, and show what the configuration process looks like, both in VS Code
+  and in a terminal.

@@ -1,0 +1,75 @@
+---
+title: privateIncludeFolders
+description: The definition of the xCDL privateIncludeFolders property.
+keywords:
+  - xpack
+  - xcdl
+  - cdl
+  - property
+  - privateIncludeFolders
+
+date: 2024-11-27 00:28:00 +0200
+---
+
+import MetadataObjectLink from "@site/src/components/MetadataObjectLink";
+import MetadataObjectPropertyLink from "@site/src/components/MetadataObjectPropertyLink";
+
+{/* ------------------------------------------------------------------------ */}
+
+# `privateIncludeFolders` property
+
+:::note
+
+Work in progress.
+
+:::
+
+## Purpose
+
+Specify the folders containing private header files used during
+the build.
+
+## Syntax
+
+```json {5}
+{
+  "cdlOptions | cdlComponents": [
+    {
+      "name": "...",
+      ...
+      "privateIncludeFolders": [ "<relative folder path>",... ],
+      ...
+    }
+  ]
+}
+```
+
+The value of the `privateIncludeFolders` property is an array of strings that
+specify folder paths relative to the location of the current xCDL file. These folders contain
+header files used during the build of the current component.
+
+## Default value
+
+If missing, the current object will not contribute any header folders to the
+build.
+
+## Description
+
+In addition to the public folders defined via `publicIncludeFolders`,
+components may also define private headers, used only locally and not 
+propagated up to the artefact. 
+
+There are no absolute conventions for the private folder names, they can
+be located anywhere outside the public `include` folder, for example in 
+`include-private`.
+
+## See also
+
+- <MetadataObjectLink name="cdlPackage" /> object
+
+## eCos reference
+
+- [`include-dir`](https://ecos.sourceware.org/docs-latest/cdl-guide/ref.include-dir.html)
+  property
+- [`include-files`](https://ecos.sourceware.org/docs-latest/cdl-guide/ref.include-files.html)
+  property

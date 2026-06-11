@@ -23,7 +23,7 @@ Work in progress.
 ## Synopsis
 
 ```sh
-xcdl configure [options...] --config <name>
+xcdl configure [options...] --configuration-file <JSON file> --cdl-configuration <name>
 ```
 
 Aliases:
@@ -32,11 +32,12 @@ Aliases:
 
 ## Description
 
-Add/edit a configuration in `xcdl-config.json`.
+Add or edit an xCDL configuration in the JSON file.
 
 If a `cdtConfigurations` object with that name does not exist, it is created.
 
-The configuration process writes the full configuration, with all objects, to the JSON, such that `xcdl setup` will have all data to create the build tree.
+The configuration process writes the configuration to the JSON file, 
+such that `xcdl setup` will have all the data to create the build tree.
 
 ---
 
@@ -47,4 +48,7 @@ ecosconfig ...
 ```
 
 - https://ecos.sourceware.org/docs-latest/user-guide/manual-configuration.html
+
+However, it must be noted that `ecosconfig` has different goals and 
+the functionality has little resemblance with **xcdl**.
 

@@ -1,0 +1,113 @@
+---
+title: publicCompilerOptions
+description: The definition of the xCDL publicCompilerOptions property.
+keywords:
+  - xpack
+  - xcdl
+  - cdl
+  - property
+  - publicCompilerOptions
+
+date: 2024-11-27 00:28:00 +0200
+---
+
+import MetadataObjectLink from "@site/src/components/MetadataObjectLink";
+import MetadataObjectPropertyLink from "@site/src/components/MetadataObjectPropertyLink";
+
+{/* ------------------------------------------------------------------------ */}
+
+# `publicCompilerOptions` property
+
+:::note
+
+Work in progress. 
+
+:::
+
+## Purpose
+
+Specify compiler specific options used when compiling the source files
+of the current component source files and propagated up to the artefact.
+
+## Syntax
+
+```json {5}
+{
+  "cdlOptions | cdlComponents": [
+    {
+      "name": "...",
+      ...
+      "publicCompilerOptions": {
+        "remove": [ "<options>", ... ],
+        "target": [ "<options>", ... ],
+        "optimisations": [ "<options>", ... ],
+        "warnings": [ "<options>", ... ],
+        "debugging": [ "<options>", ... ],
+        "miscellaneous": [ "<options>", ... ],
+        "linker": [ "<options>", ... ]
+      },
+      ...
+    }
+  ]
+}
+```
+
+The value of the `publicCompilerOptions` property is a map of categories, 
+each with an array of strings.
+
+## Default value
+
+If missing, the current object will not contribute any compiler options to the
+build.
+
+## Description
+
+Generally, compiler options are defined at the top artefact level and 
+propagated down the hierarchy to all sources that enter the build.
+
+However, in some cases, it might be necessary to define additional 
+compiler options for individual components.
+
+Therefore each component may also define compiler options that are also
+propagated up to the artefact and later applied to all sources.
+
+The detailed logic behind the compiler options is to be defined.
+
+## Conditional definitions
+
+Some compiler options are specific to a certain compiler and need 
+to be applied only 
+when the respective compiler is used.
+
+The conditional expressions can be defined using the LiquidJS syntax.
+They are evaluated late, just before generating the builder commands.
+
+TODO: add a link to the list of available LiquidJS properties.
+
+## Example
+
+```json {5}
+{
+  "cdlComponents": [
+    {
+      "name": "lists",
+      ...
+      "publicCompilerOptions": {
+        "warnings": [
+          "{% if compiler.id == 'gcc' %}-Wno-pointer-arith{% endif %}",
+          "{% if compiler.id == 'clang' %}-Wno-documentation{% endif %}"
+        ]
+      },
+      ...
+    }
+  ]
+}
+```
+
+## See also
+
+- TODO
+
+## eCos reference
+
+- [Building eCos](https://ecos.sourceware.org/docs-latest/cdl-guide/build.make.html)

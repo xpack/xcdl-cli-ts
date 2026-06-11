@@ -1,5 +1,4 @@
 ---
-
 title: category
 description: The definition of the xCDL category property.
 keywords:
@@ -10,37 +9,38 @@ keywords:
   - category
 
 date: 2015-11-25 19:32:00 +0200
-
 ---
 
-import MetadataObjectLink from '@site/src/components/MetadataObjectLink';
-import MetadataObjectPropertyLink from '@site/src/components/MetadataObjectPropertyLink';
+import MetadataObjectLink from "@site/src/components/MetadataObjectLink";
+import MetadataObjectPropertyLink from "@site/src/components/MetadataObjectPropertyLink";
 
 {/* ------------------------------------------------------------------------ */}
 
-# The `category` definition
+# `category` property
 
 :::note
 
-Work in progress. Might not make to the final design.
+Work in progress. Might not make it to the final design.
 
 :::
 
 ## Purpose
 
-Specify additional grouping information to enable a configuration tool to provide appropriate selections.
+Specify additional grouping information to enable a configuration tool to
+provide appropriate selections.
 
 ## Syntax
 
 ```json {5}
 {
-    "cdlOptions": {
-        "<name>": {
-            ...
-            "category": "<string>",
-            ...
-        }
+  "cdlOptions | cdlComponents": [
+    {
+      "name": "...",
+      ...
+      "category": "<string>",
+      ...
     }
+  ]
 }
 ```
 
@@ -48,11 +48,14 @@ The value of the `category` property is a string.
 
 ## Default value
 
-If missing no category is assigned to the current object.
+If missing, no category is assigned to the current object.
 
 ## Description
 
-Configuration tools should usually be able to provide choices for various selections, such as choosing the hardware platform for the build. For this to work, specific packages should be marked with additional metadata recognized by the configuration tools.
+Configuration tools should usually be able to provide choices for various
+selections, such as choosing the hardware platform for the build. For this to
+work, specific packages should be marked with additional metadata recognised by
+the configuration tools.
 
 Examples of such metadata are:
 

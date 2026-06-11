@@ -1,5 +1,4 @@
 ---
-
 title: childrenGeneratedFile
 description: The definition of the xCDL childrenGeneratedFile property.
 keywords:
@@ -10,15 +9,14 @@ keywords:
   - childrenGeneratedFile
 
 date: 2015-11-25 19:32:00 +0200
-
 ---
 
-import MetadataObjectLink from '@site/src/components/MetadataObjectLink';
-import MetadataObjectPropertyLink from '@site/src/components/MetadataObjectPropertyLink';
+import MetadataObjectLink from "@site/src/components/MetadataObjectLink";
+import MetadataObjectPropertyLink from "@site/src/components/MetadataObjectPropertyLink";
 
 {/* ------------------------------------------------------------------------ */}
 
-# The `childrenGeneratedFile` definition
+# `childrenGeneratedFile` property
 
 :::note
 
@@ -28,33 +26,42 @@ Work in progress.
 
 ## Purpose
 
-Specify the configuration header file that will be generated for the children of a given component.
+Specify the configuration header file that will be generated for the children of
+a given component.
 
 ## Syntax
 
 ```json {5}
 {
-    "cdlComponents": {
-        "<name>": {
-            ...
-            "childrenGeneratedFile": "<file path>",
-            ...
-        }
+  "cdlComponents": [
+    {
+      "name": "...",
+      ...
+      "childrenGeneratedFile": "<file path>",
+      ...
     }
+  ]
 }
 ```
 
-The value of the `childrenGeneratedFile` property is a string that contains a file path relative to the build folder.
+The value of the `childrenGeneratedFile` property is a string that contains a
+file path relative to the build folder.
 
 ## Default value
 
-If missing, the definition from the parent node is used, first the `childrenGeneratedFile` then `generatedFile`.
+If missing, the definition from the parent node is used, first the
+`childrenGeneratedFile`, then `headerFile`.
 
 ## Description
 
-When the configuration tools generate a build tree, one of the steps is to output each object's configuration data to a header file. Instead of defining a `generatedFile` for each individual `cdlOptions` or `cdlComponents` object, it is recommended to define the file path only once in the parent object. This definition will then be used for all child nodes without a `generatedFile`.
+When the configuration tools generate a build tree, one of the steps is to
+output each object's configuration data to a header file. Instead of defining a
+`headerFile` for each individual `cdlOptions` or `cdlComponents` object, it
+is recommended to define the file path only once in the parent object. This
+definition will then be used for all children nodes without a `headerFile`.
 
-The name specified in a `childrenGeneratedFile` property will always be interpreted as relative to the build folder.
+The name specified in a `childrenGeneratedFile` property will always be
+interpreted as relative to the build folder.
 
 ## Example
 
@@ -62,9 +69,9 @@ TBD
 
 ## See also
 
-- <MetadataObjectPropertyLink name="generatedFile" /> property
+- <MetadataObjectPropertyLink name="headerFile" /> property
 
 ## eCos reference
 
-- [`define-header`](https://ecos.sourceware.org/docs-latest/cdl-guide/ref.define-header.html) property
-
+- [`define-header`](https://ecos.sourceware.org/docs-latest/cdl-guide/ref.define-header.html)
+  property

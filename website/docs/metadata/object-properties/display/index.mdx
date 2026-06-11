@@ -1,5 +1,4 @@
 ---
-
 title: display
 description: The definition of the xCDL display property.
 keywords:
@@ -10,15 +9,14 @@ keywords:
   - display
 
 date: 2015-11-25 19:32:00 +0200
-
 ---
 
-import MetadataObjectLink from '@site/src/components/MetadataObjectLink';
-import MetadataObjectPropertyLink from '@site/src/components/MetadataObjectPropertyLink';
+import MetadataObjectLink from "@site/src/components/MetadataObjectLink";
+import MetadataObjectPropertyLink from "@site/src/components/MetadataObjectPropertyLink";
 
 {/* ------------------------------------------------------------------------ */}
 
-# The `display` definition
+# `display` property
 
 :::note
 
@@ -28,58 +26,85 @@ Work in progress.
 
 ## Purpose
 
-Specify a node name for the configuration object when it is rendered in the configuration hierarchy.
+Specify a node name for the configuration object when it is rendered in the
+configuration hierarchy.
 
 ## Syntax
 
 ```json {4}
 {
-    "cdlOptions": {
-        "<name>": {
-            "display": "<string>",
-            ...
-        }
-    }
+  "cdlProject": {
+    "name": "...",
+    "display": "<string>",
+    ...
+  }
 }
 ```
 
-The value of the `display` property is a relatively short string that starts with an uppercase letter and does not end with a period.
+```json {4}
+{
+  "cdlOptions | cdlComponents | cdlInterface": [
+    {
+      "name": "...",
+      "display": "<string>",
+      ...
+    }
+  ]
+}
+```
+
+The value of the `display` property is a relatively short string that starts
+with an uppercase letter and does not end with a period.
 
 ## Default value
 
-If missing, the value will be replaced by the name, but it is highly recommended to explicitly define it.
+If missing, the value will be replaced by the name, but it is highly recommended
+to explicitly define it.
 
 ## Description
 
-When presented with a (graphical) user interface, users can only be expected to manipulate configuration options sensibly if they are given sufficient information about these options. There are three properties which serve to explain an object in plain text: the `display` property gives a textual alias for an object, which is usually more comprehensible than something like CYGPKG_LIBC_TIME_ZONES; the `description` property gives a longer description, typically a paragraph or so; the `docsUrl` property specifies the location of additional on-line documentation related to a configuration object.
+When presented with a (graphical) user interface, users can only be expected to
+manipulate configuration options sensibly if they are given sufficient
+information about these options. There are three properties which serve to
+explain an object in plain text: the `display` property gives a textual alias
+for an object, which is usually more comprehensible than something like
+CYGPKG_LIBC_TIME_ZONES; the `description` property gives a longer description,
+typically a paragraph or so; the `documentationUrls` property specifies the location of
+additional on-line documentation related to a configuration object.
 
-In the context of a graphical tool, the `display` string will be the primary way for users to identify configuration objects; the `description` paragraph will be visible whenever the object is selected; the on-line documentation will only be accessed when the user explicitly requests it.
+In the context of a graphical tool, the `display` string will be the primary way
+for users to identify configuration objects; the `description` paragraph will be
+visible whenever the object is selected; the on-line documentation will only be
+accessed when the user explicitly requests it.
 
-As implementation, the short `<name>` string is used internally to identify nodes in the configuration hierarchy, while the `display` string is the external representation of hierarchy nodes.
+In the implementation, the short `<name>` string is used internally to identify
+nodes in the configuration hierarchy, while the `display` string is the external
+representation of hierarchy nodes.
 
 ## Example
 
-```json {4}
+```json {3}
 {
-    "cdlOptions": {
-        "size": {
-            "display": "Message box queue size",
-            "description": "This configuration option controls the number of messages that can be queued in a message box before a non-blocking put() operation will fail or a blocking put() operation will block. The cost in memory is one pointer per message box for each possible message.",
-            "parent": "mbox-queue",
-            "valueType": "integer",
-            "legalValues": "1 to 65535",
-            "defaultValue": "10",
-            "generatedDefinition": "CYGNUM_KERNEL_SYNCH_MBOX_QUEUE_SIZE"
-        }
+  "cdlOptions": [
+    {
+      "name": "mbox-queue.size",
+      "display": "Message box queue size",
+      "description": "This configuration option controls the number of messages that can be queued in a message box before a non-blocking put() operation will fail or a blocking put() operation will block. The cost in memory is one pointer per message box for each possible message.",
+      "valueType": "integer",
+      "legalValues": "1 to 65535",
+      "defaultValue": "10",
+      "customDefine": "CYGNUM_KERNEL_SYNCH_MBOX_QUEUE_SIZE"
     }
+  ]
 }
 ```
 
 ## See also
 
 - <MetadataObjectPropertyLink name="description" /> property
-- <MetadataObjectPropertyLink name="docsUrl" /> property
+- <MetadataObjectPropertyLink name="documentationUrls" /> property
 
 ## eCos reference
 
-- [`display`](https://ecos.sourceware.org/docs-latest/cdl-guide/ref.display.html) property
+- [`display`](https://ecos.sourceware.org/docs-latest/cdl-guide/ref.display.html)
+  property

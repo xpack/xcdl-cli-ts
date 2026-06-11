@@ -114,15 +114,16 @@
   },
   "buildConfig": {
     "greeting": "The xPack components manager command line tool",
-    "isTypeScript": "true"
+    "isTypescript": "true"
   },
   "topConfig": {
     "descriptiveName": "xPack Component Manager",
     "permalinkName": "xcdl",
+    "preferShortName": "true",
     "hasTriggerPublish": "true",
     "isWebPreview": "true"
   },
   "engines": {
-    "node": " >=18.0.0"
+    "node": ">=18.0.0"
   }
 }

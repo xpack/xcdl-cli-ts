@@ -1,6 +1,12 @@
 ---
 
 title: xcdl build
+description: The definition of the `xcdl build` command.
+keywords:
+  - xpack
+  - xcdl
+  - build
+  - cli
 
 date: 2024-11-20 23:47:00 +0300
 
@@ -17,7 +23,7 @@ Work in progress.
 ## Synopsis
 
 ```sh
-xcdl build [options...] ...TBD
+xcdl build [options...] [--target <name>] ...TBD
 ```
 
 Aliases:
@@ -26,7 +32,11 @@ Aliases:
 
 ## Description
 
-TBD
+Runs the builder in the current folder, which is expected to be a build tree.
+
+- `--target` use a custom target.
+
+A target named `clean` can be used to clean the build folder.
 
 ---
 

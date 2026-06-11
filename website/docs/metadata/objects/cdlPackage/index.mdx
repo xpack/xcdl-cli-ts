@@ -1,5 +1,4 @@
 ---
-
 title: cdlPackage
 description: The definition of the xCDL cdlPackage objects.
 keywords:
@@ -9,34 +8,17 @@ keywords:
   - package
 
 date: 2015-11-15 12:00:00 +0200
-
 ---
 
-import MetadataObjectLink from '@site/src/components/MetadataObjectLink';
-import MetadataObjectPropertyLink from '@site/src/components/MetadataObjectPropertyLink';
+import MetadataObjectLink from "@site/src/components/MetadataObjectLink";
+import MetadataObjectPropertyLink from "@site/src/components/MetadataObjectPropertyLink";
 
-import PropertyActiveIf from '../../_components/_active-if';
-import PropertyCategory from '../../_components/_category';
-import PropertyChildrenGeneratedFile from '../../_components/_children-generated-file';
-import PropertyCompilerIncludeFolders from '../../_components/_compiler-include-folders';
-import PropertyCompilerOptions from '../../_components/_compiler-options';
-import PropertyCompilerPreprocessorSymbols from '../../_components/_compiler-preprocessor-symbols';
-import PropertyCompilerSourceFiles from '../../_components/_compiler-source-files';
-import PropertyDefaultEnabled from '../../_components/_default-enabled';
-import PropertyDefaultValue from '../../_components/_default-value';
-import PropertyDescription from '../../_components/_description';
-import PropertyDisplay from '../../_components/_display';
-import PropertyDocsUrl from '../../_components/_docs-url';
-import PropertyGeneratedDefinition from '../../_components/_generated-definition';
-import PropertyGeneratedFile from '../../_components/_generated-file';
-import PropertyImplements from '../../_components/_implements';
-import PropertyincludeCDLs from '../../_components/_include-xcdls';
-import PropertyParent from '../../_components/_parent';
-import PropertyRequires from '../../_components/_requires';
+import PropertyDescription from "../../_components/_description";
+import PropertyDisplay from "../../_components/_display";
 
 {/* ------------------------------------------------------------------------ */}
 
-# The `cdlPackage` definition
+# `cdlPackage` object
 
 :::note
 
@@ -46,79 +28,66 @@ Work in progress.
 
 ## Purpose
 
-Define a package (a specialized component that can be distributed independently).
+Define a package (a specialized project that can be distributed
+independently).
 
 ## Syntax
 
 ```json
 {
-    "cdlPackage": {
-        "name": "<name>",
-        "display": "<short name>",
-        "description": "<long text>",
+  "cdlPackage": {
+    "display": "<short name>",
+    "description": "<long text>",
 
-        ... package members ...
-    }
+    ... package members ...
+  }
 }
 ```
 
 ## Description
 
-The `cdlPackage` object is **the unit of software distribution**. It is also a configuration option in that users can choose whether or not a particular package is loaded into the configuration. It is also a configuration component in that it can contain additional components and options in a hierarchy.
-
-A `cdlPackage` can have most of the properties and behaviour of a `cdlComponents` object, but with some limitations (see the [Unavailable properties](#unavailable-properties) below).
+The `cdlPackage` object is **the unit of software distribution**. It is a
+container of a hierarchy of components and options.
 
 The project top-level xCDL file must begin with a `cdlPackage` object.
 
 ## Containers
 
-The `cdlPackage` is inherently a container, so it may include `cdlComponents`, `cdlOptions`, `cdlInterfaces` objects that will go below this object in the configuration hierarchy.
+The `cdlPackage` is inherently a container, so it may include `cdlComponents`,
+`cdlOptions`, and `cdlInterfaces` objects.
+
+The `cdlPackage` object itself does not have a name and does not 
+contribute to the configuration hierarchy.
 
 ## Properties
 
-- <PropertyActiveIf objectType="package"/>
-- <PropertyChildrenGeneratedFile objectType="package"/>
-- <PropertyCompilerIncludeFolders objectType="package"/>
-- <PropertyCompilerOptions objectType="package"/>
-- <PropertyCompilerPreprocessorSymbols objectType="package"/>
-- <PropertyCompilerSourceFiles objectType="package"/>
-- <PropertyDefaultEnabled objectType="package"/>
-- <PropertyDefaultValue objectType="package"/>
-- <PropertyDescription objectType="component"/>
-- <PropertyDisplay objectType="component"/>
-- <PropertyDocsUrl objectType="component"/>
-- <PropertyGeneratedDefinition objectType="package"/>
-- <PropertyGeneratedFile objectType="package"/>
-- <PropertyImplements objectType="package"/>
-- <PropertyincludeCDLs objectType="package"/>
-- `name` - the internal name used to identify the package
-- <PropertyParent objectType="package"/>
-- <PropertyRequires objectType="package"/>
-
-## Unavailable properties
-
-- <MetadataObjectPropertyLink name="computed" /> - always false; the package's value cannot be computed
-- <MetadataObjectPropertyLink name="configurable" /> - always true; packages can always be enabled/disabled by the user during the configuration process
-- <MetadataObjectPropertyLink name="valueType" /> - always `bool`; packages do not have an associated value, they return 1 if enabled
-- <MetadataObjectPropertyLink name="valueFormat" /> - if the header definition is generated, the value will always be `(1)` [TODO: perhaps booleans can be formatted as true/false]
-- <MetadataObjectPropertyLink name="legalValues" /> - no restrictions can apply to package values
+- <PropertyDescription objectType="package" />
+- <PropertyDisplay objectType="package" />
 
 ## Example
 
 ```json
 {
-    "cdlPackage": {
-        "name": "infra",
-        "display" : "Infrastructure",
-        "description": "Common types and useful macros. Tracing and assertion facilities. Package startup options.",
-        "generatedFile": "os/infra/infra.h",
-        "compilerSourceFiles": [
-            "startup.cpp",
-            "prestart.cpp",
-            "pkgstart.cpp",
-            "userstart.cpp"
-        ]
-    }
+  "cdlPackage": {
+    "display": "µOS++ Utils Lists",
+    "cdlComponents": [
+      {
+        "name": "micro-os-plus.utils-lists",
+        "description": "µOS++ C++ Intrusive Lists.",
+        "publicIncludeFolders": [
+          "include"
+        ],
+        "sourceFiles": [
+          "src/doubly-list-links.cpp"
+        ],
+        "dependencies": [
+          "micro-os-plus.diag.trace"
+        ],
+        "customDefine": "MICRO_OS_PLUS_INCLUDES_UTILS_LISTS",
+        ...
+      }
+    ]
+  }
 }
 ```
 

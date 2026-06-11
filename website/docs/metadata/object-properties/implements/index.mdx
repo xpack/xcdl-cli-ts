@@ -1,5 +1,4 @@
 ---
-
 title: implements
 description: The definition of the xCDL implements property.
 keywords:
@@ -10,15 +9,14 @@ keywords:
   - implements
 
 date: 2015-11-25 19:32:00 +0200
-
 ---
 
-import MetadataObjectLink from '@site/src/components/MetadataObjectLink';
-import MetadataObjectPropertyLink from '@site/src/components/MetadataObjectPropertyLink';
+import MetadataObjectLink from "@site/src/components/MetadataObjectLink";
+import MetadataObjectPropertyLink from "@site/src/components/MetadataObjectPropertyLink";
 
 {/* ------------------------------------------------------------------------ */}
 
-# The `implements` definition
+# `implements` property
 
 :::note
 
@@ -34,43 +32,55 @@ Notify the framework that one or more general interfaces are implemented.
 
 ```json {5}
 {
-    "cdlOptions": {
-        "<name>": {
-            ...
-            "implements": [ "<path>",... ],
-            ...
-        }
+  "cdlComponents": [
+    {
+      "name": "...",
+      ...
+      "implements": [ "<path>",... ],
+      ...
     }
+  ]
 }
 ```
 
-The value of the `implements` property is an array of strings containing xCDL paths of interface objects that this object implements.
+The value of the `implements` property is an array of strings containing xCDL
+paths of interface objects that this object implements.
 
 ## Default value
 
-If missing it is assumed that the current object does not implement any interface.
+If missing, it is assumed that the current object does not implement any
+interface.
 
 ## Description
 
-The xCDL interface concept provides an abstraction mechanism that can be useful in many different circumstances. Essentially, an interface is a computed option whose value is the number of active and enabled objects that implement that interface. For example, the interface `kernel/scheduler` has a value corresponding to the number of schedulers in the system, typically just one.
+The xCDL interface concept provides an abstraction mechanism that can be useful
+in many different circumstances. Essentially, an interface is a computed option
+whose value is the number of active and enabled objects that implement that
+interface. For example, the interface `kernel.scheduler` has a value
+corresponding to the number of schedulers in the system, typically just one.
 
-The `implements` property defines an array of xCDL paths of the implemented interfaces (an object may implement multiple interfaces). These interfaces may be defined in the same package as the implementor or in another package. In the latter case, it may sometimes be appropriate for the implementor or the implementor's package to have a `requires` property for the package containing the interface.
+The `implements` property defines an array of xCDL paths of the implemented
+interfaces (an object may implement multiple interfaces). These interfaces may
+be defined in the same package as the implementor or in another package. In the
+latter case, it may sometimes be appropriate for the implementor or the
+implementor's package to have a `requires` property for the package containing
+the interface.
 
-It is possible for an object to implement a given interface multiple times, but only distinct implementors are counted.
+It is possible for an object to implement a given interface multiple times, but
+only distinct implementors are counted.
 
 ## Example
 
 ```json
 {
-  "cdlOptions": {
-    "mlqueue": {
+  "cdlOptions": [
+    {
+      "name": "kernel.mlqueue",
       "display": "Multi-level queue scheduler",
-      "parent": "kernel",
-      "generatedDefinition": "OS_PACKEGE_KERNEL_SCHED_MLQUEUE",
-      "defaultEnable": true,
-      "implements": [ "kernel/scheduler" ]
+      "customDefine": "OS_PACKAGE_KERNEL_SCHED_MLQUEUE",
+      "implements": ["kernel.scheduler"]
     }
-  }
+  ]
 }
 ```
 
@@ -80,4 +90,5 @@ It is possible for an object to implement a given interface multiple times, but 
 
 ## eCos reference
 
-- [`implements`](https://ecos.sourceware.org/docs-latest/cdl-guide/ref.implements.html) property
+- [`implements`](https://ecos.sourceware.org/docs-latest/cdl-guide/ref.implements.html)
+  property

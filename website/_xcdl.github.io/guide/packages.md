@@ -270,7 +270,7 @@ Example:
         {
             "name": "Liviu Ionescu",
             "email": "ilg@livius.net",
-            "url": "https://github.com/ilg-ul/"
+            "url": "https://github.com/ilg-ul"
         }
     ],
 
@@ -298,7 +298,7 @@ Example:
         {
             "name": "Liviu Ionescu",
             "email": "ilg@livius.net",
-            "url": "https://github.com/ilg-ul/"
+            "url": "https://github.com/ilg-ul"
         }
     ],
 

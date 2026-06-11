@@ -1,5 +1,4 @@
 ---
-
 title: configurable
 description: The definition of the xCDL configurable property.
 keywords:
@@ -10,15 +9,14 @@ keywords:
   - configurable
 
 date: 2015-11-25 19:32:00 +0200
-
 ---
 
-import MetadataObjectLink from '@site/src/components/MetadataObjectLink';
-import MetadataObjectPropertyLink from '@site/src/components/MetadataObjectPropertyLink';
+import MetadataObjectLink from "@site/src/components/MetadataObjectLink";
+import MetadataObjectPropertyLink from "@site/src/components/MetadataObjectPropertyLink";
 
 {/* ------------------------------------------------------------------------ */}
 
-# The `configurable` definition
+#`configurable` property
 
 :::note
 
@@ -28,35 +26,46 @@ Work in progress.
 
 ## Purpose
 
-Specify if the current object can be manually modified by the user during the configuration process.
+Specify whether the current object can be manually modified by the user during
+the configuration process.
 
 ## Syntax
 
 ```json {5}
 {
-    "cdlOptions": {
-        "<name>": {
-            ...
-            "configurable": true | false | "<boolean expression>",
-            ...
-        }
+  "cdlOptions | cdlComponents": [
+    {
+      "name": "...",
+      ...
+      "configurable": true | false | "<boolean expression>",
+      ...
     }
+  ]
 }
 ```
 
-The value of the `configurable` property is either a `true`/`false` constant or a string containing an expression that evaluates to a boolean value.
+The value of the `configurable` property is either a `true`/`false` constant or
+a string containing an expression that evaluates to a boolean value.
 
 ## Default value
 
-If missing, the default is `true`, all objects are configurable.
+If missing, the default is `true`, the object is configurable.
 
 ## Description
 
-Most of the objects can be individually enabled/disabled and/or their values changed using the configuration (graphical) tools; some are `computed` and cannot be changed by the user.
+Most of the objects can be individually enabled/disabled and/or their values
+changed using the configuration (graphical) tools; some are `computed` and
+cannot be changed by the user.
 
-Setting `configurable` to false will instruct the configuration (graphical) tools to prevent the user from enabling or disabling the object. The object will be enabled if it is active and `defaultEnable` is true. For graphical tools, the radio button will be greyed out. Similarly, for objects with data, the editable widget will be greyed out, and the user will not be able to change the value.
+Setting `configurable` to false will instruct the configuration (graphical)
+tools to prevent the user from enabling or disabling the object. The object will
+be enabled if it is active and `defaultEnable` is true. For graphical tools, the
+radio button will be greyed out. Similarly, for objects with data, the editable
+widget will be greyed out, and the user will not be able to change the value.
 
-Objects marked as non-configurable can still be active or inactive; this property does not affect the functional behaviour during builds, only the behaviour of the configuration tools.
+Objects marked as non-configurable can still be active or inactive; this
+property does not affect the functional behaviour during builds, only the
+behaviour of the configuration tools.
 
 ## Example
 

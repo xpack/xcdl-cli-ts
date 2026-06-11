@@ -1,0 +1,17 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "overrides": [
+    {
+      "files": ["*.jsx", "*.tsx"],
+      "rules": {
+        "max-len": "off"
+      }
+    }
+  ]
+}

@@ -1,0 +1,128 @@
+---
+title: cdlProject
+description: The definition of the xCDL cdlProject objects.
+keywords:
+  - xpack
+  - xcdl
+  - cdl
+  - package
+
+date: 2026-05-29 20:40:00 +0300
+---
+
+import MetadataObjectLink from "@site/src/components/MetadataObjectLink";
+import MetadataObjectPropertyLink from "@site/src/components/MetadataObjectPropertyLink";
+
+import PropertyDescription from "../../_components/_description";
+import PropertyDisplay from "../../_components/_display";
+import PropertyHeaderFile from "../../_components/_header-file";
+import PropertyincludeCDLs from "../../_components/_include-xcdls";
+
+
+{/* ------------------------------------------------------------------------ */}
+
+# `cdlProject` object
+
+:::note
+
+Work in progress.
+
+:::
+
+## Purpose
+
+Provide the top definitions for an application project or a sub-project (like `tests`).
+
+## Syntax
+
+```json
+{
+  "cdlProject": {
+    "name": "<name>",
+    "display": "<short name>",
+    "description": "<long text>",
+
+    ... project members ...
+
+    "cdlConfigurations": {
+      "<name>": {
+        ... configuration members ...
+      }
+      ...
+    }
+  }
+}
+```
+
+## Description
+
+The `cdlProject` object defines the overall project structure, like the 
+configuration hierarchy and the xCDL configurations.
+
+At the limit, the configuration hierarchy can be defined in place for 
+the entire project, but if the
+project is modular and uses libraries, they usually have their own xCDL
+files, and the project uses `includeCDLs` to bring everything together.
+
+The `cdlProject` object is expected to be located in the top folder of 
+a project or in sub-project folders, in a file 
+named `xcdl-project.json`.
+
+## Containers
+
+The `cdlProject` is inherently a container which may include objects that will go 
+into the configuration hierarchy  (like `cdlComponents`,
+`cdlOptions`, `cdlInterfaces`) and `cdlConfigurations`,
+that will complement them with user settings.
+
+## Properties
+
+- `name` - the internal name used to identify the project
+- <PropertyDescription objectType="project" />
+- <PropertyDisplay objectType="project" />
+- <PropertyHeaderFile objectType="project" />
+- `packagesHeaderFile` - the file where the list of generated packages will be stored
+- <PropertyincludeCDLs objectType="project" />
+- `properties` - a map of additional properties that can be used by the project and its
+  components and options for the LiquidJS substitutions context.
+
+## Example
+
+```json
+{
+  "cdlProject": {
+    "name": "hello",
+    "display": "Hello World",
+    "description": "The classical Hello World minimal project.",
+    "headerFile": "generated/include/hello-configuration.h",
+
+    "includeCDLs": [
+      "xpacks/@micro-os-plus/diag-trace/xcdl-package.json",
+    ],
+    "cdlConfigurations": {
+      "debug": {
+        "buildType": "debug"
+      },
+      "release": {
+        "inherits": "debug",
+        "buildType": "release"
+      }
+    }
+  }
+}
+```
+
+## See also
+
+- <MetadataObjectLink name="cdlConfigurations" />
+- <MetadataObjectLink name="cdlComponents" />
+- <MetadataObjectLink name="cdlInterfaces" />
+- <MetadataObjectLink name="cdlOptions" />
+
+## eCos reference
+
+The `cdlProject` has no direct equivalent in eCos.
+
+----------
+
+add filters to format numbers, like 0xXXXX

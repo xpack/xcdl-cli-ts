@@ -1,5 +1,4 @@
 ---
-
 title: defaultValue
 description: The definition of the xCDL defaultValue property.
 keywords:
@@ -10,15 +9,14 @@ keywords:
   - defaultValue
 
 date: 2015-11-25 19:32:00 +0200
-
 ---
 
-import MetadataObjectLink from '@site/src/components/MetadataObjectLink';
-import MetadataObjectPropertyLink from '@site/src/components/MetadataObjectPropertyLink';
+import MetadataObjectLink from "@site/src/components/MetadataObjectLink";
+import MetadataObjectPropertyLink from "@site/src/components/MetadataObjectPropertyLink";
 
 {/* ------------------------------------------------------------------------ */}
 
-# The `defaultValue` definition
+# `defaultValue` property
 
 :::note
 
@@ -34,39 +32,63 @@ Specify a default value for this option using an xCDL expression.
 
 ```json {5}
 {
-    "cdlOptions": {
-        "<name>": {
-            ...
-            "defaultValue": true | false | "<expression>",
-            ...
-        }
+  "cdlOptions | cdlComponents": [
+    {
+      "name": "...",
+      ...
+      "defaultValue": true | false | "<expression>",
+      ...
     }
+  ]
 }
 ```
 
-The value of the `defaultValue` property is a boolean constant or a string containing an expression that is evaluated each time `valueOf(`object`)` is called.
+The value of the `defaultValue` property is a boolean constant or a string
+containing an expression that is evaluated each time `valueOf(`object`)` is
+called.
 
 ## Default value
 
 If missing, the object default value depends on the object type and state:
 
-- `none` - these object have no value, and the `defaultValue`  is not applicable
-- `bool` - enabled objects have the value `true` and non enabled objects have the value `false`
-- `int` - enabled objects have the value 1 and non enabled objects have the value 0
-- `float` - enabled objects have the value 1.0 and non enabled objects have the value 0.0
-- `string` - enabled objects have the value "1" and non enabled objects have the value "0"
+- `none` - these objects have no value, and the `defaultValue` is not applicable
+- `bool` - enabled objects have the value `true` and non enabled objects have
+  the value `false`
+- `int` - enabled objects have the value 1 and non enabled objects have the
+  value 0
+- `float` - enabled objects have the value 1.0 and non enabled objects have the
+  value 0.0
+- `string` - enabled objects have the value "1" and non enabled objects have the
+  value "0"
 
 ## Description
 
-The `defaultValue` property usually defines the default value for the object with data, in case no other value is set during configuration.
+The `defaultValue` property usually defines the default value for the object
+with data, in case no other value is set during configuration.
 
-The data of the `defaultValue` property is an xCDL expression; see the Section called Ordinary Expressions in [xCDL packages](/docs/guide/packages) for the syntactic details. In many cases a simple constant value will suffice.
+The data of the `defaultValue` property is an xCDL expression; see the section
+called Ordinary Expressions in [xCDL packages](/docs/guide/packages) for the
+syntactic details. In many cases a simple constant value will suffice.
 
-However it is also possible for an object's default value to depend on other objects. For example the common HAL package provides some support functions needed by the kernel, but are unlikely to be useful if the kernel is not being used.
+However, it is also possible for an object's default value to depend on other
+objects. For example, the common HAL package provides some support functions
+needed by the kernel, but are unlikely to be useful if the kernel is not being
+used.
 
-An object can have either a `computed` or a `defaultValue` property. If an object does not have either a `defaultValue` or a `computed` property and it does not have the `valueType` none then the configuration tools will assume a default value expression of 1/`true` if the object is enabled and 0/`false` otherwise.
+An object can have either a `computed` or a `defaultValue` property. If an
+object does not have either a `defaultValue` or a `computed` property and it
+does not have the `valueType` none, then the configuration tools will assume a
+default value expression of 1/`true` if the object is enabled and 0/`false`
+otherwise.
 
-Occasionally, it is useful to have a configuration object A that has both a `requires` constraint on some other object B and a `defaultValue` expression of B. If option B is not enabled then A will also be disabled by default and no conflict arises. If B is enabled then A also becomes enabled, and again no conflict arises. If a user attempts to enable B but not A then there will be a conflict. Users should be able to deduce that the two options are closely interlinked and should not be manipulated independently except in very unusual circumstances.
+Occasionally, it is useful to have a configuration object A that has both a
+`requires` constraint on some other object B and a `defaultValue` expression of
+B. If option B is not enabled, then A will also be disabled by default and no
+conflict arises. If B is enabled, then A also becomes enabled, and again no
+conflict arises. If a user attempts to enable B but not A then there will be a
+conflict. Users should be able to deduce that the two options are closely
+interlinked and should not be manipulated independently except in very unusual
+circumstances.
 
 ## Example
 
@@ -74,15 +96,15 @@ The HAL option replicates the kernel option.
 
 ```json
 {
-  "cdlOptions": {
-    "thread-support": {
-      "parent": "hal/debug/gdb",
+  "cdlOptions": [
+    {
+      "name": "hal.debug.gdb.thread-support",
       "display": "Include GDB multi-threading debug support",
-      "generatedDefinition": "OS_DEBUG_HAL_DEBUG_GDB_THREAD_SUPPORT",
-      "requires": "isEnabled('kernel/debug/gdb/thread-support')",
-      "defaultValue": "valueOf('kernel/debug/gdb/thread-support')"
+      "customDefine": "OS_DEBUG_HAL_DEBUG_GDB_THREAD_SUPPORT",
+      "requires": "isEnabled('kernel.debug.gdb.thread-support')",
+      "defaultValue": "valueOf('kernel.debug.gdb.thread-support')"
     }
-  }
+  ]
 }
 ```
 
@@ -94,5 +116,5 @@ The HAL option replicates the kernel option.
 
 ## eCos reference
 
-- [`default-value`](https://ecos.sourceware.org/docs-latest/cdl-guide/ref.default-value.html) property
-
+- [`default-value`](https://ecos.sourceware.org/docs-latest/cdl-guide/ref.default-value.html)
+  property

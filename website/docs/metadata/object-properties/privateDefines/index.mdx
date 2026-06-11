@@ -1,0 +1,94 @@
+---
+title: privateDefines
+description: The definition of the xCDL privateDefines property.
+keywords:
+  - xpack
+  - xcdl
+  - cdl
+  - property
+  - privateDefines
+
+date: 2024-11-27 00:28:00 +0200
+---
+
+import MetadataObjectLink from "@site/src/components/MetadataObjectLink";
+import MetadataObjectPropertyLink from "@site/src/components/MetadataObjectPropertyLink";
+
+{/* ------------------------------------------------------------------------ */}
+
+# `privateDefines` property
+
+:::note
+
+Work in progress. 
+
+:::
+
+## Purpose
+
+Specify compiler preprocessor macros passed on the compiler command line
+when compiling the source files of the current component.
+
+## Syntax
+
+```json {2}
+{
+ "cdlOptions | cdlComponents": [
+    {
+      "name": "...",
+      ...
+      "privateDefines": [ 
+        "<name>[=<value>]",
+        ... 
+      ],
+      ...
+    }
+  ]
+}
+
+```
+
+The value of the `privateDefines` property is an array of
+names, possibly with values.
+
+## Default value
+
+If missing, the current object will not contribute any preprocessor macros to
+the build.
+
+## Description
+
+Generally, preprocessor macros are defined at the top level and apply to all
+sources that enter the build.
+
+In some cases, it might be necessary to define preprocessor macros for each
+component.
+
+TODO
+
+## Examples
+
+```json {5}
+{
+  "cdlComponents": [
+    {
+      "name": "lists",
+        ...
+      "privateDefines": [
+        "SOMETHING",
+        "THE_ANSWER=42"
+      ],
+      ...
+    }
+  ]
+}
+```
+
+## See also
+
+- TODO
+
+## eCos reference
+
+- [Building eCos](https://ecos.sourceware.org/docs-latest/cdl-guide/build.make.html)
+

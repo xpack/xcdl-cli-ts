@@ -16,14 +16,15 @@ Work in progress.
 ## What is xcdl?
 
 **xcdl**, short for **x**Pack **CDL**, is a
-[Node.js](https://nodejs.org/en/) CommonJS  module and a CLI
+[Node.js](https://nodejs.org/en/) CommonJS module and a CLI
 application designed to **automate configurations** and **builds**
 for C/C++ projects. It draws inspiration from eCos CDL.
 
 [CDL - Component Definition Language](https://ecos.sourceware.org/ecos/docs-latest/cdl-guide/cdl-guide.html)
 is an advanced technology for configuring and building projects,
 introduced by the [eCos](https://ecos.sourceware.org)
-free open-source real-time operating system, which is intended for embedded applications.
+free open-source real-time operating system, which is intended for
+embedded applications.
 
 xCDL was inspired by CDL but, as part
 of the Node.js ecosystem, it migrated the original Tcl configuration
@@ -54,20 +55,39 @@ and **metadata**, which are documented in the
 
 **xcdl** enhances cross-platform builds and tests with its distinctive features:
 
-- **Cross-Platform Support**: Operates seamlessly on **Windows**, **macOS**, and **GNU/Linux**.
-- **Compile-time configurability**: Allows behaviour to be controlled during compilation.
-- **Per-component source files**: Divides the project into components, each with its own set of source files.
-- **Per-option preprocessor definitions**: When components and options are individually enabled or disabled, this determines which lines are generated in a configuration header file. Specifically, each enabled component or option triggers the generation of corresponding `#define` statements in the header file.
-- **Enforce constraints**: Components and options can define ranges of values and/or interdependencies with other objects.
-- **Build Configurations**: Manages multiple build configurations, such as debug/release builds or platform-specific tests.
+- **Cross-Platform Support**: Operates seamlessly on **Windows**,
+  **macOS**, and **GNU/Linux**.
+- **Compile-time configurability**: Allows behaviour to be controlled
+  during compilation.
+- **Per-component source files**: Divides the project into components,
+  each with its own set of source files.
+- **Per-option preprocessor definitions**: When components and options
+  are individually enabled or disabled, this determines which lines
+  are generated in a configuration header file. Specifically, each
+  enabled component or option triggers the generation of corresponding
+  `#define` statements in the header file.
+- **Enforce constraints**: Components and options can define ranges of
+  values and/or interdependencies with other objects.
+- **Build Configurations**: Manages multiple build configurations,
+  such as debug/release builds or platform-specific tests.
 
 ## Benefits
 
-- Being able to develop exactly the same project on Windows, macOS and GNU/Linux provides team members with the flexibility to use their preferred platform.
-- Disabled components automatically have their source files excluded from the build process, allowing for coarse granularity in excluding unused code.
-- Automatically generated preprocessor definitions allow for precise control over the inclusion of code and data, ensuring that only the necessary elements are compiled.
-- Compile-time control at the individual statement level optimises the build process by excluding unnecessary code, leading to more efficient and manageable projects.
-- Enforcing constraints enables to:
+- Being able to develop exactly the same project on Windows, macOS,
+  and GNU/Linux provides team members with the flexibility to use
+  their preferred platform.
+- Disabled components automatically have their source files excluded
+  from the build process, allowing for coarse granularity in
+  excluding unused code.
+- Automatically generated preprocessor definitions allow for precise
+  control over the inclusion of code and data, ensuring that only the
+  necessary elements are compiled.
+- Compile-time control at the individual statement level optimises
+  the build process by excluding unnecessary code, leading to more
+  efficient and manageable projects.
+- Enforcing constraints enables one to:
   - generate a consistent set of preprocessor definitions
   - validate the configuration even before the compilation step
-- Managing separate configurations for multiple build setups facilitates convenient testing across different platforms, such as native and/or embedded.
+- Managing separate configurations for multiple build setups
+  facilitates convenient testing across different platforms, such as
+  native and/or embedded.

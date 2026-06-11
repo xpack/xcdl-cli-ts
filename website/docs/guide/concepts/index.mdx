@@ -1,6 +1,5 @@
 ---
-
-title: The xCDL concepts
+title: xCDL concepts
 description: Some of the key concepts used by the xCDL project.
 keywords:
   - xpack
@@ -8,10 +7,7 @@ keywords:
   - concepts
 
 date: 2015-10-25 12:00:00 +0200
-
 ---
-
-# The xCDL concepts
 
 ## Terminology
 
@@ -19,117 +15,200 @@ The xCDL component design involves a number of key concepts, presented below.
 
 ### xCDL
 
-xCDL is short for **xPack Component Definition Language**, and is specifically designed as a way of describing configuration options.
+xCDL is short for **xPack Component Definition Language**, and is specifically
+designed as a way of describing configuration options.
 
-It is also referred as the **xCDL Framework**.
+It is also referred to as the **xCDL Framework**.
 
 ### Metadata
 
-In the context of the xCDL Framework, metadata (generally defined as _data about data_) refers to additional information about the software project, such as lists of files, build settings, dependencies, options, etc. Metadata is stored in various separate files, like `package.json` and `xcdl.json`.
+In the context of the xCDL Framework, metadata (generally defined as _data about
+data_) refers to additional information about the software project, such as
+lists of files, build settings, dependencies, options, etc. Metadata is stored
+in various separate files, like `package.json` and `xcdl*.json`.
 
 ### Components
 
-A **component** is a generic unit of functionality, usually containing a number of related files and configuration data. More details in the Components sub-section below.
+A **component** is a generic unit of functionality, usually containing a number
+of related files and configuration data. More details in the Components
+sub-section below.
 
 ### Component framework
 
-The expression **component framework** is used to describe the collection of tools that allow software developers to manage a collection of components (usually organised in one or more component repositories) and to configure a build system to use these components. The xPack Framework includes tools like **xpm** and **xcdl**.
+The expression **component framework** is used to describe the collection of
+tools that allow software developers to manage a collection of components
+(usually organised in one or more component repositories) and to configure a
+build system to use these components. The xPack Framework includes tools like
+**xpm** and **xcdl**.
 
-### Packages
+### Packages/Libraries
 
-A **package** is the unit of distribution of components. It includes one or more related components.
+A **package** is the unit of distribution for components. It is a formally
+structured means of distributing a source library, and contains one or more
+related components.
 
-In addition to the `xcdl.json` metadata file, a typical package contains the following:
+In addition to the `xcdl*.json` metadata file, a typical package contains the
+following:
 
-- Several source files (`.c`/`.cpp`) and header files (`.h`). These files are used to create the project artifact (library or executable). Some source files may serve other purposes, such as providing a linker script.
+- Several source files (`.c`/`.cpp`) and header files (`.h`). These files are
+  used to create the project artefact (library or executable). Some source files
+  may serve other purposes, such as providing a linker script.
 - Exported header files that define the interface provided by the package.
 - Online documentation, such as reference pages for each exported function.
-- A number of test cases, provided in source format, allowing users to verify that the package works as expected on their specific hardware and configuration.
-- Additional xCDL metadata files describing the package to the component framework.
+- A number of test cases, provided in source format, allowing users to verify
+  that the package works as expected on their specific hardware and
+  configuration.
+- Additional xCDL metadata files describing the package to the component
+  framework.
 
 :::info
 
-Not all packages need to contain all of these elements. For example, some packages, such as device drivers, may not provide a new interface but instead offer another implementation of an existing interface. However, **all packages must contain at least one metadata file** (`xcdl.json`) that describes the package to the component framework.
+Not all packages need to contain all of these elements. For example, some
+packages, such as device drivers, may not provide a new interface but instead
+offer another implementation of an existing interface. However, **all packages
+must contain at least one metadata file** (`xcdl*.json`) that describes the
+package to the component framework.
 
 :::
 
-It is possible to create a binary distribution file for a package that includes all the source code, header files, and other relevant files. The website and tests do not need to be included in the binary distribution but can remain available from the project repository.
+It is possible to create a distribution archive for a package that includes
+all the source code, header files, and other relevant files. The documentation
+website and test cases do not need to be included in the distribution archive,
+but can remain available from the project repository.
 
-More details in the Packages section below and in the separate [xCDL Packages](/docs/metadata/objects/cdlPackage/) section.
+More details in the Packages section below and in the separate
+[xCDL Packages](/docs/metadata/objects/cdlPackage/) section.
 
 #### Portability
 
-Portability is a mandatory requirement. All xCDL tools must be able to run on all primary desktop environments, including Windows, macOS, and GNU/Linux.
+Portability is a mandatory requirement. All xCDL tools must be able to run on
+all primary desktop environments, including Windows, macOS, and GNU/Linux.
 
 #### Reference implementation
 
-The reference implementation will include one or more command line tools for non-graphical environments and one or more Visual Studio Code extensions as graphical configuration tools. Additionally, with lower priority, there might be some Eclipse plug-ins as part of the Eclipse Embedded CDT project.
+The reference implementation will include one or more command line tools for
+non-graphical environments and one or more Visual Studio Code extensions as
+graphical configuration tools. Additionally, with lower priority, there might be
+some Eclipse plug-ins as part of the Eclipse Embedded CDT project.
 
 ### Component repositories
 
-Generally a **component repository** is a managed collection of packages.
+Generally, a **component repository** is a managed collection of packages.
 
-Physically, a component repository is a hierarchy of folders, with folders typically directly mapping the hierarchy of packages.
+There can be:
 
-The component framework includes tools that allow new packages or new versions of a package to be installed, old packages to be removed, and so on.
+- remote component repositories, as servers that can store multiple versions
+  of the packages
+- local component repositories, as a result of installing remote packages on
+  the local machine.
 
-In the xPack Framework, packages are managed by **xpm** and the components are stored in the **user global xPack store**.
+Physically, a local component repository is a hierarchy of folders, with folders
+typically directly mapping the hierarchy of packages.
+
+The component framework includes tools that allow new packages or new versions
+of a package to be installed, old packages to be removed, and so on.
+
+In the xPack Framework, packages are managed by **xpm**, and the components are
+stored in the **user global xPack store**.
 
 #### Read-only
 
-To preserve the integrity of components, the component repository is treated as a read-only resource that can be shared by multiple projects and even multiple users. Application developers are not allowed to modify anything inside the component repository, and build tools should involve separate build and install trees.
+To preserve the integrity of components, the component repository is treated as
+a read-only resource that can be shared by multiple projects and even multiple
+users. Application developers are not allowed to modify anything inside the
+component repository, and build tools should involve separate build and install
+trees.
 
-Typically, application developers install packages by unpacking binary archives downloaded from HTTP/FTP/Git servers.
+Typically, application developers install packages by unpacking binary archives
+downloaded from HTTP/FTP/Git servers.
 
 #### Read-write
 
-However, during development, component authors need to modify files directly in the component repository. To simplify development, the component framework should allow the registration of local folder structures containing the source code and metadata used to build the packages.
+However, during development, component authors need to modify files directly in
+the component repository. To simplify development, the component framework
+should allow the registration of local folder structures containing the source
+code and metadata used to build the packages.
 
-Typically, component authors install packages by cloning one or more Git repositories.
+Typically, component authors install packages by cloning one or more Git
+repositories.
 
 **xpm** provides a way to manage such configurations via the `xpm link` command.
 
 ## xCDL metadata
 
-The configuration tools require information about the various options provided by each package, their consequences and constraints, and other properties such as the location of online documentation. This information must be provided in the form of xCDL metadata files.
+The configuration tools require information about the various options provided
+by each package, their consequences and constraints, and other properties such
+as the location of online documentation. This information must be provided in
+the form of xCDL metadata files.
 
 ### xCDL objects
 
-The xCDL definition language includes several objects used to define all the configuration details.
+The xCDL definition language includes several objects used to define all the
+configuration details.
 
-The xCDL objects are organised hierarchically, from leaf option objects up to the root package object.
+The xCDL objects are organised hierarchically, from leaf option objects up to
+the root package object.
 
 ### The virtual hierarchy
 
-In addition to the physical view represented by the file system folders and files, the xCDL hierarchy can be considered a virtual view of the project resources.
+In addition to the physical view represented by the file system folders and
+files, the xCDL hierarchy can be considered a virtual view of the project
+resources.
 
-In a GUI-based tool, this virtual hierarchy can be presented in a custom project explorer. There should be multiple views: at least one showing only the nodes participating in the build, and another showing all nodes, with inactive/disabled nodes displayed in grey.
+In a GUI-based tool, this virtual hierarchy can be presented in a custom project
+explorer. There should be multiple views: at least one showing only the nodes
+participating in the build, and another showing all nodes, with
+inactive or disabled nodes displayed in grey.
 
 #### JSON mapping
 
-As a design decision, xCDL objects must map 1:1 to serializable JavaScript objects, more specifically the [JSON](https://www.json.org/json-en.html) specifications. This means they should have properties whose names match the JavaScript naming convention and have values of type string, number, object, or array of objects.
+As a design decision, xCDL objects must map 1:1 to serialisable JavaScript
+objects, more specifically the [JSON](https://www.json.org/json-en.html)
+specifications. This means they should have properties whose names match the
+JavaScript naming convention and have values of type string, number, object, or
+array of objects.
 
-The main advantage of defining xCDL objects using JavaScript syntax (compared to, for instance, XML definitions) is inherent simplicity and uniformity. Consequently, xCDL objects can be easily serialized into JSON files, the preferred exchange format.
+The main advantage of defining xCDL objects using JavaScript syntax (compared
+to, for instance, XML definitions) is inherent simplicity and uniformity.
+Consequently, xCDL objects can be easily serialised into JSON files, the
+preferred exchange format.
 
 #### Hierarchy
 
-Except for the root node, all xCDL objects have a single parent; in other words, the nodes can be represented as a tree.
+Except for the root node(s), all xCDL objects have a single parent; in other words,
+the nodes can be represented as a tree.
 
-Except for leaf nodes, all xCDL objects also have an ordered array of child nodes.
+Except for leaf nodes, all xCDL objects also have an ordered array of children
+nodes.
 
 #### Node name
 
-Each node has an internal name used to refer to objects in the configuration hierarchy.
+Each node has an internal name used to refer to objects in the configuration
+hierarchy.
 
-Names are short strings. The recommended syntax is all lowercase, with words separated by dashes (`-`).
+Names are short strings. The recommended syntax is all lowercase, with words
+separated by dashes (`-`). Internally names are always converted to lower case
+and all references are also converted to lower-case.
 
-More details in [Object naming convention](../language/#object-naming-convention).
+More details in
+[Object naming convention](../language/#object-naming-convention).
+
+#### Node displayed name
+
+Nodes also have a public name (`display`), to be used when the name is displayed 
+in a hierarchy.
+
+Generally this is also a short string, but the case is preserved and words
+are separated by spaces.
 
 #### Node description
 
-Each node must have a string property called `description`. Descriptions should be reasonably long strings.
+Each node must have a string property called `description`. Descriptions should
+be reasonably long strings.
 
-When used in a GUI, the node `description` is generally displayed as a tooltip, activated when the mouse hovers over the node, or in additional views showing all node details.
+When used in a GUI, the node `description` is generally displayed as a tooltip,
+activated when the mouse hovers over the node, or in additional views showing
+all node details.
 
 #### Node children
 
@@ -137,39 +216,44 @@ If a node has children, they are grouped as one or more inner containers.
 
 ```json {5,8}
 {
-  "cdlComponents": {
-    "hal": {
+  "cdlComponents": [
+    {
+      "name": "hal",
       ...
-      "cdlComponents": {
+      "cdlComponents": [
         ...
-      },
-      "cdlOptions": {
+      ],
+      "cdlOptions": [
         ...
-      }
+      ]
     }
-  }
+  ]
 }
 ```
 
 #### xCDL paths
 
-Similar to files in a filesystem, xCDL nodes can be addressed using a sequence of slash-separated node names:
+Similar to objects in a JavaScript hierarchy, xCDL nodes can be addressed 
+using a sequence of dot-separated node names:
+
 
 ```
-hal/rcc
+hal.rcc
 ```
 
-Addressing nodes can be done with:
+Paths are relative and are resolved in the following order:
 
-- Complete paths: These start with `/` and are similar to absolute file system paths.
-- Incomplete paths: These do not start with `/` and are similar to relative file system paths.
-
-Incomplete paths are searched:
-
+- the current node (interfaces may refer to themselves)
 - within the current node's children
 - among the current node's siblings
-- within the current node's parents
-- (to be further defined)
+- within the current node's parents, recursively
+- within the top nodes (there may be several, like `micro-os-plus` and `tests`)
+
+NOTE: if this will prove unreliable, a syntax to force absolute search
+from the top nodes might be added (like `/node.sub-node`).
+
+Internally paths are always converted to lowercase and all searches or
+other operations are performed as lowercase.
 
 ### Options
 
@@ -177,55 +261,97 @@ The **option** is the basic unit of configurability.
 
 #### Single choice
 
-Typically, each option corresponds to a single choice that a user can make. For example, there may be an option to control whether assertions are enabled, and an RTOS may provide an option corresponding to the number of scheduling priority levels in the system. Options can control very small amounts of code, such as whether a function gets inlined. They can also control larger amounts of code, for example, whether tracing support is enabled.
+Typically, each option corresponds to a single choice that a user can make. For
+example, there may be an option to control whether assertions are enabled, and
+an RTOS may provide an option corresponding to the number of scheduling priority
+levels in the system. Options can control very small amounts of code, such as
+whether a function gets inlined. They can also control larger amounts of code,
+for example, whether tracing support is enabled.
 
-Many options are straightforward, allowing the user to choose whether the option is enabled or disabled. Some options are more complex and have values; for example, the number of scheduling priority levels is a number that should be within a certain range.
+Many options are straightforward, allowing the user to choose whether the option
+is enabled or disabled. Some options are more complex and have values; for
+example, the number of scheduling priority levels is a number that should be
+within a certain range.
 
 #### Sensible defaults
 
-Options should always start with a sensible default setting, so users do not need to make numerous decisions before starting application development. Once the application is running, various configuration options can be used to tune the build for the specific needs of the application. The header files with the updated configuration will be automatically generated as the first step of the build process.
+Options should always start with a sensible default setting, so users do not
+need to make numerous decisions before starting application development. Once
+the application is running, various configuration options can be used to tune
+the build for the specific needs of the application. The header files with the
+updated configuration will be automatically generated as the first step of the
+build process.
 
 #### Read-only
 
-The component framework allows for options that are not directly user-modifiable. For example, consider processor endianness: some processors are always big-endian or always little-endian, while others offer a choice. Depending on the user's choice of target hardware, endianness may or may not be user-modifiable.
+The component framework allows for options that are not directly
+user-modifiable. For example, consider processor endianness: some processors are
+always big-endian or always little-endian, while others offer a choice.
+Depending on the user's choice of target hardware, endianness may or may not be
+user-modifiable.
 
 #### Hierarchy
 
-Options are leaves in the configuration hierarchy, with components or packages as parents. Options cannot include other child objects.
+Options are leaves in the configuration hierarchy, with components or packages
+as parents. Options cannot include other children objects.
 
 #### Active/inactive
 
-Options can be **active** or **inactive**. Inactive options are not shown in the current virtual hierarchy. If the full tree is displayed, inactive options appear as grey nodes, and users cannot enable/disable them or change the value for options with attached data. An option is automatically inactive if its parent object is inactive or disabled.
+Options can be **active** or **inactive**. Inactive options are not shown in the
+current virtual hierarchy. If the full tree is displayed, inactive options
+appear as grey nodes, and users cannot enable or disable them, nor change the
+value for options with attached data. An option is automatically inactive if its
+parent object is inactive or disabled.
 
 #### Enabled/disabled
 
-Active options can be **enabled** or **disabled** by users, usually via a graphical tool. Simple options are boolean, with the enable/disable state also serving as their value. More complex options can have different types and values according to these types.
+Active options can be **enabled** or **disabled** by users, usually via a
+graphical tool. Simple options are boolean, with the enable/disable state also
+serving as their value. More complex options can have different types and values
+according to these types.
 
 ### Components
 
 Components are containers of other objects.
 
-A **component** represents a unit of functionality, such as an RTOS scheduler or a device driver for a specific device. It also serves as a configuration option, allowing users to enable or disable its entire functionality. For instance, if a particular device on the target hardware is not used by the application, there's no need for its device driver. Disabling the driver can also reduce memory usage for both code and data.
+A **component** represents a unit of functionality, such as an RTOS scheduler or
+a device driver for a specific device. It also serves as a configuration option,
+allowing users to enable or disable its entire functionality. For instance, if a
+particular device on the target hardware is not used by the application, there
+is no need for its device driver. Disabling the driver can also reduce
+memory usage for both code and data.
 
 #### Hierarchy
 
-Components can include additional configuration objects. For example, a device driver might have options to control its specific behaviour, which become irrelevant if the driver is disabled. Generally, options and components exist in a hierarchy, where any component or package can contain options specific to that component and further sub-components.
+Components can include additional configuration objects. For example, a device
+driver might have options to control its specific behaviour, which become
+irrelevant if the driver is disabled. Generally, options and components exist in
+a hierarchy, where any component or package can contain options specific to that
+component and further sub-components.
 
 #### Active/inactive
 
-Options can be **active** or **inactive**. Inactive options are not shown in the current virtual hierarchy. If the full tree is displayed, inactive options appear as grey nodes, and users cannot enable or disable them, nor change the value for options with attached data. An option is automatically inactive if its parent object is inactive or disabled.
+Options can be **active** or **inactive**. Inactive options are not shown in the
+current virtual hierarchy. If the full tree is displayed, inactive options
+appear as grey nodes, and users cannot enable or disable them, nor change the
+value for options with attached data. An option is automatically inactive if its
+parent object is inactive or disabled.
 
 #### Enabled/disabled
 
-Active options can be **enabled** or **disabled** by users, usually via a graphical tool. Simple options are boolean, with the enable/disable state also serving as their value. More complex options can have different types and values according to these types.
+Active options can be **enabled** or **disabled** by users, usually via a
+graphical tool. Simple options are boolean, with the enable/disable state also
+serving as their value. More complex options can have different types and values
+according to these types.
 
 ### Files
 
-Files are a special type of objects that map to physical files.
+Files are a special type of object that map to physical files.
 
 #### Node name
 
-The node name of a file is exactly the file name as represented in the file system.
+The node name of a file is exactly the file name as represented in the file
+system.
 
 #### Hierarchy
 
@@ -233,37 +359,75 @@ Files are generally children of components and they have no children.
 
 #### Active/inactive
 
-Files can be **active** or **inactive**. Inactive files are not shown in the current virtual hierarchy. If the full tree is displayed, inactive files appear as grey in the interface, and users cannot enable or disable them. A file is automatically inactive if its parent object is inactive or disabled.
+Files can be **active** or **inactive**. Inactive files are not shown in the
+current virtual hierarchy. If the full tree is displayed, inactive files appear
+as grey in the interface, and users cannot enable or disable them. A file is
+automatically inactive if its parent object is inactive or disabled.
 
 #### Enabled/disabled
 
-Active files can be **enabled** or **disabled** by users, usually via a graphical tool, similar to options.
+Active files can be **enabled** or **disabled** by users, usually via a
+graphical tool, similar to options.
 
-Enabled files are generally included in the build (copied or linked to the project). Disabled files behave as if they do not exist for the project, and any reference to disabled files should break the build.
+Enabled files are generally included in the build (copied or linked to the
+project). Disabled files behave as if they do not exist for the project, and any
+reference to disabled files should break the build.
 
 ### Packages
 
-A package is a special type of component, specifically serving as the unit of distribution for components.
+A package is a special type of component, specifically serving as the unit of
+distribution for components.
 
-If the package is distributed as a binary file, it can be unpacked and installed (added to the components repository) using the appropriate tool. Afterwards, it is possible to uninstall that package or install a later version.
+If the package is distributed as a binary file, it can be unpacked and installed
+(added to the components repository) using the appropriate tool. Afterwards, it
+is possible to uninstall that package or install a later version.
 
 #### Loaded/unloaded
 
-Packages can be **loaded** or **not loaded**. Generally, for a given configuration, it is unnecessary for the tools to load the details of every single package installed by the user in the local component repository. For example, if the target board explicitly requires the STM32F407VG processor, there is no point in loading packages for other processors and displaying irrelevant choices to the user. Therefore, loading a package means loading its configuration data into the appropriate tool and making it available for user choices (e.g., showing it in the graphical user interface). A package not loaded by a configuration simply does not exist for that configuration, and none of its resources can be used.
+Packages can be **loaded** or **not loaded**. Generally, for a given
+configuration, it is unnecessary for the tools to load the details of every
+single package installed by the user in the local component repository. For
+example, if the target board explicitly requires the STM32F407VG processor,
+there is no point in loading packages for other processors and displaying
+irrelevant choices to the user. Therefore, loading a package means loading its
+configuration data into the appropriate tool and making it available for user
+choices (e.g., showing it in the graphical user interface). A package not loaded
+by a configuration simply does not exist for that configuration, and none of its
+resources can be used.
 
-Packages maintain a dependencies list; loading a package also means loading all dependent packages recursively.
+Packages maintain a dependencies list; loading a package also means loading all
+dependent packages recursively.
 
-Selecting which packages are loaded is the first step of the configuration wizard, a mandatory step to select the target processor and possibly the target board. After this step, the dependencies list is stored in the project configuration. It can be updated at any time during the project life cycle, with packages loaded/unloaded as needed.
+Selecting which packages are loaded is the first step of the configuration
+wizard, a mandatory step to select the target processor and possibly the target
+board. After this step, the dependencies list is stored in the project
+configuration. It can be updated at any time during the project life cycle, with
+packages loaded/unloaded as needed.
 
-In the xPack Framework, packages are installed/uninstalled in a project or build configuration via `xpm install`/`xpm uninstall`.
+In the xPack Framework, packages are installed/uninstalled in a project or build
+configuration via `xpm install`/`xpm uninstall`.
+
+TODO: further refine the text, since in practical terms this seems to mean
+which folder are refered from an xCDL configuration via `includeCDLs`.
+
 
 #### Versioning
 
-For reproducibility reasons, some packages must depend on a specific version of another package. To achieve this, it must be possible to select the particular version of a package that should be loaded. Since multiple different packages may each depend on different versions of a package, multiple versions of the same package must be available to the component framework simultaneously.
+For reproducibility reasons, some packages must depend on a specific version of
+another package. To achieve this, it must be possible to select the particular
+version of a package that should be loaded. Since multiple different packages
+may each depend on different versions of a package, multiple versions of the
+same package must be available to the component framework simultaneously.
+
+In the xPack Framework, versioning is addressed by `xpm`, which can
+install specific versions of a package in a given project or build
+configuration. xCDL simply uses the resulting folder, without dealing
+directly with package versions.
 
 #### Hierarchy
 
-Packages can be organized in a hierarchical structure. Loading a package will automatically load all its parent packages, up to the repository root.
+Packages can be organised in a hierarchical structure. Loading a package will
+automatically load all its parent packages, up to the repository root.
 
 :::note[TODO]
 
@@ -273,49 +437,134 @@ Review this.
 
 #### Core distribution
 
-The core distribution may include several packages such as CMSIS, startup files, the RTOS, and debug infrastructure. Other packages, such as network stacks, can come from various sources and can be installed alongside the core distribution upon request.
+The core distribution may include several packages such as CMSIS, startup files,
+the RTOS, and debug infrastructure. Other packages, such as network stacks, can
+come from various sources and can be installed alongside the core distribution
+upon request.
+
+:::note[TODO]
+
+Review this.
+
+:::
 
 ### Configurations
 
-A **configuration** is a persistent collection of user choices, applied on top of a collection of choices made by the component designer. The various tools that make up the component framework deal with configurations. Users can create, manage, and use a configuration to generate a build tree prior to building an artifact (application or library). A configuration includes details such as which packages are loaded, as well as finer-grained information such as which options in those packages have been enabled or disabled by the user and what values were assigned to typed versions.
+An xCDL **configuration** is a persistent collection of user choices,
+applied on top of a collection of choices made by the component designer.
+The various tools that make up the component framework deal with
+configurations. Users can create, manage, and use a configuration to
+generate a build tree prior to building an artefact (application, test,
+or library). A configuration includes details such as which packages are
+loaded, as well as finer-grained information such as which options in
+those packages have been enabled or disabled by the user and what values
+were assigned to typed options.
+
+:::note
+
+xCDL configurations are different from **xpm** build configurations.
+Since during tests it might be necessary to build the artefacts
+defined by an xCDL configuration with multiple toolchains, or even
+multiple versions of the same toolchain, multiple xpm build
+configurations may refer to the same xCDL configuration.
+
+:::
 
 ### Targets
 
-The **target** is the specific piece of hardware on which the application is expected to run. This may be an off-the-shelf evaluation board, custom hardware intended for a specific application, or a simulator or synthetic platform. One of the steps when creating a new configuration is selecting the target. The component framework will map this to a set of packages used to populate the configuration, typically including specific startup files and device driver packages. Additionally, it may cause certain options to be changed from their default settings to something more appropriate for the specified target.
+The **target** is the specific piece of hardware on which the application is
+expected to run. This may be an off-the-shelf evaluation board, custom hardware
+intended for a specific application, or a simulator or synthetic platform. One
+of the steps when creating a new configuration is selecting the target. The
+component framework will map this to a set of packages used to populate the
+configuration, typically including specific startup files and device driver
+packages. Additionally, it may cause certain options to be changed from their
+default settings to something more appropriate for the specified target.
+
+TODO: clarify how these are different from platforms.
 
 ### Templates
 
-A **template** is a partial configuration designed to provide users with an appropriate starting point. xCDL/xPack repositories should include a small number of templates that closely correspond to common usage scenarios.
+A **template** is a partial configuration designed to provide users with an
+appropriate starting point. xCDL/xPack repositories should include a small
+number of templates that closely correspond to common usage scenarios.
 
-There is a minimal template that provides very little functionality, just enough to bootstrap the hardware and then jump directly to the application code. The default template adds more functionality; for example, it includes an RTOS and various library packages. Creating a new configuration typically involves specifying a template as well as a target, resulting in a configuration that can be built and linked with the application code and will run on the actual hardware. It is then possible to fine-tune configuration options to better match the specific requirements of the application.
+There is a minimal template that provides very little functionality, just enough
+to bootstrap the hardware and then jump directly to the application code. The
+default template adds more functionality; for example, it includes an RTOS and
+various library packages. Creating a new configuration typically involves
+specifying a template as well as a target, resulting in a configuration that can
+be built and linked with the application code and will run on the actual
+hardware. It is then possible to fine-tune configuration options to better match
+the specific requirements of the application.
 
 ### Properties
 
-The component framework requires a certain amount of information about each xCDL object. For example, it needs to know the legal values, the default settings, where to find the online documentation if the user needs to consult it to make a decision, and so on. These are all **properties** of the object. Every object (including components and packages) consists of a name and a set of properties.
+The component framework requires a certain amount of information about each xCDL
+object. For example, it needs to know the legal values, the default settings,
+where to find the online documentation if the user needs to consult it to make a
+decision, and so on. These are all **properties** of the object. Every object
+(including components and packages) consists of a name and a set of properties.
 
 ### Consequences
 
-As in real life, choices must have consequences. For example, for some configurations, the main end product is an executable, while for others, it is a library. Therefore, the consequences of a user choice must affect the build process. This happens in two main ways. First, options can affect which files get built and included in the executable or library. Second, details of the current option settings are written into various configuration header files using C preprocessor #define directives. Package source code can #include these configuration headers and adapt accordingly. This allows options to affect a package at a very fine grain, even at the level of individual lines in a source file if desired. There may be other consequences as well; for example, there are options to control the compiler flags used during the build process.
+As in real life, choices must have consequences. For example, for some
+configurations, the main end product is an executable, while for others, it is a
+library. Therefore, the consequences of a user choice must affect the build
+process. This happens in two main ways. First, options can affect which files
+get built and included in the executable or library. Second, details of the
+current option settings are written into various configuration header files
+using C preprocessor #define directives. Package source code can use 
+`#include` to use these
+configuration headers and adapt accordingly. This allows options to affect a
+package at a very fine grain, even at the level of individual lines in a source
+file if desired. There may be other consequences as well; for example, there are
+options to control the compiler flags used during the build process.
 
 ### Constraints
 
-Configuration choices are not independent. For example, the C library can provide thread-safe implementations of functions like `rand()`, but only if the RTOS supports per-thread data. This is a constraint: the C library option depends on the RTOS. A typical configuration involves numerous constraints of varying complexity. Many constraints are straightforward, such as _option A requiring option B_, or _option C precluding option D_. Other constraints can be more complex; for example, _option E may require the presence of an RTOS scheduler_ but does not specify whether it must be the `bitmap` scheduler, the `mlqueue` scheduler, or another type.
+Configuration choices are not independent. For example, the C library can
+provide thread-safe implementations of functions like `rand()`, but only if the
+RTOS supports per-thread data. This is a constraint: the C library option
+depends on the RTOS. A typical configuration involves numerous constraints of
+varying complexity. Many constraints are straightforward, such as _option A
+requiring option B_, or _option C precluding option D_. Other constraints can be
+more complex; for example, _option E may require the presence of an RTOS
+scheduler_ but does not specify the exact type of scheduler.
 
-Another type of constraint involves the values that can be used for certain options. For example, there is an RTOS option related to the number of scheduling levels, and there is a legal values constraint on this option: specifying zero or a negative number for the number of scheduling levels is not valid.
+Another type of constraint involves the values that can be used for certain
+options. For example, there is an RTOS option related to the number of
+scheduling levels, and there is a legal values constraint on this option:
+specifying zero or a negative number for the number of scheduling levels is not
+valid.
 
 ### Conflicts
 
-As the user manipulates options (enables/disables them), it is possible to end up with an invalid configuration where one or more constraints are not satisfied. For example, if RTOS per-thread data is disabled but the C library's thread-safety options are left enabled, there are unsatisfied constraints, also known as **conflicts**. Such conflicts will be reported by the configuration tools. The presence of some conflicts may prevent users from building the project, but others may not, leading to undefined consequences: there may be compile-time failures, link-time failures, the application may completely fail to run, or it may run most of the time but occasionally experience strange failures. Typically, users will want to resolve all conflicts before continuing.
+As the user manipulates options (enables or disables them), it is possible to
+end up with an invalid configuration where one or more constraints are not
+satisfied. For example, if RTOS per-thread data is disabled but the C library's
+thread-safety options are left enabled, there are unsatisfied constraints, also
+known as **conflicts**. Such conflicts will be reported by the configuration
+tools. The presence of some conflicts may prevent users from building the
+project, but others may not, leading to undefined consequences: there may be
+compile-time failures, link-time failures, complete run-time failures, or
+intermittent strange failures. Typically, users will want to resolve all
+conflicts before continuing.
 
 #### Inference engine
 
-To make things easier for the user, the configuration tools contain an inference engine. This engine can examine a conflict in a particular configuration and attempt to resolve it. Depending on the specific tool being used, the inference engine may be invoked automatically at certain times, or the user may need to invoke it explicitly. Additionally, the inference engine may apply any solutions it finds automatically or request user confirmation, depending on the tool.
+To make things easier for the user, the configuration tools contain an inference
+engine. This engine can examine a conflict in a particular configuration and
+attempt to resolve it. Depending on the specific tool being used, the inference
+engine may be invoked automatically at certain times, or the user may need to
+invoke it explicitly. Additionally, the inference engine may apply any solutions
+it finds automatically or request user confirmation, depending on the tool.
 
 ## Credits
 
-The initial content of this page was based on *Chapter 1. Overview* of *The eCos Component Writer's Guide*, by Bart Veer and John Dallaway, published in 2001.
+The initial content of this page was based on _Chapter 1. Overview_ of _The eCos
+Component Writer's Guide_, by Bart Veer and John Dallaway, published in 2001.
 
 Also:
 
 - [The eCos Component Writer's Guide - 1. Overview](https://ecos.sourceware.org/docs-latest/cdl-guide/overview.html)
-

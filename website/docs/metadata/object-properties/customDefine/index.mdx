@@ -1,0 +1,108 @@
+---
+title: customDefine
+description: The definition of the xCDL customDefine property.
+keywords:
+  - xpack
+  - xcdl
+  - cdl
+  - property
+  - customDefine
+
+date: 2015-11-25 19:32:00 +0200
+---
+
+import MetadataObjectLink from "@site/src/components/MetadataObjectLink";
+import MetadataObjectPropertyLink from "@site/src/components/MetadataObjectPropertyLink";
+
+{/* ------------------------------------------------------------------------ */}
+
+# `customDefine` property
+
+:::note
+
+Work in progress.
+
+:::
+
+## Purpose
+
+Specify an additional custom name for the header variable to be generated.
+
+## Syntax
+
+```json {5}
+{
+  "cdlOptions | cdlComponents": [
+    {
+      "name": "...",
+      ...
+      "customDefine": "<string>",
+      ...
+    }
+  ]
+}
+```
+
+The value of the `customDefine` property is a string containing a C/C++
+preprocessor identifier.
+
+## Default value
+
+If missing, no custom header definition is generated for this object.
+
+## Description
+
+In order for a custom header definition to be generated, the xCDL Framework must be provided:
+
+- the full path of the include file where the line will be added 
+(provided via the `headerFile` in the current node or one of the parents)
+- the preprocessor symbol name.
+
+The name must be a valid C/C++ preprocessor identifier: a sequence of uppercase
+or lowercase letters, digits, and underscores, starting with a non-digit
+character. Identifiers beginning with an underscore should normally be avoided
+because they may clash with system packages or identifiers reserved for use by
+the compiler.
+
+Within a file, names must be unique. For a recommended naming convention, see
+the section called Package Contents and Layout in
+[xCDL packages](/docs/guide/packages).
+
+For active and enabled objects, if the `customDefine` property is
+defined, a line with the following structure will be generated in the file
+pointed to by the `headerFile` property:
+
+```c
+#define <name> <value>
+```
+
+For nodes of type `none`, the default definition includes only the name:
+
+```c
+#define <name>
+```
+
+For objects with type `string`, a second line will be generated, with the value
+appended to the name.
+
+```c
+#define <name>_<value>
+```
+
+The value is slightly adjusted to uppercase and all non-letter characters are
+replaced with `_`. Empty strings are suffixed with `_EMPTY`.
+
+## Example
+
+A typical definition is prefixed with the package 
+parent name and suffixed by the package/component/option name.
+
+For example, packages can include definitions like:
+
+```json
+"customDefine": "MICRO_OS_PLUS_INCLUDES_UTILS_LISTS",
+```
+
+## eCos reference
+
+- none

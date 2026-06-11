@@ -1,0 +1,143 @@
+---
+title: privateCompilerOptions
+description: The definition of the xCDL privateCompilerOptions property.
+keywords:
+  - xpack
+  - xcdl
+  - cdl
+  - property
+  - privateCompilerOptions
+
+date: 2024-11-27 00:28:00 +0200
+---
+
+import MetadataObjectLink from "@site/src/components/MetadataObjectLink";
+import MetadataObjectPropertyLink from "@site/src/components/MetadataObjectPropertyLink";
+
+{/* ------------------------------------------------------------------------ */}
+
+# `privateCompilerOptions` property
+
+:::note
+
+Work in progress.
+
+:::
+
+## Purpose
+
+Specify compiler specific options used when compiling the source files
+of the current component.
+
+## Syntax
+
+```json {5}
+{
+  "cdlOptions | cdlComponents": [
+    {
+      "name": "...",
+      ...
+      "privateCompilerOptions": {
+        "remove": [ "<options>", ... ],
+        "target": [ "<options>", ... ],
+        "optimisations": [ "<options>", ... ],
+        "warnings": [ "<options>", ... ],
+        "debugging": [ "<options>", ... ],
+        "miscellaneous": [ "<options>", ... ],
+        "linker": [ "<options>", ... ]
+      },
+      ...
+    }
+  ]
+}
+```
+
+The value of the `privateCompilerOptions` property is a map of categories, 
+each with an array of strings.
+
+## Default value
+
+If missing, the current object will not contribute any compiler options to the
+build.
+
+## Description
+
+Generally, compiler options are defined at the top artefact level and 
+propagated down the hierarchy to all sources that enter the build.
+
+However, in some cases, it might be necessary to define additional 
+compiler options for individual components.
+
+The detailed logic behind the compiler options is to be defined.
+
+## Replacing options
+
+In certain configurations it might be necessary to override the public
+options inherited from the parent artefact.
+
+This is supported first by the order of options, the local options
+are listed after the ones inherited from the parent.
+
+However, to avoid confusions, it is also possible to filter out unwanted
+inheritted options, using the `remove` category.
+
+The strings in the remove category are regulare expressions; if they match
+any of the inheritted options, they are no longer passed to the component.
+
+A typical example is the optimisation level, for example it may be
+defined as `-O3` for the artefact, but a certain component needs `-O2`.
+
+In this case the parent option can be filtered out with a configuration like:
+
+```json
+{ 
+  "cdlComponents": [
+    {
+      "name": "exampleComponent",
+      "privateCompilerOptions": {
+        "remove": [ "-O[0-9a-z]+" ],
+        "privateOptimisations": [ "-O2" ]
+      }
+    }
+  ]
+}
+```
+
+## Conditional definitions
+
+Some compiler options are specific to a certain compiler and need 
+to be applied only 
+when the respective compiler is used.
+
+The conditional expressions can be defined using the LiquidJS syntax.
+They are evaluated late, just before generating the builder commands.
+
+TODO: add a link to the list of available LiquidJS properties.
+
+## Example
+
+```json {5}
+{
+  "cdlComponents": [
+    {
+      "name": "lists",
+      ...
+      "privateCompilerOptions": {
+        "warnings": [
+          "{% if compiler.id == 'gcc' %}-Wno-pointer-arith{% endif %}",
+          "{% if compiler.id == 'clang' %}-Wno-documentation{% endif %}"
+        ]
+      },
+      ...
+    }
+  ]
+}
+```
+
+## See also
+
+- TODO
+
+## eCos reference
+
+- [Building eCos](https://ecos.sourceware.org/docs-latest/cdl-guide/build.make.html)

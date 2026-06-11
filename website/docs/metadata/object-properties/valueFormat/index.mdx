@@ -1,5 +1,4 @@
 ---
-
 title: valueFormat
 description: The definition of the xCDL valueFormat property.
 keywords:
@@ -10,15 +9,14 @@ keywords:
   - valueFormat
 
 date: 2015-11-25 19:32:00 +0200
-
 ---
 
-import MetadataObjectLink from '@site/src/components/MetadataObjectLink';
-import MetadataObjectPropertyLink from '@site/src/components/MetadataObjectPropertyLink';
+import MetadataObjectLink from "@site/src/components/MetadataObjectLink";
+import MetadataObjectPropertyLink from "@site/src/components/MetadataObjectPropertyLink";
 
 {/* ------------------------------------------------------------------------ */}
 
-# The `valueFormat` definition
+# `valueFormat` property
 
 :::note
 
@@ -34,17 +32,19 @@ Control how an option's value is displayed in the configuration header file.
 
 ```json {5}
 {
-    "cdlOptions": {
-        "<name>": {
-            ...
-            "valueFormat": "<expression>",
-            ...
-        }
+  "cdlOptions | cdlComponents": [
+    {
+      "name": "...",
+      ...
+      "valueFormat": "<expression>",
+      ...
     }
+  ]
 }
 ```
 
-The value of the `valueFormat` property is a string containing a JavaScript expression.
+The value of the `valueFormat` property is a string containing a JavaScript
+expression.
 
 ## Default value
 
@@ -58,7 +58,9 @@ The defaults depend on `valueType`:
 
 ## Description
 
-For active and enabled objects, if the `generatedDefinition` property is defined, a line with the following structure will be generated in the file pointed by the `generatedFile` property:
+For active and enabled objects, if the `customDefine` property is
+defined, a line with the following structure will be generated in the file
+pointed to by the `headerFile` property:
 
 ```c
 #define <name> (<value>)
@@ -70,21 +72,27 @@ For nodes of type `none`, the default definition includes only the name:
 #define <name>
 ```
 
-For string objects, a second line is generated, with the value appended to the name:
+For string objects, a second line is generated, with the value appended to the
+name:
 
 ```c
 #define <name>_<value>
 ```
 
-The value is slightly adjusted to uppercase and all non-letter characters are changed with `_`. Empty strings are suffixed with `_EMPTY`.
+The value is slightly adjusted to uppercase and all non-letter characters are
+replaced with `_`. Empty strings are suffixed with `_EMPTY`.
 
-The `valueFormat` property can be set to a JavaScript expression. If the type is `none` and the expression returns `undefined`, no value is shown. For all other types, returning `undefined` triggers an error.
+The `valueFormat` property can be set to a JavaScript expression. If the type is
+`none` and the expression returns `undefined`, no value is shown. For all other
+types, returning `undefined` triggers an error.
 
-The implementation creates an internal JavaScript function that has an input parameter named `value` and returns a string.
+The implementation creates an internal JavaScript function that has an input
+parameter named `value` and returns a string.
 
 :::info
 
-For security reasons, the string is not accepted if it includes words like `import` or `request`.
+For security reasons, the string is not accepted if it includes words like
+`import` or `request`.
 
 :::
 
@@ -98,9 +106,10 @@ To format a 32bit hex value, a possible solution is:
 
 ## See also
 
-- <MetadataObjectPropertyLink name="generatedDefinition" /> property
+- <MetadataObjectPropertyLink name="customDefine" /> property
 - <MetadataObjectPropertyLink name="valueType" /> property
 
 ## eCos reference
 
-- [`define-format`](https://ecos.sourceware.org/docs-latest/cdl-guide/ref.define-format.html) property
+- [`define-format`](https://ecos.sourceware.org/docs-latest/cdl-guide/ref.define-format.html)
+  property

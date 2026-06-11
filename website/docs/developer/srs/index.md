@@ -1,6 +1,6 @@
 ---
 
-title: The xCDL SRS
+title: The xCDL Software Requirement Specifications
 description: The project Software Requirement Specifications.
 keywords:
   - xpack
@@ -11,15 +11,14 @@ date: 2015-10-25 12:00:00 +0200
 
 ---
 
-# The xCDL Software Requirement Specifications
-
 ## Introduction
 
 ### Purpose
 
 This document is intended for software architects, designers, and
 developers, and should provide the necessary input during the design,
-implementation and maintenance of the xCDL tools part of the xPack framework.
+implementation, and maintenance of the xCDL tools that are part of
+the xPack framework.
 
 :::note
 
@@ -51,8 +50,9 @@ manufacturer families (like STM32F1, STM32F4), multiple sub-families
 - possibly more...
 
 For testability reasons, as an extension to physical architectures,
-**synthetic architectures**, like POSIX, should be supported; therefore
-multiple synthetic run platforms (like macOS, GNU/Linux) will be also considered.
+**synthetic architectures**, like POSIX, should be supported;
+therefore multiple synthetic run platforms (like macOS, GNU/Linux)
+will be also considered.
 
 The inputs of the xCDL configuration step are one or more JSON files with the
 xCDL metadata.
@@ -64,12 +64,13 @@ The outputs of the xCDL configuration step are:
 
 The xCDL framework should include one or more tools to:
 
-- generate the artefacts needed by various build configurations (like C/C++ header files)
+- generate the artefacts needed by various build configurations
+  (like C/C++ header files)
 - manage (view/edit) the specific xCDL metadata, including in a GUI environment
 
-The selection of tools used during the build process should not be limited,
-any system tools being acceptable, but, for reproducibility reasons, the
-xPack Development Tools are recommended.
+The selection of tools used during the build process is not limited;
+any system tools are acceptable, but, for reproducibility reasons,
+the xPack Development Tools are recommended.
 
 ### Definitions and acronyms
 
@@ -80,14 +81,14 @@ inspired by CDL
 - xCDL software component - a set of source files that perform a given
 function, standalone or depending on other components, together with
 some metadata
-- xCDL component metadata - additional informations added to
-software components to describe dependencies, requirements and constraints
+- xCDL component metadata - additional information added to
+software components to describe dependencies, requirements, and constraints
 - xCDL configuration tools - tools running on development machines
 to create and manage xCDL configurations and component metadata
-- xCDL configurations - specific metadata definitions, that describe
+- xCDL configurations - specific metadata definitions that describe
 the requirements of an application, like which components are used,
 the values for preprocessor definitions, toolchain selection, build
-details, etc
+details, etc.
 - xCDL build configurations - the result of processing an xCDL
 configuration, usually a build folder with associated build related
 files (like CMake/Meson/GNU Make files); when IDEs (like VS Code or
@@ -111,16 +112,18 @@ parameter of the build configuration.
 
 ### References
 
-- [eCos](https://ecos.sourceware.org/) - *The embedded configurable operating system*
-by Cygnus Solutions ([Wikipedia](https://en.wikipedia.org/wiki/ECos))
+- [eCos](https://ecos.sourceware.org/) -
+  *The embedded configurable operating system*
+  by Cygnus Solutions ([Wikipedia](https://en.wikipedia.org/wiki/ECos))
 - Manual: *The eCos Component Writer’s Guide*, by Bart Veer and
 John Dallaway, published in 2001, available from
 [eCos Documentation](https://ecos.sourceware.org/docs-3.0/).
 - Book: *Embedded software development with eCos*, by Anthony J. Massa,
-published in 2003 at Prentice Hall, available from [Amazon](https://www.amazon.com/Embedded-Software-Development-Anthony-Massa/dp/0130354732)
+published in 2003 at Prentice Hall, available from
+[Amazon](https://www.amazon.com/Embedded-Software-Development-Anthony-Massa/dp/0130354732)
 - Book: *Software Build Systems: Principles and Experience*,
-by Peter Smith, published in 2011 at Addison Wesley, available
-from [Amazon](https://www.amazon.com/Software-Build-Systems-Principles-Experience/dp/0321717287)
+by Peter Smith, published in 2011 at Addison Wesley, available from
+[Amazon](https://www.amazon.com/Software-Build-Systems-Principles-Experience/dp/0321717287)
 - IEEE Std 830-1998: *IEEE Recommended Practice for Software
 Requirements Specifications*, published in 1998, available from
 [IEEE](https://standards.ieee.org/ieee/830/1222/)
@@ -142,9 +145,11 @@ The xCDL definition language is functionally inspired by eCos CDL,
 but has a different syntax and supports a slightly different
 functionality. The first version was based on Python definitions
 and served as an excellent prototyping platform. The second
-version was planned to be XML based, integrated into Eclipse.
+version was planned to be XML based, integrated into Eclipse,
+but, given that Eclipse is no longer a priority, it was scrapped.
 
-The final version will be JSON based, integrated into Visual Studio Code.
+The final version will be JSON-based, both as a CLI tool and
+integrated into Visual Studio Code.
 
 The package management features in **xpm** were inspired by **npm**.
 
@@ -155,29 +160,39 @@ as a replacement for Eclipse Embedded CDT plug-ins.
 
 #### Steps
 
-The initial versions of the xCDL framework was fully written
-in Python and runs on macOS and GNU/Linux.
+The initial versions of the xCDL framework were fully written
+in Python and ran on macOS and GNU/Linux. They were not intended for
+production, but served as a good proof of concept.
 
 The packages and build configurations functionality is
 already implemented by **xpm**.
 
 The first preliminary step is to generate the current CMake
 and Meson configuration automatically from the xCDL metadata
-(the `xcdl export` command).
+(the `xcdl export` command). Until the `xcdl` tool is functional,
+a temporary `xcdl-export.sh` script will be used.
 
-The next steps are:
+The initial goal would be to define the tests in the existing projects
+(like **µTest++** and **utils-lists**) as xCDL configurations, and
+possibly generate the **CMake** and **Meson** configurations from them.
+The rationale is that, given the complexity of the tests, if xCDL
+configurations can describe them, it is reasonable to expect that
+most applications will also be supported.
 
-- implement the configuration logic that allows to generate
-the C/C++ header files, and run the builds/tests via **CMake** and **Meson**
+From the functionality point of view, the next steps are:
+
+- implement the configuration logic to generate
+the C/C++ header files and run the builds/tests via **CMake** and **Meson**
 - extend the logic to generate **ninja** configurations,
 possibly **GNU make** configurations similar to those used by Eclipse
 - run the build internally from **xcdl**
 
-In parallel the VS Code xPack extension will be able to edit the xcdl metadata.
+In parallel, the VS Code xPack extension will be able to edit the xCDL metadata.
 
 The implementation will be in TypeScript, for integration into VS Code.
 **xcdl** will provide both a CLI and an internal TypeScript API.
-If necessary, part of the code will be moved to separate Node.js modules.
+If necessary, part of the code will be moved to separate Node.js modules,
+similar to the `xpm-lib-ts` project.
 
 ### Product functions
 
@@ -193,8 +208,10 @@ between various software components in order to:
 
 There are several roles for xCDL users:
 
-- application software developer, who contributes application code to a given project
-- application project manager, who creates and manages application configurations
+- application software developer, who contributes application
+  code to a given project
+- application project manager, who creates and manages
+  application configurations
 - enterprise component developers, who create and manage private xCDL
 components (the equivalent of enterprise libraries) to be used in
 multiple applications
@@ -208,7 +225,7 @@ macOS, and GNU/Linux.
 
 ### Assumptions and dependencies
 
-The final version of the SRS is based on the experience of
+The curent version of the SRS is based on the experience of
 implementing **xpm**, the **xPack Development Tools** and some
 µOS++ packages, like **utils-lists**, **µTest++**.
 
@@ -259,17 +276,17 @@ operation by the application developer is the build process.
 
 The input is:
 
-- the xCDL configuration
+- the xCDL configuration, spread across multiple JSON files
 
 The output is:
 
-- the final application image, usually a binary file.
+- one or more images with the application or tests, usually binary files.
 
 **xpm** already supports multiple build configurations, like debug/release,
 that can be used for debug or for multi-platform applications.
 
-If the application includes tests (for example unit-tests for libraries),
-they can also be implemented with **xpm** build configurations.
+If the application includes tests (for example, unit-tests for libraries),
+they can also be built and run via **xpm** build configurations.
 
 #### Interactions with the application project manager (component authors)
 
@@ -285,14 +302,14 @@ Using the xCDL configuration tool, the project manager selects:
 
 - the board where the application is intended to run
 - one or more configuration templates referring to the components
-needed by the application (like minimal, network, usb, etc)
+needed by the application (like minimal, network, usb, etc.)
 - the toolchain to be used
 
 The project manager then:
 
 - enables/disables various components
 - sets different values to various options, like number of threads,
-stack sizes, etc
+stack sizes, etc.
 
 The output of this process is:
 
@@ -301,7 +318,10 @@ The output of this process is:
 The xCDL configuration can be later edited, either manually
 with a text editor, or with the xCDL configuration tools.
 
-There is one xCDL configuration for each build configuration.
+There is one xCDL configuration for each build configuration,
+but the same xCDL configuration can be used in multiple build
+configurations, for example, to test builds with multiple
+toolchain versions.
 
 #### Interaction with the component developers
 
@@ -319,7 +339,7 @@ or with the xCDL configuration tools.
 
 <small>Q: What is the software supposed to do?</small>
 
-The next version of the VS COde xPack extension should add a wizard,
+The next version of the VS Code xPack extension should add a wizard,
 to allow the creation of new C/C++ projects based on the definitions
 found in the µOS++ packages and an editor page to change various
 settings related to components.
@@ -350,9 +370,10 @@ Nodes can have distinct status attributes (preliminary, may change):
 - isEnabled
 - isConfigurable
 
-Since multiple boards can be supported by an xCDL component repository,
-it makes no sense to have all existing boards in use during the
-configuration process, but only the board required for the application.
+Since multiple platfomrs/boards can be supported by an xCDL component repository,
+it makes no sense to have all existing platforms in use during the
+configuration process, but only the platforms required for the current 
+targets, application or tests.
 Loading a package automatically loads all parent packages, recursively.
 Packages not loaded are not presented in the xCDL configuration tools.
 
@@ -373,7 +394,7 @@ In addition to dependencies definitions, the xCDL metadata should
 provide some grouping definitions, to assist the xCDL tools in
 providing meaningful suggestions for major selections, for
 example when creating a new configuration the list of available
-boards should be presented.
+platforms/boards should be presented.
 
 ### Performance requirements
 
@@ -390,13 +411,14 @@ the tools performances shall not be an issue.
 implementation language, policies for database integrity,
 resource limits, operating environment(s) etc.?</small>
 
-The **xcdl** CLI tool should run on the latest 3 Node.js
-LTS releases (like 18, 20, 22).
+The **xcdl** CLI tool should run on the latest 2-3 Node.js
+LTS releases (like 20, 22, 24).
 
 The VS Code extension should run on relatively recent releases.
 
 The xCDL metadata should be stored as JSON in standard text
-files, editable with common text editors.
+files, editable with common text editors, preferbly using the new
+JSON with comments formats.
 
 ### Software system attributes
 
@@ -411,19 +433,19 @@ least theoretically, portable.
 <small>Tip: Should not describe any design or implementation details.</small>
 
 - the xCDL framework shall not be specific to a revision
-control system, svn/git/hg/etc shall be accepted; however,
-the recommended revision control system is Git
+control system, all systems (svn/git/hg/etc) shall be accepted; however,
+the recommended revision control system is **git**
 - the build configurations may run on identical or different
 hardware (different boards, different processors, different
-amounts of ram/flash, etc); an example of such a different
-configuration was used for the Metrilog SDI-12 sensors,
+amounts of RAM/flash, etc.); an example of such a configuration
+was used for the Metrilog SDI-12 sensors,
 where the Debug configuration used a larger AVR than the Release.
 - shall allow multiple toolchains
 - shall be C/C++ centric and shall handle C/C++ dependencies
 automatically (obviously)
 - shall provide support for testing (continuous integration)
 - shall provide support for custom build steps, using external
-tools (for example for adding a binary checksum, custom metadata, etc)
+tools (for example, for adding a binary checksum, custom metadata, etc.)
 - shall provide support for documentation generating tools (Doxygen)
 
 Future versions:
