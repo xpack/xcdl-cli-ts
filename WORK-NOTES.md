@@ -190,6 +190,13 @@ Usage
 {{ some.path | iifFolderExists: 'yes', 'no' }}
 ```
 
+## compiler standard
+
+Is it reasonable to enforce in the xCDL definitions the compiler standard?
+
+How to read it by invoking the compiler?
+
+
 ## Liquid substitution values
 
 ### buildFolderPath
