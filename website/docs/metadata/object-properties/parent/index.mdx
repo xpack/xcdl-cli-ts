@@ -57,21 +57,18 @@ Configuration objects exist within a hierarchy of packages and components. By
 default, an object's position in the hierarchy is determined by its location
 within the xCDL scripts, based on its position in the folder hierarchy. Packages
 are generally placed at the top level of the configuration. Any `cdlComponents`
-or `cdlOptions` objects defined at the same level as the `cdlPackage` object
+or `cdlOptions` objects defined at the same level 
 in a package's top-level xCDL script are placed immediately below that package
 in the hierarchy. Any `cdlOptions` or `cdlComponents` objects defined within a
-`cdlPackage` or `cdlComponents` object, or read in as a result of processing an
+`cdlComponents` object, or read in as a result of processing an
 object's `includeCDLs` property, will be placed immediately below that
-`cdlPackage` or `cdlComponents` in the hierarchy.
+`cdlComponents` in the hierarchy.
 
 In some cases, it is useful to specify an alternative position in the hierarchy
 for a given object. For example, it is often convenient to re-parent device
 driver packages below the `io` package in the configuration hierarchy, reducing
 the number of packages at the top level and making navigation easier. The
-`parent` property can be used to achieve this.
-
-The value of the `parent` property is a string containing the xCDL path of a
-`cdlPackage` or `cdlComponents` object.
+dot path naming convention can be used to achieve this.
 
 ### Re-parenting to another package
 
@@ -131,7 +128,6 @@ as global preferences and default compiler flags.
 ## See also
 
 - <MetadataObjectLink name="cdlComponents" /> object
-- <MetadataObjectLink name="cdlPackage" /> object
 - <MetadataObjectPropertyLink name="includeCDLs" /> property
 
 ## eCos reference

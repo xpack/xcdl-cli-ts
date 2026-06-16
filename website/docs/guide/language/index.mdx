@@ -48,15 +48,17 @@ A very simple xCDL file would look like this:
 
 ```json
 {
-  "cdlPackage": {
-    "name": "errors",
-    "display": "Common error code support",
-    "description": "This package contains the common list of error and status codes. It is held centrally to allow packages to interchange error codes and status codes in a common way, rather than each package having its own conventions for error/status reporting. The error codes are modelled on the POSIX style naming e.g. EINVAL etc. This package also provides the standard strerror() function to convert error codes to textual representation.",
-    "sourceFiles": ["src/strerror.cpp"],
-    "publicIncludeFolders": ["include"],
-    "headerFile": "os/error.h",
-    "customDefine": "OS_PACKAGE_ERROR"
-  }
+  "cdlComponents": [
+    {
+      "name": "errors",
+      "display": "Common error code support",
+      "description": "This package contains the common list of error and status codes. It is held centrally to allow packages to interchange error codes and status codes in a common way, rather than each package having its own conventions for error/status reporting. The error codes are modelled on the POSIX style naming e.g. EINVAL etc. This package also provides the standard strerror() function to convert error codes to textual representation.",
+      "sourceFiles": ["src/strerror.cpp"],
+      "publicIncludeFolders": ["include"],
+      "headerFile": "os/error.h",
+      "customDefine": "OS_PACKAGE_ERROR"
+    }
+  ]
 }
 ```
 
@@ -115,7 +117,7 @@ following excerpt comes from the infrastructure package:
 }
 ```
 
-Like a `cdlPackage`, a `cdlComponents` object has a name and a body. The body
+Each `cdlComponents` object has a name and a body. The body
 contains various properties for that component and may also include
 subcomponents or options. Similarly, a `cdlOptions` object has a name and a body
 of properties. This example introduces several new properties: `defaultValue`,
@@ -126,22 +128,12 @@ properties in detail.
 ## xCDL objects
 
 Several xCDL-related objects can occur at the top level of a xCDL file:
-`cdlPackage`, `cdlComponents`, `cdlOptions` and `cdlInterfaces`. These objects
+`cdlComponents`, `cdlOptions` and `cdlInterfaces`. These objects
 correspond to the basic building blocks of the language. All of them follow more
 or less the same basic form.
 
-`cdlPackage` defines a single object.
-
-```json
-{
-  "cdlPackage": {
-    "name": "<name>",
-    ... body ...
-  }
-}
-```
-
-`cdlComponents`, `cdlOptions` and `cdlInterfaces` define maps of named objects:
+`cdlComponents`, `cdlOptions` and `cdlInterfaces` define arrays of named 
+objects:
 
 ```json
 {
@@ -166,7 +158,7 @@ or less the same basic form.
 }
 ```
 
-All objects have a mandatory **name** and, within their body, a list of
+All objects have a mandatory **name**, a list of
 **properties** and an optional list of **children objects**. All children names must
 be unique within a given parent. Addressing objects is similar to addressing
 files in a file system, using forward slash-separated paths. Paths can be
@@ -186,8 +178,7 @@ in the hierarchy. Second, it permits a much simpler representation of the
 configuration in the graphical configuration tool, facilitating navigation and
 modification.
 
-Each package has one top-level xCDL file, `xcdl*.json`. There should be a single
-top-level `cdlPackage` object per package.
+Each package has one top-level xCDL file, `xcdl*.json`.
 
 By default, an object is placed at the top level of the hierarchy, but it is
 possible to override this using a `parent` property. This is generally useful
@@ -239,11 +230,13 @@ following:
 
 ```json {5}
 {
-  "cdlPackage": {
-    "name": "libc",
-    ...
-    "includeCDLs": [ "xcdl-stdio.json" ],
-  }
+  "cdlComponents": [
+    {
+      "name": "libc",
+      ...
+      "includeCDLs": [ "xcdl-stdio.json" ],
+    }
+  ]
 }
 ```
 
@@ -286,9 +279,9 @@ the property and can include names, texts, integer values, file/folder paths,
 etc. The values of `activeIf`, `computed`, `defaultValue`, `legalValues` and
 `requires` properties are various JavaScript expressions.
 
-Many of the properties can be used in any of the `cdlPackage`, `cdlComponents`,
+Many of the properties can be used in any of the `cdlComponents`,
 `cdlOptions` or `cdlInterfaces` objects. However, some properties are more
-specific. The `includeCDLs` property is only relevant to `cdlPackage` and
+specific. The `includeCDLs` property is only relevant to
 `cdlComponents` objects. The `headerFile` property usually applies to a
 package as a whole. The `computed`, `defaultValue`, `legalValues` and
 `valueType` properties are not relevant to packages, as will be explained later.
@@ -320,13 +313,15 @@ it.
 
 ```json {4-6}
 {
-  "cdlPackage": {
-    "name": "uitron",
-    "display": "uITRON compatibility layer",
-    "description": "eCos supports a uITRON Compatibility Layer, full Level S (Standard) compliance with Version 3.02 of the uITRON Standard, plus many Level E (Extended) features. uITRON is the premier Japanese embedded RTOS standard.",
-    "documentationUrls": "https://ecos.com/reference/package/uitron/",
-    "customDefine": "OS_PACKAGE_UITRON"
-  }
+  "cdlComponents": [
+    {
+      "name": "uitron",
+      "display": "uITRON compatibility layer",
+      "description": "eCos supports a uITRON Compatibility Layer, full Level S (Standard) compliance with Version 3.02 of the uITRON Standard, plus many Level E (Extended) features. uITRON is the premier Japanese embedded RTOS standard.",
+      "documentationUrls": "https://ecos.com/reference/package/uitron/",
+      "customDefine": "OS_PACKAGE_UITRON"
+    }
+  ]
 }
 ```
 
@@ -343,11 +338,13 @@ represented as a dot-separated path.
 
 ```json {5}
 {
-  "cdlPackage": {
-    "name": "hal.cortex-m",
-    "display": "Cortex-M architecture",
-    ...
-  }
+  "cdlComponents": [
+    {
+      "name": "hal.cortex-m",
+      "display": "Cortex-M architecture",
+      ...
+    }
+  ]
 }
 ```
 
@@ -358,7 +355,7 @@ Additionally, caution is needed when re-parenting below another package that may
 not be loaded in a given configuration, as this can result in undefined
 behaviour.
 
-The `includeCDLs` property can only be used in the body of a `cdlPackage` or a
+The `includeCDLs` property can only be used at the top or in the body of a
 `cdlComponents` object. The property value is an array of strings, containing
 file paths of xCDL files with additional options, subcomponents, and interfaces
 that should be placed below the current object in the hierarchy. The file paths
@@ -533,12 +530,14 @@ that interface's value.
 
 ```json {5}
 {
-  "cdlPackage": {
-    "name": "net.drivers.eth.edb7xxx",
-    "display": "Cirrus Logic ethernet driver",
-    "implements": "net/drivers/if",
-    ...
-  }
+  "cdlComponents": [
+    {
+      "name": "net.drivers.eth.edb7xxx",
+      "display": "Cirrus Logic ethernet driver",
+      "implements": "net/drivers/if",
+      ...
+    }
+  ]
 }
 ```
 
@@ -587,13 +586,15 @@ object, the parent property is used.
 
 ```json {4}
 {
-  "cdlPackage": {
-    "name": "hal.risc-v",
-    "display": "RISC-V architecture",
-    "headerFile": "hal-risc-v.h",
-    "customDefine": "OS_PACKAGE_HAL_RISC_V",
-    ...
-  }
+  "cdlComponents": [
+    {
+      "name": "hal.risc-v",
+      "display": "RISC-V architecture",
+      "headerFile": "hal-risc-v.h",
+      "customDefine": "OS_PACKAGE_HAL_RISC_V",
+      ...
+    }
+  ]
 }
 ```
 
@@ -613,14 +614,16 @@ property is used to list these source files:
 
 ```json {5-7}
 {
-  "cdlPackage": {
-    "name": "errors",
-    "display": "Common error code support",
-    "sourceFile": [
-      "src/strerror.cpp"
-    ],
-    ...
-  }
+  "cdlComponents": [
+    {
+      "name": "errors",
+      "display": "Common error code support",
+      "sourceFile": [
+        "src/strerror.cpp"
+      ],
+      ...
+    }
+  ]
 }
 ```
 
@@ -645,12 +648,14 @@ avoid any mistakes, this property must be explicitly defined:
 
 ```json {5}
 {
-  "cdlPackage": {
-    "name": "infra",
-    "display": "Infrastructure",
-    "headerFile": "os/infra.h",
-    ...
-  }
+  "cdlComponents": [
+    {
+      "name": "infra",
+      "display": "Infrastructure",
+      "headerFile": "os/infra.h",
+      ...
+    }
+  ]
 }
 ```
 
@@ -865,33 +870,35 @@ practice:
 
 ```json
 {
-  "cdlPackage": {
-    "name": "libc",
-    "cdlComponents": [
-      {
-        "name": "rand",
-        "valueType": "none",
-        "defaultEnable": "false",
-        "sourceFile": "stdlib/rand.cpp",
-        "customDefine": "OS_PACKAGE_LIBC_RAND"
-      }
-    ],
-    "cdlOptions": [
-      {
-        "name": "perThread",
-        "customDefine": "OS_PACKAGE_LIBC_PER_THREAD_RAND",
-        "requires": "isEnabled('kernel.perThreadData')",
-        "defaultEnable": "false"
-      },
-      {
-        "name": "seed",
-        "customDefine": "OS_INTEGER_LIBC_RAND_SEED",
-        "valueType": "int",
-        "legalValues": "0 to 0x7FFFFFFF",
-        "defaultValue": "1"
-      }
-    ]
-  }
+  "cdlComponents": [
+    {
+      "name": "libc",
+      "cdlComponents": [
+        {
+          "name": "rand",
+          "valueType": "none",
+          "defaultEnable": "false",
+          "sourceFile": "stdlib/rand.cpp",
+          "customDefine": "OS_PACKAGE_LIBC_RAND"
+        }
+      ],
+      "cdlOptions": [
+        {
+          "name": "perThread",
+          "customDefine": "OS_PACKAGE_LIBC_PER_THREAD_RAND",
+          "requires": "isEnabled('kernel.perThreadData')",
+          "defaultEnable": "false"
+        },
+        {
+          "name": "seed",
+          "customDefine": "OS_INTEGER_LIBC_RAND_SEED",
+          "valueType": "int",
+          "legalValues": "0 to 0x7FFFFFFF",
+          "defaultValue": "1"
+        }
+      ]
+    }
+  ]
 }
 ```
 

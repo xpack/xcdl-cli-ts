@@ -27,18 +27,21 @@ Work in progress.
 ## Purpose
 
 Specify the configuration header file that will be generated for a given object,
-typically a `cdlPackage` or a `cdlComponents` object.
+typically a `cdlComponents` object.
 
 ## Syntax
 
 ```json {5}
 {
-  "cdlPackage": {
-    "display": "...",
-    ...
-    "headerFile": "<file path>",
-    ...
-  }
+  "cdlComponents": [
+    {
+      "name": "...",
+      "display": "...",
+      ...
+      "headerFile": "<file path>",
+      ...
+    }
+  ]
 }
 ```
 
@@ -47,7 +50,8 @@ relative to the build folder.
 
 ## Default value
 
-If missing, the definition from the parent node is used. If none, the default is `generated/include/xcdl-defines.h`.
+If missing, the definition from the parent node is used. If none, 
+the default is `generated/include/xcdl-defines.h`.
 
 ## Description
 
@@ -64,11 +68,13 @@ relative to the build folder.
 
 ```json
 {
-  "cdlPackage": {
-    "name": "hal.arm",
-    "display": "Arm architecture",
-    "headerFile": "include/os/hal/hal-arm-generated.h"
-  }
+  "cdlComponents": [
+    {
+      "name": "hal.arm",
+      "display": "Arm architecture",
+      "headerFile": "include/os/hal/hal-arm-generated.h"
+    }
+  ]
 }
 ```
 

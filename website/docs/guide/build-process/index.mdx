@@ -154,16 +154,18 @@ There are several properties which affect the process of generating
 header files: `headerFile`, `customDefine`and  `valueFormat`.
 
 The `headerFile` property can only occur in the body of a
-`cdlPackage` or `cdlComponents` object and specifies the path of the
+`cdlComponents` object and specifies the path of the
 header file where the configuration data is written, for example:
 
 ```json
 {
-  "cdlPackage": {
-    "name": "hal.arm",
-    "display": "Arm architecture",
-    "headerFile": "include/os/hal/hal-arm-generated.h"
-  }
+  "cdlComponents": [
+    {
+      "name": "hal.arm",
+      "display": "Arm architecture",
+      "headerFile": "include/os/hal/hal-arm-generated.h"
+    }
+  ]
 }
 ```
 

@@ -81,7 +81,8 @@ built unless an option is enabled. It would sometimes be useful to be able to
 say: "if option A is enabled then compile file x.c, otherwise compile file y.c".
 There are two simple ways of achieving this:
 
-- Always compile y.c, typically by listing it in the body of the `cdlPackage`,
+- Always compile y.c, typically by listing it in the body of the 
+  `cdlComponents` object,
   but use `#ifndef A` to produce an empty object file if option A is not
   enabled. This has the disadvantage that the file always gets compiled and
   hence for some configurations, builds will take longer than necessary.
@@ -100,7 +101,7 @@ control the priority of a `sourceFiles` property.
 
 ```json
 {
-  "cdlPackage": [
+  "cdlComponents": [
     {
       "name": "infra",
       "display": "Infrastructure",
