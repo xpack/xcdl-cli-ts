@@ -58,24 +58,29 @@ The defaults depend on `valueType`:
 
 ## Description
 
-For active and enabled objects, if the `customDefine` property is
-defined, a line with the following structure will be generated in the file
-pointed to by the `headerFile` property:
-
-```c
-#define <name> (<value>)
-```
+For active and enabled objects, 
+a line will be generated in the file
+pointed to by the `headerFile` property.
 
 For nodes of type `none`, the default definition includes only the name:
 
 ```c
-#define <name>
+#define <name>_ENABLED
+```
+
+For types with values, the default definition includes the name and the value:
+
+```c
+#define <name>_BOOL (value)
+#define <name>_INTEGER (value)
+#define <name>_FLOAT (value)
 ```
 
 For string objects, a second line is generated, with the value appended to the
 name:
 
 ```c
+#define <name>_STRING "value"
 #define <name>_<value>
 ```
 
