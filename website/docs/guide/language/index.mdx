@@ -50,7 +50,7 @@ A very simple xCDL file would look like this:
 {
   "cdlComponents": [
     {
-      "name": "errors",
+      "id": "errors",
       "display": "Common error code support",
       "description": "This package contains the common list of error and status codes. It is held centrally to allow packages to interchange error codes and status codes in a common way, rather than each package having its own conventions for error/status reporting. The error codes are modelled on the POSIX style naming e.g. EINVAL etc. This package also provides the standard strerror() function to convert error codes to textual representation.",
       "sourceFiles": ["src/strerror.cpp"],
@@ -93,7 +93,7 @@ following excerpt comes from the infrastructure package:
 {
   "cdlComponents": [
     {
-      "name": "traceBuffer",
+      "id": "traceBuffer",
       "display": "Buffered tracing",
       "description": "An output module which buffers output from tracing and assertion events. The stored messages are output when an assert fires, or OS_TRACE_PRINT() (defined in <os/infra/os_trac.h>) is called. Of course, there will only be stored messages if tracing per se (OS_DEBUG_USE_TRACING) is enabled above.",
 
@@ -103,7 +103,7 @@ following excerpt comes from the infrastructure package:
 
       "cdlOptions": [
         {
-          "name": "size",
+          "id": "size",
           "display": "Trace buffer size",
           "description": "The size of the trace buffer. This counts the number of trace records stored. When the buffer fills it either wraps, stops recording, or generates output.",
           "valueType": "int",
@@ -139,19 +139,19 @@ objects:
 {
   "cdlComponents": [
     {
-      "name": "...",
+      "id": "...",
       ... component body ...
     }
   ],
   "cdlOptions": [
     {
-      "name": "...",
+      "id": "...",
       ... option body ...
     }
   ],
   "cdlInterfaces": [
     {
-      "name": "...",
+      "id": "...",
       ... interface body ...
     }
   ]
@@ -194,13 +194,13 @@ what distinguishes them from options. These can be defined in the body of the
 {
   "cdlComponents": [
     {
-      "name": "stdio",
+      "id": "stdio",
       ...
       "customDefine": "OS_PACKAGE_LIBC_STDIO",
       ...
       "cdlComponents": [
         {
-          "name": "floating-point",
+          "id": "floating-point",
           ...
           "customDefine": "OS_PACKAGE_LIBC_STDIO_FLOATING_POINT",
           ...
@@ -208,7 +208,7 @@ what distinguishes them from options. These can be defined in the body of the
       ],
       "cdlOptions": [
         {
-          "name": "thread-safe-streams",
+          "id": "thread-safe-streams",
           ...
           "customDefine": "OS_PACKAGE_LIBC_STDIO_THREAD_SAFE_STREAMS",
           ...
@@ -232,7 +232,7 @@ following:
 {
   "cdlComponents": [
     {
-      "name": "libc",
+      "id": "libc",
       ...
       "includeCDLs": [ "xcdl-stdio.json" ],
     }
@@ -315,7 +315,7 @@ it.
 {
   "cdlComponents": [
     {
-      "name": "uitron",
+      "id": "uitron",
       "display": "uITRON compatibility layer",
       "description": "eCos supports a uITRON Compatibility Layer, full Level S (Standard) compliance with Version 3.02 of the uITRON Standard, plus many Level E (Extended) features. uITRON is the premier Japanese embedded RTOS standard.",
       "documentationUrls": "https://ecos.com/reference/package/uitron/",
@@ -340,7 +340,7 @@ represented as a dot-separated path.
 {
   "cdlComponents": [
     {
-      "name": "hal.cortex-m",
+      "id": "hal.cortex-m",
       "display": "Cortex-M architecture",
       ...
     }
@@ -365,7 +365,7 @@ are treated as relative to the folder where the current xCDL file is located.
 {
   "cdlComponents": [
     {
-      "name": "stdio",
+      "id": "stdio",
       "display": "Standard input/output functions",
       "description": "This enables support for standard I/O functions from <stdio.h>.",
       "requires": ["isEnabled('io')", "isEnabled('io.haldiag.serial')"],
@@ -440,7 +440,7 @@ value is an xCDL expression, for example:
 {
   "cdlOptions": [
     {
-      "name": "period",
+      "id": "period",
       "display": "Real-time clock period",
       "valueType": "int",
       "computed": "12500",
@@ -462,7 +462,7 @@ packages or interfaces. A typical example would be:
 {
   "cdlOptions": [
     {
-      "name": "hal.gdb.thread-support",
+      "id": "hal.gdb.thread-support",
       "display": "Include GDB multi-threading debug support",
       "customDefine": "OS_DEBUG_HAL_DEBUG_GDB_THREAD_SUPPORT",
       "requires": [ "isEnabled('kernel.debug.gdb.threadSupport')" ],
@@ -482,11 +482,11 @@ of the `legalValues` property are arrays of xCDL list expressions.
 {
   "cdlComponents": [
     {
-      "name": "libc",
+      "id": "libc",
       ...
       "cdlOptions": [
         {
-          "name": "std-default-offset",
+          "id": "std-default-offset",
           "display": "Default Standard Time offset",
           "customDefine": "OS_INTEGER_LIBC_TIME_STD_DEFAULT_OFFSET",
           "valueType": "int",
@@ -513,7 +513,7 @@ expressions.
 {
   "cdlOptions": [
     {
-      "name": "kernel.instrument.binsem",
+      "id": "kernel.instrument.binsem",
       "customDefine": "OS_DEBUG_KERNEL_INSTRUMENT_BINSEM",
       "activeIf": [
         "isEnabled('kernel/synch')"
@@ -532,7 +532,7 @@ that interface's value.
 {
   "cdlComponents": [
     {
-      "name": "net.drivers.eth.edb7xxx",
+      "id": "net.drivers.eth.edb7xxx",
       "display": "Cirrus Logic ethernet driver",
       "implements": "net/drivers/if",
       ...
@@ -550,7 +550,7 @@ disabled, or if the kernel is not being used at all.
 {
   "cdlOptions": [
     {
-      "name": "libc.per-thread-errno",
+      "id": "libc.per-thread-errno",
       "display": "Per-thread errno support",
       "customDefine": "OS_PACKAGE_LIBC_PER_THREAD_ERRNO",
       "requires": [
@@ -588,7 +588,7 @@ object, the parent property is used.
 {
   "cdlComponents": [
     {
-      "name": "hal.risc-v",
+      "id": "hal.risc-v",
       "display": "RISC-V architecture",
       "headerFile": "hal-risc-v.h",
       "customDefine": "OS_PACKAGE_HAL_RISC_V",
@@ -616,7 +616,7 @@ property is used to list these source files:
 {
   "cdlComponents": [
     {
-      "name": "errors",
+      "id": "errors",
       "display": "Common error code support",
       "sourceFile": [
         "src/strerror.cpp"
@@ -650,7 +650,7 @@ avoid any mistakes, this property must be explicitly defined:
 {
   "cdlComponents": [
     {
-      "name": "infra",
+      "id": "infra",
       "display": "Infrastructure",
       "headerFile": "os/infra.h",
       ...
@@ -686,7 +686,7 @@ bodies as JSON objects.
 {
   "cdlComponents": [
     {
-      "name": "rcc",
+      "id": "rcc",
       "display": "RCC",
       ...
     }
@@ -872,10 +872,10 @@ practice:
 {
   "cdlComponents": [
     {
-      "name": "libc",
+      "id": "libc",
       "cdlComponents": [
         {
-          "name": "rand",
+          "id": "rand",
           "valueType": "none",
           "defaultEnable": "false",
           "sourceFile": "stdlib/rand.cpp",
@@ -884,13 +884,13 @@ practice:
       ],
       "cdlOptions": [
         {
-          "name": "perThread",
+          "id": "perThread",
           "customDefine": "OS_PACKAGE_LIBC_PER_THREAD_RAND",
           "requires": "isEnabled('kernel.perThreadData')",
           "defaultEnable": "false"
         },
         {
-          "name": "seed",
+          "id": "seed",
           "customDefine": "OS_INTEGER_LIBC_RAND_SEED",
           "valueType": "int",
           "legalValues": "0 to 0x7FFFFFFF",

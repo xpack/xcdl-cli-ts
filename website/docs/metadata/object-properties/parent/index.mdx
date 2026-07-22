@@ -34,7 +34,7 @@ Control the placement of an option within the configuration hierarchy.
 {
   "cdlOptions": [
     {
-      "name": "<name>",
+      "id": "<name>",
       ...
       "parent": "<string>",
       ...
@@ -99,11 +99,11 @@ as global preferences and default compiler flags.
 {
   "cdlComponents": [
     {
-      "name": "trace",
+      "id": "trace",
       ...
       "cdlComponents": [
         {
-          "name": "buffer",
+          "id": "buffer",
           "display": "Buffered tracing",
           "customDefine": "OS_DEBUG_INFRA_DEBUG_TRACE_ASSERT_BUFFER",
 
@@ -112,7 +112,7 @@ as global preferences and default compiler flags.
       ],
       "cdlOptions": [
         {
-          "name": "size",
+          "id": "size",
           "display": "Trace buffer array size",
           "parent": "buffer",
           "valueType": "int",

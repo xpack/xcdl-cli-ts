@@ -37,7 +37,7 @@ greyed out when shown in the configuration hierarchy.
 {
   "cdlOptions | cdlComponents": [
     {
-      "name": "...",
+      "id": "...",
       ...
       "activeIf": [ "<expression>",... ],
       ...
@@ -137,7 +137,7 @@ Do not provide extra semaphore debugging if there are no semaphores:
 {
   "cdlOptions": [
     {
-      "name": "kernel.instrument.binsem",
+      "id": "kernel.instrument.binsem",
       ...
       "activeIf": [ "isEnabled('kernel.synch')" ],
       "customDefine": "OS_PACKAGE_KERNEL_SYNCH_MUTEX_PRIORITY_INHERITANCE_SIMPLE_RELAY"
@@ -153,7 +153,7 @@ Avoid another level in the configuration hierarchy:
 {
   "cdlOptions": [
     {
-      "name": "kernel.synch.mutex.priorityInheritance.simple.relay",
+      "id": "kernel.synch.mutex.priorityInheritance.simple.relay",
       ...
       "activeIf": [ "isEnabled('kernel.synch.mutex.priorityInheritance.simple')" ],
       "customDefine": "OS_PACKAGE_KERNEL_SYNCH_MUTEX_PRIORITY_INHERITANCE_SIMPLE_RELAY",
@@ -169,7 +169,7 @@ Functionality that is only relevant if another package is loaded:
 {
   "cdlOptions": [
     {
-      "name": "start.uitron-compatibility",
+      "id": "start.uitron-compatibility",
       ...
       "activeIf": [ "isLoaded('uitron')" ],
       "customDefine": "OS_PACKAGE_START_UITRON_COMPATIBILITY",
@@ -185,7 +185,7 @@ Check that the hardware or HAL provide the appropriate functionality:
 {
   "cdlOptions": [
     {
-      "name": "hal.debug.gdb.break-support.debug-break-support",
+      "id": "hal.debug.gdb.break-support.debug-break-support",
       ...
       "activeIf": [ "isEnabled('hal.debug.gdb.stubs-break')" ],
       "customDefine": "OS_DEBUG_HAL_DEBUG_GDB_BREAK_SUPPORT",

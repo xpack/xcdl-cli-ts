@@ -35,7 +35,7 @@ of the current component.
 {
   "cdlOptions | cdlComponents": [
     {
-      "name": "...",
+      "id": "...",
       ...
       "privateCompilerOptions": {
         "remove": [ "<options>", ... ],
@@ -93,7 +93,7 @@ In this case the parent option can be filtered out with a configuration like:
 { 
   "cdlComponents": [
     {
-      "name": "exampleComponent",
+      "id": "exampleComponent",
       "privateCompilerOptions": {
         "remove": [ "-O[0-9a-z]+" ],
         "privateOptimisations": [ "-O2" ]
@@ -120,7 +120,7 @@ TODO: add a link to the list of available LiquidJS properties.
 {
   "cdlComponents": [
     {
-      "name": "lists",
+      "id": "lists",
       ...
       "privateCompilerOptions": {
         "warnings": [

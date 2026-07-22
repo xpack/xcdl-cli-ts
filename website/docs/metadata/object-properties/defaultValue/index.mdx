@@ -34,7 +34,7 @@ Specify a default value for this option using an xCDL expression.
 {
   "cdlOptions | cdlComponents": [
     {
-      "name": "...",
+      "id": "...",
       ...
       "defaultValue": true | false | "<expression>",
       ...
@@ -98,7 +98,7 @@ The HAL option replicates the kernel option.
 {
   "cdlOptions": [
     {
-      "name": "hal.debug.gdb.thread-support",
+      "id": "hal.debug.gdb.thread-support",
       "display": "Include GDB multi-threading debug support",
       "customDefine": "OS_DEBUG_HAL_DEBUG_GDB_THREAD_SUPPORT",
       "requires": "isEnabled('kernel.debug.gdb.thread-support')",

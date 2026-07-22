@@ -34,7 +34,7 @@ Provide a textual description for a configuration object.
 {
   "cdlProject | cdlOptions | cdlComponents | cdlInterface": [
     {
-      "name": "...",
+      "id": "...",
 
       "description": "<string>",
       ...
@@ -81,7 +81,7 @@ likely using a subset of the [CommonMark](https://commonmark.org) syntax.
 {
   "cdlOptions": [
     {
-      "name": "infra-debug.trace-message",
+      "id": "infra-debug.trace-message",
       "display": "Use trace text",
       "description": "All trace calls within eCos contain a text message which should give some information about the circumstances. These text messages will end up being embedded in the application image and hence there is a significant penalty in terms of image size.\n It is possible to suppress the use of these messages by disabling this option.\n This results in smaller code size, but there is less human-readable information available in the trace output, possibly only filenames and line numbers.",
       "defaultValue": "1",

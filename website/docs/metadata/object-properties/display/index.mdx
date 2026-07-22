@@ -34,7 +34,7 @@ configuration hierarchy.
 ```json {4}
 {
   "cdlProject": {
-    "name": "...",
+    "id": "...",
     "display": "<string>",
     ...
   }
@@ -45,7 +45,7 @@ configuration hierarchy.
 {
   "cdlOptions | cdlComponents | cdlInterface": [
     {
-      "name": "...",
+      "id": "...",
       "display": "<string>",
       ...
     }
@@ -87,7 +87,7 @@ representation of hierarchy nodes.
 {
   "cdlOptions": [
     {
-      "name": "mbox-queue.size",
+      "id": "mbox-queue.size",
       "display": "Message box queue size",
       "description": "This configuration option controls the number of messages that can be queued in a message box before a non-blocking put() operation will fail or a blocking put() operation will block. The cost in memory is one pointer per message box for each possible message.",
       "valueType": "integer",

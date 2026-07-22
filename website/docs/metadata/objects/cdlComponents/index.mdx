@@ -59,7 +59,7 @@ Define an array of component objects (generic units of functionality).
 {
   "cdlComponents": [
     {
-      "name": "<component name>",
+      "id": "<component name>",
       "display": "<short name>",
       "description": "<long text>",
 
@@ -131,7 +131,7 @@ A simple component, enabled by default.
 {
   "cdlComponents": [
     {
-      "name": "useAsserts",
+      "id": "useAsserts",
       "display": "Use asserts",
       "description": "If this component is enabled, assertions in the code are tested at run-time. Assert functions (OS_ASSERT()) are defined in `include/os/infra/os_ass.h` within the install tree. If the component is disabled, these result in no additional object code and no checking of the asserted conditions.",
       "includeCDLs": ["assert.json"]
