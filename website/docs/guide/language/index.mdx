@@ -117,9 +117,9 @@ following excerpt comes from the infrastructure package:
 }
 ```
 
-Each `cdlComponents` object has a name and a body. The body
+Each `cdlComponents` object has an identifier and a body. The body
 contains various properties for that component and may also include
-subcomponents or options. Similarly, a `cdlOptions` object has a name and a body
+subcomponents or options. Similarly, a `cdlOptions` object has an identifier and a body
 of properties. This example introduces several new properties: `defaultValue`,
 `activeIf`, `valueType` and `legalValues`. The meanings of most of these should
 be fairly obvious. The next sections describe the various xCDL objects and
@@ -132,7 +132,7 @@ Several xCDL-related objects can occur at the top level of a xCDL file:
 correspond to the basic building blocks of the language. All of them follow more
 or less the same basic form.
 
-`cdlComponents`, `cdlOptions` and `cdlInterfaces` define arrays of named 
+`cdlComponents`, `cdlOptions` and `cdlInterfaces` define arrays of  
 objects:
 
 ```json
@@ -158,8 +158,8 @@ objects:
 }
 ```
 
-All objects have a mandatory **name**, a list of
-**properties** and an optional list of **children objects**. All children names must
+All objects have a mandatory **identifier**, a list of
+**properties** and an optional list of **children objects**. All children identifiers must
 be unique within a given parent. Addressing objects is similar to addressing
 files in a file system, using forward slash-separated paths. Paths can be
 absolute or relative. Additionally, relative paths may be incomplete, such as
@@ -170,9 +170,9 @@ The various xCDL objects exist in a hierarchy. There is no upper limit on how
 deeply components can be nested, but it is rarely necessary to go more than
 three or four levels beyond the package level. The naming convention used for
 referring to objects incorporates elements of the hierarchy, which helps keep
-the names more manageable in size.
+the identifiers more manageable in size.
 
-The hierarchy serves two purposes. First, it allows objects to be controlled en
+The hierarchy serves two purposes. First, it allows objects to be controlled e
 masse, so disabling a component automatically disables all the objects below it
 in the hierarchy. Second, it permits a much simpler representation of the
 configuration in the graphical configuration tool, facilitating navigation and
@@ -228,7 +228,7 @@ C library, all stdio-related configuration options could be placed in
 `xcdl-stdio.json`, and the top-level xCDL file `xcdl*.json` would contain the
 following:
 
-```json {5}
+```json {6}
 {
   "cdlComponents": [
     {
@@ -311,7 +311,7 @@ the primary way for users to identify nodes in the configuration hierarchy. The
 the online documentation will only be accessed when the user explicitly requests
 it.
 
-```json {4-6}
+```json {5-7}
 {
   "cdlComponents": [
     {
@@ -331,12 +331,12 @@ string is a descriptive text. For `documentationUrls` the string should hold an 
 ### The configuration hierarchy
 
 There are two properties related to the hierarchical organization of components
-and options: the node name and the `includeCDLs` properties.
+and options: the node identifier and the `includeCDLs` properties.
 
 There is no explicit `parent` property; instead, the hierarchy can be
 represented as a dot-separated path. 
 
-```json {5}
+```json {4}
 {
   "cdlComponents": [
     {
@@ -361,7 +361,7 @@ file paths of xCDL files with additional options, subcomponents, and interfaces
 that should be placed below the current object in the hierarchy. The file paths
 are treated as relative to the folder where the current xCDL file is located.
 
-```json {12-14}
+```json {10}
 {
   "cdlComponents": [
     {
@@ -436,7 +436,7 @@ object can be changed. There are valid uses for computed objects, but also many
 invalid ones. Consult the reference packages for further details. The property
 value is an xCDL expression, for example:
 
-```json {6}
+```json {7}
 {
   "cdlOptions": [
     {
@@ -458,7 +458,7 @@ The `defaultValue` property is similar to `computed`, but it only specifies a
 default value that users can modify. Again, this property is not relevant to
 packages or interfaces. A typical example would be:
 
-```json {7}
+```json {8}
 {
   "cdlOptions": [
     {
@@ -478,7 +478,7 @@ data part of an object. Therefore, it is not applicable to objects with the type
 `none`. It cannot be used for packages since packages have no values. The values
 of the `legalValues` property are arrays of xCDL list expressions.
 
-```json {10}
+```json {12}
 {
   "cdlComponents": [
     {
@@ -491,7 +491,7 @@ of the `legalValues` property are arrays of xCDL list expressions.
           "customDefine": "OS_INTEGER_LIBC_TIME_STD_DEFAULT_OFFSET",
           "valueType": "int",
           "legalValues": "-90000 to 90000",
-            "defaultValue": "0"
+          "defaultValue": "0"
         }
       ]
     }
@@ -509,7 +509,7 @@ one of these conditions, and an additional `activeIf` property could be used for
 the other. The value of an `activeIf` property is an array of xCDL goal
 expressions.
 
-```json {5-7}
+```json {6-8}
 {
   "cdlOptions": [
     {
@@ -528,7 +528,7 @@ The `implements` property is related to the concept of xCDL interfaces. If an
 object is enabled and it implements a particular interface, it contributes 1 to
 that interface's value.
 
-```json {5}
+```json {6}
 {
   "cdlComponents": [
     {
@@ -546,7 +546,7 @@ example, it is unreasonable to expect the C library to provide thread-safe
 implementations of certain functions if the underlying kernel support has been
 disabled, or if the kernel is not being used at all.
 
-```json {6-8}
+```json {7-9}
 {
   "cdlOptions": [
     {
@@ -584,7 +584,7 @@ The component framework will generate a configuration header file based on the
 `headerFile` property. If this property is not defined for the current
 object, the parent property is used.
 
-```json {4}
+```json {6}
 {
   "cdlComponents": [
     {
@@ -612,7 +612,7 @@ appropriate flags, along with an additional set defined by the target hardware
 and possible modifications on a per-package basis. The `sourceFiles`
 property is used to list these source files:
 
-```json {5-7}
+```json {6-8}
 {
   "cdlComponents": [
     {
@@ -646,7 +646,7 @@ For full details of the build process, see
 The `headerFile` property relates to an object's generated header files. To
 avoid any mistakes, this property must be explicitly defined:
 
-```json {5}
+```json {6}
 {
   "cdlComponents": [
     {
@@ -668,10 +668,10 @@ TBD - `publicIncludeFolders`, ...
 
 ## Object naming convention
 
-xCDL objects have internal names, used to refer objects in the configuration
+xCDL objects have internal identifiers, used to refer objects in the configuration
 hierarchy and to compose permalinks in documentation websites.
 
-Names are short strings and must follow these rules:
+Identifiers are short strings and must follow these rules:
 
 - Be unique for a given parent.
 - Be accepted as POSIX file/folder names, which means they can include letters,
@@ -679,10 +679,9 @@ Names are short strings and must follow these rules:
 
 The recommended syntax is all lowercase, with words separated by dashes (`-`).
 
-Using the JSON syntax, nodes names are represented as JSON member names and node
-bodies as JSON objects.
+Using the JSON syntax, node identifiers are represented as JSON `id` properties.
 
-```json {3-6}
+```json {4}
 {
   "cdlComponents": [
     {
@@ -694,7 +693,7 @@ bodies as JSON objects.
 }
 ```
 
-When used in a configuration (graphical) tool, it's not the name, but the node
+When used in a configuration (graphical) tool, it's not the identifier, but the node
 `display` property that is preferred to be displayed to identify the node.
 
 ## Values and expressions
@@ -807,9 +806,9 @@ object to be inactive:
 
 The majority of configuration options are boolean in nature, allowing the user
 to either enable or disable certain functionality. However, some objects are
-different. For example, `valueOf('libc/stdio/bufsize')` is a number, and
-`valueOf('libc/stdio/default-console')` is a string corresponding to a device
-name. xCDL must accommodate this variety and define the exact behaviour of the
+different. For example, `valueOf('libc.stdio.bufsize')` is a number, and
+`valueOf('libc.stdio.default-console')` is a string corresponding to a device
+identifier. xCDL must accommodate this variety and define the exact behaviour of the
 system in terms of constraints and build-time consequences.
 
 In xCDL, the value of an object consists of two parts. There is a boolean part,
