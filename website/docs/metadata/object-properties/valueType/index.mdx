@@ -30,7 +30,7 @@ Specify the type of value associated with a configuration object.
 
 ## Syntax
 
-```json {5}
+```json {6}
 {
   "cdlOptions | cdlComponents": [
     {
@@ -50,6 +50,7 @@ The `valueType` property can be one of the following strings:
 - `int`
 - `float`
 - `string`
+- `enum`
 
 ## Default value
 
@@ -213,6 +214,11 @@ the associated string. For enabled objects, normal `#define` processing will
 take place, and two `#define` lines will be generated using the object's
 `customDefine` and the string value. Similarly, build-related properties
 such as `sourceFiles` will take effect.
+
+#### `enum`
+
+TODO
+
 
 #### Defaults
 
