@@ -112,33 +112,39 @@ xcdl-tree
 ├── micro-os-plus
 │   ├── architecture (i)
 │   ├── architectures
-│   │   ├── aarch32
-│   │   ├── aarch64
-│   │   ├── cortexm
-│   │   ├── riscv
-│   │   └── synthetic-posix
-│   ├── core
-│   │   └── startup
+│   │   ├── aarch32 (c)
+│   │   ├── aarch64 (c)
+│   │   ├── cortexm (c)
+│   │   ├── riscv (c)
+│   │   └── synthetic-posix (c)
 │   ├── device (i)
 │   ├── devices
-│   │   ├── cortexm
+│   │   ├── cortexm (c)
+│   │   │   └── core (o)
 │   │   ├── qemu-aarch32
-│   │   ├── qemu-aarch64
-│   │   └── qemu-riscv
+│   │   │   └── core (o)
+│   │   ├── qemu-aarch64 (c)
+│   │   │   └── core (o)
+│   │   └── qemu-riscv (c)
+│   │   │   └── core (o)
 │   ├── diag
 │   │   └── trace
-│   │       ├── arm
+│   │       ├── arm (c)
 │   │       │   ├── itm
 │   │       │   └── semihosting
 │   │       │       ├── debug
+│   │       │       │   └── buffer-array-size (o)
 │   │       │       └── stdout
-│   │       ├── interface
-│   │       ├── posix
+│   │       ├── output-channel (i)
+│   │       ├── posix (c)
 │   │       │   ├── stderr
 │   │       │   └── stdout
+│   │       ├── printf-buffer-array-size (o)
 │   │       └── segger
-│   │           └── rtt
-│   ├── micro-test-plus
+│   │           └── rtt (c)
+│   ├── micro-test-plus (c)
+│   │   ├── trace (o)
+│   │   └── trace-constructors (o)
 │   ├── platform (i)
 │   ├── platforms
 │   │   ├── native
@@ -153,33 +159,51 @@ xcdl-tree
 │   │   ├── qemu-cortex-m7f
 │   │   ├── qemu-riscv-rv32imac
 │   │   └── qemu-riscv-rv64imafdc
-│   ├── semihosting
+│   ├── semihosting (c)
+│   │   ├── startup (c)
+│   │   │   ├── argv-buffer-array-size (o)
+│   │   │   └── cmdline-buffer-array-size (o)
+│   │   └── syscalls (c)
+│   │       ├── debug-...-brk (o)
+│   │       ├── debug-brk (o)
+│   │       ├── debug-chdir-brk (o)
+│   │       └── max-open-files (o)
+│   ├── startup (c)
+│   │   ├── exit (c)
+│   │   ├── guard-check (o)
+│   │   ├── initialise-hardware (o)
+│   │   ├── initialise-hardware-early (o)
+│   │   ├── initialise-multiple-ram-sections (o)
+│   │   └── sbrk (c)
 │   └── utils
-│       └── lists
-│           ├── trace
-│           └── trace-constructors
-└── tests
-    ├── common
-    │   ├── compiler-options
-    │   │   ├── verbose-link (o)
-    │   │   └── warnings
-    │   ├── create-hex (o)
-    │   ├── create-listing (o)
-    │   └── report-size (o)
-    ├── sample
-    │   ├── binary (a)
-    │   │   ├── hex (a)
-    │   │   ├── listing (a)
-    │   │   └── size (a)
-    │   └── runner (t)
-    └── unit
-        ├── binary (a)
-        │   ├── hex (a)
-        │   ├── listing (a)
-        │   └── size (a)
-        ├── runner (t)
-        └── runner-coverage (t)
-
+│       └── lists (c)
+│           ├── trace (o)
+│           └── trace-constructors (o)
+├── tests
+│   ├── common
+│   │   ├── compiler-options
+│   │   │   ├── verbose-link (o)
+│   │   │   └── warnings
+│   │   ├── create-hex (o)
+│   │   ├── create-listing (o)
+│   │   └── report-size (o)
+│   ├── sample
+│   │   ├── binary (a)
+│   │   │   ├── hex (a)
+│   │   │   ├── listing (a)
+│   │   │   └── size (a)
+│   │   └── runner (t)
+│   └── unit
+│       ├── binary (a)
+│       │   ├── hex (a)
+│       │   ├── listing (a)
+│       │   └── size (a)
+│       ├── runner (t)
+│       └── runner-coverage (t)
+└── xpack-3rd-party
+    └── arm-cmsis-core
+        ├── cortex-a (c)
+        └── cortex-m (c)
 ```
 
 ## Credits
